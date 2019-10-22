@@ -28,11 +28,14 @@ const POSTS = [
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Images below</Text>
-      {POSTS.forEach(post =>
-        <Image
-          source={{uri: 'https://facebook.github.io/react/logo-og.png'}}
-          style={{width: 400, height: 400}} />
+      <Text>PANDO</Text>
+      {POSTS.map(post =>
+        <View key={post.id}>
+          <Text>{post.title}</Text>
+          <Image
+            source={{uri: post.image}}
+            style={{width: 400, height: 200}} />
+        </View>
       )}
     </View>
   );
