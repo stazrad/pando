@@ -6,7 +6,7 @@ import Feed from './src/components/Feed'
 export default function App () {
   return (
     <View style={{backgroundColor: '#b8dad5', flex:1}}>
-
+      <Header />
     </View>
   )
 }

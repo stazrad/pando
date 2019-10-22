@@ -15,5 +15,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
+    maxHeight: 100
   },
 })
