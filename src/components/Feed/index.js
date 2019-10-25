@@ -4,8 +4,8 @@ import POSTS from '../../data/POSTS.json'
 
 export default function Feed () {
   const imageRenderer = ({ item }) => (
-    <View key={item.id}>
-      <Text>{item.title}</Text>
+    <View style={styles.post} key={item.id}>
+      <Text style={styles.title}>{item.title}</Text>
       <Image
         source={{uri: item.image}}
         style={{width: 400, height: 200}} />
@@ -28,4 +28,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  post: {
+    backgroundColor: 'white',
+    height: 260,
+    marginVertical: 6,
+  },
+  title: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginVertical: 4,
+    marginHorizontal: 4,
+  }
 })

@@ -12,7 +12,7 @@ export default function Footer () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#aeb1b0',
+    backgroundColor: '#efefef',
     alignItems: 'center',
     justifyContent: 'center',
     maxHeight: 100

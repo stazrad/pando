@@ -12,9 +12,15 @@ export default function Header () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: '#efefef',
     alignItems: 'center',
     justifyContent: 'center',
-    maxHeight: 100
+    maxHeight: 100,
+    paddingTop: 16,
   },
+  header: {
+    fontSize: 20,
+    padding: 10,
+    fontWeight: 'bold',
+  }
 })
