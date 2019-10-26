@@ -1,14 +1,15 @@
 import React from 'react'
-import { FlatList, StyleSheet, Text, View, Image } from 'react-native'
+import { Dimensions, FlatList, StyleSheet, Text, View, Image } from 'react-native'
 import POSTS from '../../data/POSTS.json'
 
 export default function Feed () {
+  const DEVICE_WIDTH = Dimensions.get('window').width
   const imageRenderer = ({ item }) => (
     <View style={styles.post} key={item.id}>
       <Text style={styles.title}>{item.title}</Text>
       <Image
         source={{uri: item.image}}
-        style={{width: 400, height: 200}} />
+        style={{width: DEVICE_WIDTH, height: 200}} />
     </View>
   )
 
