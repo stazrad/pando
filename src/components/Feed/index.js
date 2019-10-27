@@ -1,13 +1,10 @@
 import React, { useState } from 'react'
-import { FlatList, Text, View, Image } from 'react-native'
+import { FlatList } from 'react-native'
 import FeedPost from './FeedPost'
 import POSTS from '../../data/POSTS.json'
 
 export default function Feed () {
   const [ refreshing, setRefreshing ] = useState(false)
-  const postRenderer = ({ item }) => (
-    <FeedPost post={item} />
-  )
   const onRefresh = () => {
     // TODO network call here
     setRefreshing(true)
@@ -22,7 +19,7 @@ export default function Feed () {
       keyExtractor={item => item.id}
       onRefresh={onRefresh}
       refreshing={refreshing}
-      renderItem={postRenderer}
+      renderItem={({ item }) => <FeedPost post={item} />}
     />
   )
 }
