@@ -26,7 +26,7 @@ export default function App () {
   navigate = onSetScreen // there's gotta be a better way to do this
 
   return (
-    <View style={{ backgroundColor: '#b8dad5', flex: 1 }}>
+    <View style={{ backgroundColor: '#4d4d4d', flex: 1 }}>
       <Header />
       <Body>
         {screenSwitcher(screen)}
@@ -39,7 +39,7 @@ export default function App () {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    backgroundColor: 'grey'
+    backgroundColor: '#4d4d4d'
   },
   container: {
     flex: 1,

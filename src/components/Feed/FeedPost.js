@@ -7,10 +7,10 @@ export default function FeedPost (props) {
 
   return (
     <View style={styles.container} key={post.id}>
-      <Text style={styles.title}>{post.title}</Text>
       <Image
         source={{uri: post.image}}
-        style={{width: DEVICE_WIDTH, height: 200}} />
+        style={{width: DEVICE_WIDTH, height: 120}} />
+      <Text style={styles.title}>{post.title}</Text>
     </View>
   )
 }
@@ -18,7 +18,7 @@ export default function FeedPost (props) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    height: 260,
+    height: 140,
     marginVertical: 6,
   },
   title: {

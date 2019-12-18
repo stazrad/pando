@@ -12,7 +12,7 @@ export default function Body (props) {
 const styles = StyleSheet.create({
   container: {
     flex: 8,
-    backgroundColor: '#cecece',
+    backgroundColor: '#808080',
     alignItems: 'center',
     justifyContent: 'center'
   },
