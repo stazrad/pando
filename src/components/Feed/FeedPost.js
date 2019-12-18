@@ -4,13 +4,14 @@ import { Dimensions, StyleSheet, Text, View, Image } from 'react-native'
 export default function FeedPost (props) {
   const { post } = props
   const DEVICE_WIDTH = Dimensions.get('window').width
+  console.log('WIDTH', DEVICE_WIDTH)
 
   return (
     <View style={styles.container} key={post.id}>
       <Image
         source={{uri: post.image}}
-        style={{width: DEVICE_WIDTH, height: 120}} />
-      <Text style={styles.title}>{post.title}</Text>
+        style={{width: DEVICE_WIDTH, height: 100}} />
+        {/* <Text style={styles.title}>{post.title}</Text> */}
     </View>
   )
 }
@@ -18,7 +19,7 @@ export default function FeedPost (props) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    height: 140,
+    height: 100,
     marginVertical: 6,
   },
   title: {

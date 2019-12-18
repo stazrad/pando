@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native'
 export default function Header () {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>PANDO 🐼</Text>
+      <Text style={styles.header}>P A N D O 🐼</Text>
     </View>
   )
 }
@@ -22,6 +22,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 10,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#fff9f0',
   }
 })
