@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "824EB36EFA78FCC320869872F2051540"
+               BlueprintIdentifier = "3A4A926B93EF92246A41A8D284AEE2C0"
                BuildableName = "UMSensorsInterface"
                BlueprintName = "UMSensorsInterface"
                ReferencedContainer = "container:Pods.xcodeproj">

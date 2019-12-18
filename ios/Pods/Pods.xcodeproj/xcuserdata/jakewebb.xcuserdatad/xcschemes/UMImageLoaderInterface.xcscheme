@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DDF6366FEB19A7748F8E5C617DB398B7"
+               BlueprintIdentifier = "61FC77A4B07751908BF6A8E0AC0CDCDD"
                BuildableName = "UMImageLoaderInterface"
                BlueprintName = "UMImageLoaderInterface"
                ReferencedContainer = "container:Pods.xcodeproj">

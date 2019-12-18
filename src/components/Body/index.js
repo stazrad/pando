@@ -1,7 +1,7 @@
 import React from 'react'
 import { SafeAreaView, StyleSheet } from 'react-native'
 
-export default function Main (props) {
+export default function Body (props) {
   return (
     <SafeAreaView style={styles.container}>
       {props.children}

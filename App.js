@@ -3,15 +3,15 @@ import { StyleSheet, Text, View, Image } from 'react-native'
 import Header from './src/components/Header'
 import Feed from './src/components/Feed'
 import Footer from './src/components/Footer'
-import Main from './src/components/Main'
+import Body from './src/components/Body'
 
 export default function App () {
   return (
     <View style={{ backgroundColor: '#b8dad5', flex: 1 }}>
       <Header />
-      <Main>
+      <Body>
         <Feed />
-      </Main>
+      </Body>
       <Footer />
     </View>
   )

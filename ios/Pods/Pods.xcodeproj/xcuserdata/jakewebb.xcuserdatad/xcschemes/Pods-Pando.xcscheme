@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BD0C2FCE173EA58EA1C752B78DBEC820"
+               BlueprintIdentifier = "9259684568FB4FD124FE44131A8ECF2B"
                BuildableName = "libPods-Pando.a"
                BlueprintName = "Pods-Pando"
                ReferencedContainer = "container:Pods.xcodeproj">
