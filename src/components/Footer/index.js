@@ -2,10 +2,15 @@ import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import SvgUri from 'react-native-svg-uri'
 
+import { navigate } from '../../App'
+
 export default function Footer () {
   return (
     <View style={styles.container}>
-      <View style={styles.icon}>
+      <View
+        style={styles.icon}
+        onStartShouldSetResponder={() => true}
+        onResponderGrant={() => navigate('home')}>
         <SvgUri
           fill='white'
           width='30'
@@ -19,7 +24,10 @@ export default function Footer () {
           height='28'
           source={require('../../images/search.svg')} />
       </View>
-      <View style={styles.icon}>
+      <View
+        style={styles.icon}
+        onStartShouldSetResponder={() => true}
+        onResponderGrant={() => navigate('create')}>
         <SvgUri
           fill='white'
           width='30'
