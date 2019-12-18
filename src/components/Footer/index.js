@@ -5,18 +5,27 @@ import SvgUri from 'react-native-svg-uri'
 import { navigate } from '../../App'
 
 export default function Footer () {
-  return (
-    <View style={styles.container}>
+  const Icon = props => {
+    const source = '../../images/' + props.string + '.svg'
+    console.log('SOURCE', source)
+    // alert(source)
+    return (
       <View
         style={styles.icon}
         onStartShouldSetResponder={() => true}
-        onResponderGrant={() => navigate('home')}>
+        onResponderGrant={() => navigate(props.string)}>
         <SvgUri
           fill='white'
-          width='30'
-          height='30'
-          source={require('../../images/pagoda.svg')} />
+          width={props.width || '30'}
+          height={props.height || '30'}
+          source={require('../../images/home.svg')} />
       </View>
+    )
+  }
+
+  return (
+    <View style={styles.container}>
+      <Icon string='home' />
       <View style={styles.icon}>
         <SvgUri
           fill='white'

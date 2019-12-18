@@ -21,7 +21,7 @@ export default function App () {
         return <Feed />
       }
   }
-  const [screen, onSetScreen] = useState('home')
+  const [ screen, onSetScreen ] = useState('home')
 
   navigate = onSetScreen // there's gotta be a better way to do this
 
