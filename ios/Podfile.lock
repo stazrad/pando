@@ -2,7 +2,7 @@ PODS:
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
   - EXAppLoaderProvider (7.0.0)
-  - EXConstants (7.0.0):
+  - EXConstants (7.0.1):
     - UMConstantsInterface
     - UMCore
   - EXFileSystem (7.0.0):
@@ -32,6 +32,7 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
+  - QBImagePickerController (3.4.0)
   - React (0.59.10):
     - React/Core (= 0.59.10)
   - react-native-cameraroll (1.3.0):
@@ -91,12 +92,17 @@ PODS:
     - React/RCTBlob
   - RNGestureHandler (1.4.1):
     - React
-  - RNReanimated (1.3.0):
+  - RNImageCropPicker (0.24.0):
+    - QBImagePickerController
+    - React/Core
+    - RSKImageCropper
+  - RNReanimated (1.3.2):
     - React
   - RNScreens (1.0.0-alpha.23):
     - React
   - RNSVG (9.13.6):
     - React
+  - RSKImageCropper (2.2.3)
   - UMBarCodeScannerInterface (4.0.0)
   - UMCameraInterface (4.0.0)
   - UMConstantsInterface (4.0.0)
@@ -128,6 +134,7 @@ DEPENDENCIES:
   - EXWebBrowser (from `../node_modules/expo-web-browser/ios`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - QBImagePickerController (from `../node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePickerController.podspec`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
@@ -144,6 +151,7 @@ DEPENDENCIES:
   - React/RCTVibration (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler/RNGestureHandler.podspec`)
+  - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNReanimated (from `../node_modules/react-native-reanimated/RNReanimated.podspec`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -164,6 +172,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - boost-for-react-native
+    - RSKImageCropper
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -202,12 +211,16 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  QBImagePickerController:
+    :path: "../node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePickerController.podspec"
   React:
     :path: "../node_modules/react-native"
   react-native-cameraroll:
     :path: "../node_modules/@react-native-community/cameraroll"
   RNGestureHandler:
     :podspec: "../node_modules/react-native-gesture-handler/RNGestureHandler.podspec"
+  RNImageCropPicker:
+    :path: "../node_modules/react-native-image-crop-picker"
   RNReanimated:
     :podspec: "../node_modules/react-native-reanimated/RNReanimated.podspec"
   RNScreens:
@@ -257,7 +270,7 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   EXAppLoaderProvider: 98f3e889fa48b441b19c64f19193c82ebb1c15ca
-  EXConstants: 11210104ab59ee1cdfb79b0466add077f59c9218
+  EXConstants: db705745139c4c674b1a54ddce94766d9ddf8387
   EXFileSystem: 217d1480b63c595d0620e64d6a6845dc52229bbd
   EXFont: ce93c38bb43624eac43d283ca42e6e09496342b6
   EXKeepAwake: 97c48386fa562a57956c99a1b66b422de1fa3a19
@@ -268,12 +281,15 @@ SPEC CHECKSUMS:
   EXWebBrowser: 52ce377fa8fc0f4832e233d625d5a5ebb2801b64
   Folly: de497beb10f102453a1afa9edbf8cf8a251890de
   glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
+  QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: 36d0768f9e93be2473b37e7fa64f92c1d5341eef
   react-native-cameraroll: ad20f5a93c25cb83a76455df57a2c62fbb63aaed
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
-  RNReanimated: 6abbbae2e5e72609d85aabd92a982a94566885f1
+  RNImageCropPicker: 1f22116cbcee5c66f0dea776eb114269afd91b90
+  RNReanimated: 5d148a7f55ebf47055ea55f51f5dc7a827dc9547
   RNScreens: f28b48b8345f2f5f39ed6195518291515032a788
   RNSVG: 8ba35cbeb385a52fd960fd28db9d7d18b4c2974f
+  RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   UMBarCodeScannerInterface: 07047b4faa779e7963efa3d2c5951a71a0a807bf
   UMCameraInterface: f6a3e71ddd928617637084bfd67db2daec3b1927
   UMConstantsInterface: 20e6caaba4ddac70d0b50827d6cf35a202ac988f
@@ -288,6 +304,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 8f2117979aacb688fe304f834ff8800fadc320bb
   yoga: 684513b14b03201579ba3cee20218c9d1298b0cc
 
-PODFILE CHECKSUM: 1ba5f6eb8e6aba2404d8f0991dac9076c23abe9e
+PODFILE CHECKSUM: bff8905917652fda46b7fc06390aba5079b847f7
 
 COCOAPODS: 1.6.1
