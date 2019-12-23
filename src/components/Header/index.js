@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0d0d0d',
     alignItems: 'center',
     justifyContent: 'center',
-    maxHeight: 100,
+    maxHeight: 80,
     paddingTop: 16,
   },
   header: {

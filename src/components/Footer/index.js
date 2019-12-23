@@ -29,7 +29,7 @@ export default function Footer () {
         string='search'
         source={require('../../images/search.svg')} />
       <Icon
-        string='CREATE'
+        string='create'
         source={require('../../images/create.svg')} />
       <Icon
         width='26'
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0d0d0d',
     alignItems: 'center',
     justifyContent: 'center',
-    maxHeight: 60
+    maxHeight: 50
   },
   icon: {
     flex: 1,

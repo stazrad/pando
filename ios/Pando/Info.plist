@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -52,11 +54,11 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow Pando to access your microphone</string>
 	<key>NSMotionUsageDescription</key>
-	<string>Allow Pando to access your device's accelerometer</string>
+	<string>Allow Pando to access your device&apos;s accelerometer</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Give Pando periences permission to save photos</string>
+	<string>Give Pando permission to save photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Give Pando periences permission to access your photos</string>
+	<string>Give Pando permission to access your photos</string>
 	<key>NSRemindersUsageDescription</key>
 	<string>Allow Pando to access your reminders</string>
 	<key>UILaunchStoryboardName</key>

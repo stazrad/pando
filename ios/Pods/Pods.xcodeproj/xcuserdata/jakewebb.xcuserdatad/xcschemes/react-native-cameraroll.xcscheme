@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EDE902E6B6AA688CD0074D4901FDDBA6"
-               BuildableName = "UMPermissionsInterface"
-               BlueprintName = "UMPermissionsInterface"
+               BlueprintIdentifier = "E8284A83AA7ADA27259FB19D3D73CC0E"
+               BuildableName = "libreact-native-cameraroll.a"
+               BlueprintName = "react-native-cameraroll"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

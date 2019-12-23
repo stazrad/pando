@@ -3,6 +3,8 @@ package com.pando;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.chrisbianca.cameraroll.RNCameraRollPackage;
+import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import com.horcrux.svg.SvgPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -41,6 +43,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNCameraRollPackage(),
+            new CameraRollPackage(),
             new SvgPackage(),
           new ReanimatedPackage(),
           new RNGestureHandlerPackage(),

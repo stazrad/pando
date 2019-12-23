@@ -34,4 +34,9 @@ target 'Pando' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+
+  pod 'react-native-cameraroll', :path => '../node_modules/@react-native-community/cameraroll'
+
+  pod 'RNCameraRoll', :path => '../node_modules/react-native-cameraroll'
+
 end
