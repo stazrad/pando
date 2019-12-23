@@ -1,20 +1,41 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import CameraRoll from '@react-native-community/cameraroll'
 
 export default function Footer () {
-  CameraRoll.getPhotos({
-    first: 20,
-    assetType: 'Photos',
+  const [ photos, setPhotos ] = useState([])
+  const DEVICE_WIDTH = Dimensions.get('window').width
+
+  useEffect(() => {
+    if (!photos.length) {
+      CameraRoll.getPhotos({
+        first: 5,
+        assetType: 'Photos'
+      })
+      .then(res => {
+        console.log('PHOTOS', res.edges)
+        setPhotos(res.edges)
+      })
+      .catch(e => console.log('GET PHOTOS ERROR', e))
+    }
   })
-  .then(res => {
-    console.log('PHOTOS', res)
-  })
-  .catch(e => console.log('GET PHOTOS ERROR', e))
 
   return (
     <View style={styles.container}>
-      <Text>CREATE NEW</Text>
+      <Text>Select a pano:</Text>
+      <ScrollView>
+        {photos.map((p, i) => {
+          return (
+            <Image
+              key={i}
+              style={styles.pano}
+              source={{ uri: p.node.image.uri }}
+              onStartShouldSetResponder={() => true}
+              onResponderGrant={() => alert(p.node.image.filename)}
+            />
+          )
+        })}
+      </ScrollView>
     </View>
   )
 }
@@ -25,6 +46,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#efefef',
     alignItems: 'center',
     justifyContent: 'center',
-    maxHeight: 100
+    maxHeight: 600,
+    width: Dimensions.get('window').width
   },
+  pano: {
+    height: 100,
+    width: Dimensions.get('window').width,
+    marginBottom: 10
+  }
 })

@@ -4,7 +4,6 @@ import { Dimensions, StyleSheet, Text, View, Image } from 'react-native'
 export default function FeedPost (props) {
   const { post } = props
   const DEVICE_WIDTH = Dimensions.get('window').width
-  console.log('WIDTH', DEVICE_WIDTH)
 
   return (
     <View style={styles.container} key={post.id}>
