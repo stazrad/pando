@@ -4,6 +4,14 @@ import SvgUri from 'react-native-svg-uri'
 
 import { navigate } from '../../App'
 
+const sources = {
+  create: require('../../images/create.svg'),
+  home: require('../../images/home.svg'),
+  profile: require('../../images/profile.svg'),
+  search: require('../../images/search.svg'),
+  settings: require('../../images/settings.svg')
+}
+
 export default function Footer () {
   const Icon = props => (
     <View
@@ -14,33 +22,28 @@ export default function Footer () {
         fill='#fff9f0'
         width={props.width || '30'}
         height={props.height || '30'}
-        source={props.source} />
+        source={sources[props.string]} />
     </View>
   )
 
   return (
     <View style={styles.container}>
       <Icon
-        string='home'
-        source={require('../../images/home.svg')} />
+        string='home' />
       <Icon
         width='28'
         height='28'
-        string='search'
-        source={require('../../images/search.svg')} />
+        string='search' />
       <Icon
-        string='create'
-        source={require('../../images/create.svg')} />
+        string='create' />
       <Icon
         width='26'
         height='26'
-        string='profile'
-        source={require('../../images/profile.svg')} />
+        string='profile' />
       <Icon
         width='26'
         height='26'
-        string='settings'
-        source={require('../../images/settings.svg')} />
+        string='settings' />
     </View>
   )
 }

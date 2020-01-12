@@ -1,41 +1,37 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
-import CameraRoll from '@react-native-community/cameraroll'
+import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import ImagePicker from 'react-native-image-crop-picker'
+import Cropper from './Cropper'
 
-export default function Footer () {
-  const [ photos, setPhotos ] = useState([])
+export default function Create () {
+  const [ photo, setPhoto ] = useState(null)
   const DEVICE_WIDTH = Dimensions.get('window').width
 
-  useEffect(() => {
-    if (!photos.length) {
-      CameraRoll.getPhotos({
-        first: 5,
-        assetType: 'Photos'
-      })
-      .then(res => {
-        console.log('PHOTOS', res.edges)
-        setPhotos(res.edges)
-      })
-      .catch(e => console.log('GET PHOTOS ERROR', e))
-    }
-  })
+  // useEffect(() => {
+  //   if (!photo) {
+  //     ImagePicker.openPicker({
+  //       mediaType: 'photo',
+  //       smartAlbums: ['Panoramas']
+  //     }).then(image => {
+  //       console.log('IAMGE', image);
+  //       setPhoto(image)
+  //     })
+  //     // CameraRoll.getPhotos({
+  //     //   first: 5,
+  //     //   assetType: 'Photos'
+  //     // })
+  //     // .then(res => {
+  //     //   console.log('PHOTOS', res.edges)
+  //     //   setPhotos(res.edges)
+  //     // })
+  //     // .catch(e => console.log('GET PHOTOS ERROR', e))
+  //   }
+  // })
 
   return (
     <View style={styles.container}>
       <Text>Select a pano:</Text>
-      <ScrollView>
-        {photos.map((p, i) => {
-          return (
-            <Image
-              key={i}
-              style={styles.pano}
-              source={{ uri: p.node.image.uri }}
-              onStartShouldSetResponder={() => true}
-              onResponderGrant={() => alert(p.node.image.filename)}
-            />
-          )
-        })}
-      </ScrollView>
+      <Cropper url={photo && photo.url} />
     </View>
   )
 }

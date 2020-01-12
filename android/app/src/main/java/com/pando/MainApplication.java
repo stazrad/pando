@@ -3,6 +3,7 @@ package com.pando;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.chrisbianca.cameraroll.RNCameraRollPackage;
 import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import com.horcrux.svg.SvgPackage;
@@ -43,6 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new PickerPackage(),
             new RNCameraRollPackage(),
             new CameraRollPackage(),
             new SvgPackage(),
