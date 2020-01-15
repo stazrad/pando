@@ -35,7 +35,7 @@ export default function Cropper (props) {
         <Button title='best-fit' onPress={() => setFormat('best-fit')}></Button>
       </View>
       <ImageBackground source={{ uri: !!image ? image.path : DEFAULT_URL }} style={styles.cropContainer}>
-        {framesArray.map(i => (
+        {framesArray.map((f, i) => (
           <View
             key={i}
             style={styles.cropLines}
