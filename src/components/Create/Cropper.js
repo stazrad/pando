@@ -1,26 +1,46 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Dimensions, Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { Button, Dimensions, ImageBackground, StyleSheet, Switch, Text, View } from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
 
 const DEFAULT_URL = 'https://s3.amazonaws.com/panoawards/wp-content/uploads/2016/10/Pano_Jesus-M-Garcia.jpg'
 
 export default function Cropper (props) {
-  const { url = DEFAULT_URL } = props
-  const [ photos, setPhotos ] = useState([])
+  const { image } = props
+  const [ numOfFrames, setNumOfFrames ] = useState(3)
+  const [ format, setFormat ] = useState('best-fit')
   const DEVICE_WIDTH = Dimensions.get('window').width
+  const getBestFit = (image, format, numOfFrames) => {
+    if (format === 'square') {
+      return 100
+    } else if (format === 'best-fit') {
+      const frameWidth = Dimensions.get('window').width / numOfFrames
+
+      return frameWidth
+    }
+  }
+  const framesArray = []
+  // setup array to render grid lines
+  for (let i = 0; i < numOfFrames; i++) { framesArray.push(true) }
 
   return (
     <View style={styles.container}>
       <Text>Choose crop format:</Text>
       <View>
-        <Button title='half'></Button>
-        <Button title='thirds'></Button>
-        <Button title='fourths'></Button>
+        <Button title='halve' onPress={() => setNumOfFrames(2)}></Button>
+        <Button title='thirds' onPress={() => setNumOfFrames(3)}></Button>
+        <Button title='fourths' onPress={() => setNumOfFrames(4)}></Button>
       </View>
-      <ImageBackground source={{ uri: DEFAULT_URL }} style={styles.cropContainer}>
-        <View style={styles.cropLines} />
-        <View style={styles.cropLines} />
-        <View style={styles.cropLines} />
+      <View>
+        <Button title='square' onPress={() => setFormat('square')}></Button>
+        <Button title='best-fit' onPress={() => setFormat('best-fit')}></Button>
+      </View>
+      <ImageBackground source={{ uri: !!image ? image.path : DEFAULT_URL }} style={styles.cropContainer}>
+        {framesArray.map(i => (
+          <View
+            key={i}
+            style={styles.cropLines}
+            width={getBestFit(image, format, numOfFrames)} />
+        ))}
       </ImageBackground>
     </View>
   )
@@ -46,7 +66,7 @@ const styles = StyleSheet.create({
   },
   cropLines: {
     borderColor: 'red',
-    borderWidth: 1,
+    borderWidth: 2,
     borderStyle: 'dashed',
     height: 100,
     width: 100

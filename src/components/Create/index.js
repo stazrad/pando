@@ -7,31 +7,29 @@ export default function Create () {
   const [ photo, setPhoto ] = useState(null)
   const DEVICE_WIDTH = Dimensions.get('window').width
 
-  // useEffect(() => {
-  //   if (!photo) {
-  //     ImagePicker.openPicker({
-  //       mediaType: 'photo',
-  //       smartAlbums: ['Panoramas']
-  //     }).then(image => {
-  //       console.log('IAMGE', image);
-  //       setPhoto(image)
-  //     })
-  //     // CameraRoll.getPhotos({
-  //     //   first: 5,
-  //     //   assetType: 'Photos'
-  //     // })
-  //     // .then(res => {
-  //     //   console.log('PHOTOS', res.edges)
-  //     //   setPhotos(res.edges)
-  //     // })
-  //     // .catch(e => console.log('GET PHOTOS ERROR', e))
-  //   }
-  // })
+  useEffect(() => {
+    if (!photo) {
+      ImagePicker.openPicker({
+        smartAlbums: ['Panoramas']
+      }).then(image => {
+        console.log('IAMGE', image);
+        setPhoto(image)
+      })
+      // CameraRoll.getPhotos({
+      //   first: 5,
+      //   assetType: 'Photos'
+      // })
+      // .then(res => {
+      //   console.log('PHOTOS', res.edges)
+      //   setPhotos(res.edges)
+      // })
+      // .catch(e => console.log('GET PHOTOS ERROR', e))
+    }
+  })
 
   return (
     <View style={styles.container}>
-      <Text>Select a pano:</Text>
-      <Cropper url={photo && photo.url} />
+      {photo && <Cropper image={photo} />}
     </View>
   )
 }

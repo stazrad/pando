@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>10</integer>
+	<key>logs</key>
+	<dict>
+		<key>D3572F84-0507-447F-93DD-FB6877C41E0A</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>D3572F84-0507-447F-93DD-FB6877C41E0A.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Pando project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Pando</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building workspace Pando with scheme Pando and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>600739239.86099398</real>
+			<key>timeStoppedRecording</key>
+			<real>600739241.13480997</real>
+			<key>title</key>
+			<string>Building workspace Pando with scheme Pando and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>D3572F84-0507-447F-93DD-FB6877C41E0A</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
