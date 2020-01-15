@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Dimensions, ImageBackground, StyleSheet, Switch, Text, View } from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
+import { executeCrop } from './utils'
 
 const DEFAULT_URL = 'https://s3.amazonaws.com/panoawards/wp-content/uploads/2016/10/Pano_Jesus-M-Garcia.jpg'
 
@@ -13,7 +14,7 @@ export default function Cropper (props) {
     if (format === 'square') {
       return 100
     } else if (format === 'best-fit') {
-      const frameWidth = Dimensions.get('window').width / numOfFrames
+      const frameWidth = Dimensions.get('window').width / numOfFrames // TODO get View width
 
       return frameWidth
     }
@@ -21,6 +22,8 @@ export default function Cropper (props) {
   const framesArray = []
   // setup array to render grid lines
   for (let i = 0; i < numOfFrames; i++) { framesArray.push(true) }
+
+  const frameWidth = getBestFit(image, format, numOfFrames)
 
   return (
     <View style={styles.container}>
@@ -39,9 +42,10 @@ export default function Cropper (props) {
           <View
             key={i}
             style={styles.cropLines}
-            width={getBestFit(image, format, numOfFrames)} />
+            width={frameWidth} />
         ))}
       </ImageBackground>
+      <Button title='Export' onPress={() => executeCrop(image, numOfFrames, frameWidth)}></Button>
     </View>
   )
 }
