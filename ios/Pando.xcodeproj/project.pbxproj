@@ -101,6 +101,13 @@
 			remoteGlobalIDString = 94DDAC5C1F3D024300EED511;
 			remoteInfo = "RNSVG-tvOS";
 		};
+		02E0F23923CFE5A700D4BA1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02E0F23323CFE5A700D4BA1D /* RNCImageEditor.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNCImageEditor;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -112,6 +119,7 @@
 		02E0F1A023B1690B00D4BA1D /* libRNImageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNImageCropPicker.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		02E0F1A223B1691C00D4BA1D /* libRNCameraRoll.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNCameraRoll.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		02E0F1A423B169FF00D4BA1D /* libreact-native-cameraroll.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libreact-native-cameraroll.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		02E0F23323CFE5A700D4BA1D /* RNCImageEditor.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCImageEditor.xcodeproj; path = "../node_modules/@react-native-community/image-editor/ios/RNCImageEditor.xcodeproj"; sourceTree = "<group>"; };
 		0F6D6342F3C042FF8D1A3CA4 /* libRNSVG-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNSVG-tvOS.a"; sourceTree = "<group>"; };
 		0FC5D5DC3C914B9C8B2EFADC /* RNCCameraRoll.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCCameraRoll.xcodeproj; path = "../node_modules/@react-native-community/cameraroll/ios/RNCCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		11072656C677FF7DE5B0B3E8 /* Pods-Pando.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pando.debug.xcconfig"; path = "Target Support Files/Pods-Pando/Pods-Pando.debug.xcconfig"; sourceTree = "<group>"; };
@@ -236,6 +244,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		02E0F23423CFE5A700D4BA1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02E0F23A23CFE5A700D4BA1D /* libRNCImageEditor.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* Pando */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,6 +269,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				02E0F23323CFE5A700D4BA1D /* RNCImageEditor.xcodeproj */,
 				02E0F1A423B169FF00D4BA1D /* libreact-native-cameraroll.a */,
 				02E0F1A223B1691C00D4BA1D /* libRNCameraRoll.a */,
 				02E0F1A023B1690B00D4BA1D /* libRNImageCropPicker.a */,
@@ -378,6 +395,10 @@
 					ProjectRef = 0FC5D5DC3C914B9C8B2EFADC /* RNCCameraRoll.xcodeproj */;
 				},
 				{
+					ProductGroup = 02E0F23423CFE5A700D4BA1D /* Products */;
+					ProjectRef = 02E0F23323CFE5A700D4BA1D /* RNCImageEditor.xcodeproj */;
+				},
+				{
 					ProductGroup = 02E0F1AD23CEED8F00D4BA1D /* Products */;
 					ProjectRef = A9B6C89BF6124401B73DFC03 /* RNGestureHandler.xcodeproj */;
 				},
@@ -477,6 +498,13 @@
 			fileType = archive.ar;
 			path = "libRNSVG-tvOS.a";
 			remoteRef = 02E0F1D623CEED8F00D4BA1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02E0F23A23CFE5A700D4BA1D /* libRNCImageEditor.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNCImageEditor.a;
+			remoteRef = 02E0F23923CFE5A700D4BA1D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
