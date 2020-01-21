@@ -1,10 +1,15 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, View } from 'react-native'
+import LOGO from '../../images/PANDO.png'
 
 export default function Header () {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>P A N D O 🐼</Text>
+      <View style={styles.logoContainer}>
+        <Image
+          style={styles.logo}
+          source={LOGO} />
+      </View>
     </View>
   )
 }
@@ -16,12 +21,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     maxHeight: 80,
-    paddingTop: 16,
+    paddingTop: 16
   },
-  header: {
-    fontSize: 20,
+  logo: {
+    width: 180,
+    height: 32,
+  },
+  logoContainer: {
+    marginTop: 8,
     padding: 10,
-    fontWeight: 'bold',
-    color: '#fff9f0',
+    flex: 1
   }
 })
