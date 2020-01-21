@@ -1,6 +1,13 @@
 package com.pando;
 
 import com.facebook.react.ReactActivity;
+import com.horcrux.svg.SvgPackage;
+import com.swmansion.rnscreens.RNScreensPackage;
+import com.swmansion.reanimated.ReanimatedPackage;
+import fr.bamlab.rnimageresizer.ImageResizerPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;

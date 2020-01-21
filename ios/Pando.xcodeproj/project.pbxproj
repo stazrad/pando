@@ -13,8 +13,95 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		3FF43F32D9854C51B96F4819 /* libRCTImageResizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FABCC9FE59047399C6BF0CB /* libRCTImageResizer.a */; };
+		40542D51327A4D46BEFEBAA2 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2259737C821C4E90B1CB0F21 /* libRNGestureHandler.a */; };
+		509743802A7D412A9E6A2759 /* libRNScreens.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49CCD445555048FAB8C02CBF /* libRNScreens.a */; };
+		62A7DC55D2544CCFB87C34B6 /* libRNCCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58FBE617E124465B8C46A75B /* libRNCCameraRoll.a */; };
+		6FED8E10374344209EC6A05D /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3394B248F196495086B841D1 /* libRNReanimated.a */; };
 		79E284F2E6136C9F769C1630 /* libPods-Pando.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6533E740CCB8931C374FFD /* libPods-Pando.a */; };
+		D61A4A0382724B1BB6FD832A /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F6D6342F3C042FF8D1A3CA4 /* libRNSVG-tvOS.a */; };
+		D8D4DC75831C4098A1715CB1 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB4143EC6B24F38859BFEEE /* libimageCropPicker.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		02E0F1B823CEED8F00D4BA1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CB78553BDBA4F9F837FC99C /* imageCropPicker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3400A8081CEB54A6008A0BC7;
+			remoteInfo = imageCropPicker;
+		};
+		02E0F1BB23CEED8F00D4BA1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 968FE98ACC3A4A76B819421D /* RCTImageResizer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5D72D2E81C16249000E22EC1;
+			remoteInfo = RCTImageResizer;
+		};
+		02E0F1BE23CEED8F00D4BA1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0FC5D5DC3C914B9C8B2EFADC /* RNCCameraRoll.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
+			remoteInfo = RNCCameraRoll;
+		};
+		02E0F1C223CEED8F00D4BA1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9B6C89BF6124401B73DFC03 /* RNGestureHandler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNGestureHandler;
+		};
+		02E0F1C423CEED8F00D4BA1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9B6C89BF6124401B73DFC03 /* RNGestureHandler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B5C32A36220C603B000FFB8D;
+			remoteInfo = "RNGestureHandler-tvOS";
+		};
+		02E0F1C823CEED8F00D4BA1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A05B71E34B844E02B0EA362B /* RNReanimated.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNReanimated;
+		};
+		02E0F1CA23CEED8F00D4BA1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A05B71E34B844E02B0EA362B /* RNReanimated.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FDBB176E229BF04900D1E455;
+			remoteInfo = "RNReanimated-tvOS";
+		};
+		02E0F1CE23CEED8F00D4BA1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C10758986EC74F0DB2426A1D /* RNScreens.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNScreens;
+		};
+		02E0F1D023CEED8F00D4BA1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C10758986EC74F0DB2426A1D /* RNScreens.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B5C32A4F220C6379000FFB8D;
+			remoteInfo = "RNScreens-tvOS";
+		};
+		02E0F1D423CEED8F00D4BA1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 555D22A2BD6B44B1AB1AD509 /* RNSVG.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CF68AC11AF0540F00FF9E5C;
+			remoteInfo = RNSVG;
+		};
+		02E0F1D623CEED8F00D4BA1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 555D22A2BD6B44B1AB1AD509 /* RNSVG.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 94DDAC5C1F3D024300EED511;
+			remoteInfo = "RNSVG-tvOS";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
@@ -25,6 +112,8 @@
 		02E0F1A023B1690B00D4BA1D /* libRNImageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNImageCropPicker.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		02E0F1A223B1691C00D4BA1D /* libRNCameraRoll.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNCameraRoll.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		02E0F1A423B169FF00D4BA1D /* libreact-native-cameraroll.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libreact-native-cameraroll.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F6D6342F3C042FF8D1A3CA4 /* libRNSVG-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNSVG-tvOS.a"; sourceTree = "<group>"; };
+		0FC5D5DC3C914B9C8B2EFADC /* RNCCameraRoll.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCCameraRoll.xcodeproj; path = "../node_modules/@react-native-community/cameraroll/ios/RNCCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		11072656C677FF7DE5B0B3E8 /* Pods-Pando.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pando.debug.xcconfig"; path = "Target Support Files/Pods-Pando/Pods-Pando.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Pando.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pando.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Pando/AppDelegate.h; sourceTree = "<group>"; };
@@ -33,11 +122,23 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Pando/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Pando/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Pando/main.m; sourceTree = "<group>"; };
+		2259737C821C4E90B1CB0F21 /* libRNGestureHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGestureHandler.a; sourceTree = "<group>"; };
 		2B6533E740CCB8931C374FFD /* libPods-Pando.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Pando.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3394B248F196495086B841D1 /* libRNReanimated.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNReanimated.a; sourceTree = "<group>"; };
+		3CB78553BDBA4F9F837FC99C /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = imageCropPicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; };
+		49CCD445555048FAB8C02CBF /* libRNScreens.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNScreens.a; sourceTree = "<group>"; };
+		555D22A2BD6B44B1AB1AD509 /* RNSVG.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
+		58FBE617E124465B8C46A75B /* libRNCCameraRoll.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCCameraRoll.a; sourceTree = "<group>"; };
+		6FABCC9FE59047399C6BF0CB /* libRCTImageResizer.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTImageResizer.a; sourceTree = "<group>"; };
 		8D86E6F76467B39D30C8978E /* Pods-Pando.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pando.release.xcconfig"; path = "Target Support Files/Pods-Pando/Pods-Pando.release.xcconfig"; sourceTree = "<group>"; };
+		968FE98ACC3A4A76B819421D /* RCTImageResizer.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTImageResizer.xcodeproj; path = "../node_modules/react-native-image-resizer/ios/RCTImageResizer.xcodeproj"; sourceTree = "<group>"; };
+		A05B71E34B844E02B0EA362B /* RNReanimated.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNReanimated.xcodeproj; path = "../node_modules/react-native-reanimated/ios/RNReanimated.xcodeproj"; sourceTree = "<group>"; };
+		A9B6C89BF6124401B73DFC03 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
+		C10758986EC74F0DB2426A1D /* RNScreens.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNScreens.xcodeproj; path = "../node_modules/react-native-screens/ios/RNScreens.xcodeproj"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		FAB4143EC6B24F38859BFEEE /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,12 +149,93 @@
 				02E0F1A523B169FF00D4BA1D /* libreact-native-cameraroll.a in Frameworks */,
 				02C1283123A9D34F00C92176 /* libRNSVG.a in Frameworks */,
 				79E284F2E6136C9F769C1630 /* libPods-Pando.a in Frameworks */,
+				62A7DC55D2544CCFB87C34B6 /* libRNCCameraRoll.a in Frameworks */,
+				40542D51327A4D46BEFEBAA2 /* libRNGestureHandler.a in Frameworks */,
+				D8D4DC75831C4098A1715CB1 /* libimageCropPicker.a in Frameworks */,
+				3FF43F32D9854C51B96F4819 /* libRCTImageResizer.a in Frameworks */,
+				6FED8E10374344209EC6A05D /* libRNReanimated.a in Frameworks */,
+				509743802A7D412A9E6A2759 /* libRNScreens.a in Frameworks */,
+				D61A4A0382724B1BB6FD832A /* libRNSVG-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02E0F1A623CEED8F00D4BA1D /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				58FBE617E124465B8C46A75B /* libRNCCameraRoll.a */,
+				2259737C821C4E90B1CB0F21 /* libRNGestureHandler.a */,
+				FAB4143EC6B24F38859BFEEE /* libimageCropPicker.a */,
+				6FABCC9FE59047399C6BF0CB /* libRCTImageResizer.a */,
+				3394B248F196495086B841D1 /* libRNReanimated.a */,
+				49CCD445555048FAB8C02CBF /* libRNScreens.a */,
+				0F6D6342F3C042FF8D1A3CA4 /* libRNSVG-tvOS.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		02E0F1A923CEED8F00D4BA1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02E0F1B923CEED8F00D4BA1D /* libimageCropPicker.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		02E0F1AB23CEED8F00D4BA1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02E0F1BF23CEED8F00D4BA1D /* libRNCCameraRoll.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		02E0F1AD23CEED8F00D4BA1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02E0F1C323CEED8F00D4BA1D /* libRNGestureHandler.a */,
+				02E0F1C523CEED8F00D4BA1D /* libRNGestureHandler-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		02E0F1AF23CEED8F00D4BA1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02E0F1BC23CEED8F00D4BA1D /* libRCTImageResizer.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		02E0F1B123CEED8F00D4BA1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02E0F1C923CEED8F00D4BA1D /* libRNReanimated.a */,
+				02E0F1CB23CEED8F00D4BA1D /* libRNReanimated-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		02E0F1B323CEED8F00D4BA1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02E0F1CF23CEED8F00D4BA1D /* libRNScreens.a */,
+				02E0F1D123CEED8F00D4BA1D /* libRNScreens-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		02E0F1B523CEED8F00D4BA1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02E0F1D523CEED8F00D4BA1D /* libRNSVG.a */,
+				02E0F1D723CEED8F00D4BA1D /* libRNSVG-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* Pando */ = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +280,13 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				0FC5D5DC3C914B9C8B2EFADC /* RNCCameraRoll.xcodeproj */,
+				A9B6C89BF6124401B73DFC03 /* RNGestureHandler.xcodeproj */,
+				3CB78553BDBA4F9F837FC99C /* imageCropPicker.xcodeproj */,
+				968FE98ACC3A4A76B819421D /* RCTImageResizer.xcodeproj */,
+				A05B71E34B844E02B0EA362B /* RNReanimated.xcodeproj */,
+				C10758986EC74F0DB2426A1D /* RNScreens.xcodeproj */,
+				555D22A2BD6B44B1AB1AD509 /* RNSVG.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -110,6 +299,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				77B4493FE9772507D6E92E9A /* Pods */,
+				02E0F1A623CEED8F00D4BA1D /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -174,12 +364,122 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 02E0F1A923CEED8F00D4BA1D /* Products */;
+					ProjectRef = 3CB78553BDBA4F9F837FC99C /* imageCropPicker.xcodeproj */;
+				},
+				{
+					ProductGroup = 02E0F1AF23CEED8F00D4BA1D /* Products */;
+					ProjectRef = 968FE98ACC3A4A76B819421D /* RCTImageResizer.xcodeproj */;
+				},
+				{
+					ProductGroup = 02E0F1AB23CEED8F00D4BA1D /* Products */;
+					ProjectRef = 0FC5D5DC3C914B9C8B2EFADC /* RNCCameraRoll.xcodeproj */;
+				},
+				{
+					ProductGroup = 02E0F1AD23CEED8F00D4BA1D /* Products */;
+					ProjectRef = A9B6C89BF6124401B73DFC03 /* RNGestureHandler.xcodeproj */;
+				},
+				{
+					ProductGroup = 02E0F1B123CEED8F00D4BA1D /* Products */;
+					ProjectRef = A05B71E34B844E02B0EA362B /* RNReanimated.xcodeproj */;
+				},
+				{
+					ProductGroup = 02E0F1B323CEED8F00D4BA1D /* Products */;
+					ProjectRef = C10758986EC74F0DB2426A1D /* RNScreens.xcodeproj */;
+				},
+				{
+					ProductGroup = 02E0F1B523CEED8F00D4BA1D /* Products */;
+					ProjectRef = 555D22A2BD6B44B1AB1AD509 /* RNSVG.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* Pando */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		02E0F1B923CEED8F00D4BA1D /* libimageCropPicker.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libimageCropPicker.a;
+			remoteRef = 02E0F1B823CEED8F00D4BA1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02E0F1BC23CEED8F00D4BA1D /* libRCTImageResizer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTImageResizer.a;
+			remoteRef = 02E0F1BB23CEED8F00D4BA1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02E0F1BF23CEED8F00D4BA1D /* libRNCCameraRoll.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNCCameraRoll.a;
+			remoteRef = 02E0F1BE23CEED8F00D4BA1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02E0F1C323CEED8F00D4BA1D /* libRNGestureHandler.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNGestureHandler.a;
+			remoteRef = 02E0F1C223CEED8F00D4BA1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02E0F1C523CEED8F00D4BA1D /* libRNGestureHandler-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNGestureHandler-tvOS.a";
+			remoteRef = 02E0F1C423CEED8F00D4BA1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02E0F1C923CEED8F00D4BA1D /* libRNReanimated.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNReanimated.a;
+			remoteRef = 02E0F1C823CEED8F00D4BA1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02E0F1CB23CEED8F00D4BA1D /* libRNReanimated-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNReanimated-tvOS.a";
+			remoteRef = 02E0F1CA23CEED8F00D4BA1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02E0F1CF23CEED8F00D4BA1D /* libRNScreens.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNScreens.a;
+			remoteRef = 02E0F1CE23CEED8F00D4BA1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02E0F1D123CEED8F00D4BA1D /* libRNScreens-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNScreens-tvOS.a";
+			remoteRef = 02E0F1D023CEED8F00D4BA1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02E0F1D523CEED8F00D4BA1D /* libRNSVG.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSVG.a;
+			remoteRef = 02E0F1D423CEED8F00D4BA1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02E0F1D723CEED8F00D4BA1D /* libRNSVG-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNSVG-tvOS.a";
+			remoteRef = 02E0F1D623CEED8F00D4BA1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		13B07F8E1A680F5B00A75B9A /* Resources */ = {
@@ -311,6 +611,16 @@
 				INFOPLIST_FILE = Pando/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Pando\"",
+					"\"$(SRCROOT)/Pando\"",
+					"\"$(SRCROOT)/Pando\"",
+					"\"$(SRCROOT)/Pando\"",
+					"\"$(SRCROOT)/Pando\"",
+					"\"$(SRCROOT)/Pando\"",
+					"\"$(SRCROOT)/Pando\"",
+				);
 				MARKETING_VERSION = 0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -333,6 +643,16 @@
 				INFOPLIST_FILE = Pando/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Pando\"",
+					"\"$(SRCROOT)/Pando\"",
+					"\"$(SRCROOT)/Pando\"",
+					"\"$(SRCROOT)/Pando\"",
+					"\"$(SRCROOT)/Pando\"",
+					"\"$(SRCROOT)/Pando\"",
+					"\"$(SRCROOT)/Pando\"",
+				);
 				MARKETING_VERSION = 0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",

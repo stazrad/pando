@@ -139,6 +139,14 @@ android {
 }
 
 dependencies {
+    implementation project(':@react-native-community_image-editor')
+    compile project(':react-native-svg')
+    compile project(':react-native-screens')
+    compile project(':react-native-reanimated')
+    compile project(':react-native-image-resizer')
+    compile project(':react-native-image-crop-picker')
+    compile project(':react-native-gesture-handler')
+    compile project(':@react-native-community/cameraroll')
     implementation project(':react-native-image-crop-picker')
     implementation project(':react-native-cameraroll')
     implementation project(':@react-native-community_cameraroll')
