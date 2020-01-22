@@ -40,4 +40,6 @@ target 'Pando' do
 
   pod 'react-native-cameraroll', :path => '../node_modules/@react-native-community/cameraroll'
 
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
 end

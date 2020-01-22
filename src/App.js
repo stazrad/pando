@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
+import SplashScreen from 'react-native-splash-screen'
 
 import Body from './components/Body'
 import Create from './components/Create'
@@ -24,6 +25,7 @@ export default function App () {
   const [ screen, onSetScreen ] = useState('create')
 
   navigate = onSetScreen // there's gotta be a better way to do this
+  SplashScreen.hide()
 
   return (
     <View style={{ backgroundColor: '#4d4d4d', flex: 1 }}>
