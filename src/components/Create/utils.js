@@ -22,10 +22,10 @@ export const executeCrop = (image, numOfFrames, frameWidth) => {
   const failure = image => console.log('failure', image)
 
   // best-fit workflow:
-  const framePixelWidth = parseInt(parseFloat(image.width / numOfFrames).toFixed(0))
+  const framePixelWidth = image.width / numOfFrames
 
   for (let i = 0; i < numOfFrames; i++) {
-    const xOffset = parseInt(parseFloat(framePixelWidth * i).toFixed(0)) // get offest of previous crop times width
+    const xOffset = framePixelWidth * i // get offest of previous crop times width
     const cropData = {
       offset: {x: xOffset, y: 0},
       size: {width: framePixelWidth, height: image.height},
@@ -39,6 +39,6 @@ export const executeCrop = (image, numOfFrames, frameWidth) => {
     setTimeout(() => {
       console.log('PRINT')
       ImageEditor.cropImage(image.path, cropData, success, failure)
-    }, i * 1000)
+    }, i * 3000)
   }
 }

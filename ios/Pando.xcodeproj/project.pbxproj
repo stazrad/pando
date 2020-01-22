@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		02C1283123A9D34F00C92176 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C1283023A9D34F00C92176 /* libRNSVG.a */; };
+		02DC955023D82A0D00D44B8B /* PANDO.png in Resources */ = {isa = PBXBuildFile; fileRef = 02DC954F23D82A0C00D44B8B /* PANDO.png */; };
 		02E0F1A523B169FF00D4BA1D /* libreact-native-cameraroll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E0F1A423B169FF00D4BA1D /* libreact-native-cameraroll.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		02C1283023A9D34F00C92176 /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNSVG.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		02DC954F23D82A0C00D44B8B /* PANDO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PANDO.png; path = Pando/Images.xcassets/launchscreen.imageset/PANDO.png; sourceTree = "<group>"; };
 		02E0F19023B0A95B00D4BA1D /* libreact-native-cameraroll.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libreact-native-cameraroll.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02E0F19923B1666800D4BA1D /* QBImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QBImagePicker.framework; path = "../node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework"; sourceTree = "<group>"; };
 		02E0F19A23B1666800D4BA1D /* RSKImageCropper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RSKImageCropper.framework; path = "../node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/RSKImageCropper.framework"; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				02DC954F23D82A0C00D44B8B /* PANDO.png */,
 				13B07FAE1A68108700A75B9A /* Pando */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
@@ -189,6 +192,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02DC955023D82A0D00D44B8B /* PANDO.png in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
@@ -209,7 +213,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		A4DAFF438C0837850FD88112 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
