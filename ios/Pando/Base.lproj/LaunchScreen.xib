@@ -13,8 +13,8 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="launchscreen" translatesAutoresizingMaskIntoConstraints="NO" id="lYZ-Ko-t0L">
-                    <rect key="frame" x="16" y="299" width="344" height="68"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="PANDO.png" translatesAutoresizingMaskIntoConstraints="NO" id="dlP-7E-JZV">
+                    <rect key="frame" x="21" y="301" width="332" height="65"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
             </subviews>
@@ -23,6 +23,6 @@
         </view>
     </objects>
     <resources>
-        <image name="launchscreen" width="3528" height="711"/>
+        <image name="PANDO.png" width="846.719970703125" height="170.63999938964844"/>
     </resources>
 </document>
