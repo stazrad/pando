@@ -2,13 +2,6 @@ import { ImageEditor, ImageStore, Platform } from 'react-native'
 import CameraRoll from '@react-native-community/cameraroll'
 
 export const executeCrop = (image, numOfFrames, frameWidth) => {
-  const cropData = {
-    // offset: {x: number, y: number},
-    size: {width: 4000, height: 4000},
-    displaySize: {width: 4000, height: 4000},
-    resizeMode: 'contain'
-  }
-  console.log('EXECUTION early', ImageEditor.cropImage)
   const success = (croppedImageUri) => {
     console.log('croppedImageUri = ', croppedImageUri)
     CameraRoll.saveToCameraRoll(croppedImageUri)
@@ -28,5 +21,24 @@ export const executeCrop = (image, numOfFrames, frameWidth) => {
   }
   const failure = image => console.log('failure', image)
 
-  ImageEditor.cropImage(image.path, cropData, success, failure)
+  // best-fit workflow:
+  const framePixelWidth = parseInt(parseFloat(image.width / numOfFrames).toFixed(0))
+
+  for (let i = 0; i < numOfFrames; i++) {
+    const xOffset = parseInt(parseFloat(framePixelWidth * i).toFixed(0)) // get offest of previous crop times width
+    const cropData = {
+      offset: {x: xOffset, y: 0},
+      size: {width: framePixelWidth, height: image.height},
+      displaySize: {width: framePixelWidth, height: image.height},
+      resizeMode: 'contain'
+    }
+
+
+    console.log('for loop', numOfFrames, i, cropData)
+
+    setTimeout(() => {
+      console.log('PRINT')
+      ImageEditor.cropImage(image.path, cropData, success, failure)
+    }, i * 1000)
+  }
 }
