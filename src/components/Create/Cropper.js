@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Dimensions, ImageBackground, StyleSheet, Switch, Text, View } from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
+
+import InstagramAuth from './InstagramAuth'
 import { executeCrop } from './utils'
 
 const DEFAULT_URL = 'https://s3.amazonaws.com/panoawards/wp-content/uploads/2016/10/Pano_Jesus-M-Garcia.jpg'
@@ -45,6 +47,7 @@ export default function Cropper (props) {
             width={frameWidth} />
         ))}
       </ImageBackground>
+      <InstagramAuth />
       <Button title='Export' onPress={() => executeCrop(image, numOfFrames, frameWidth)}></Button>
     </View>
   )
