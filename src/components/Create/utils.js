@@ -25,16 +25,14 @@ export const executeCrop = (image, numOfFrames, frameWidth) => {
   const framePixelWidth = image.width / numOfFrames
 
   for (let i = 0; i < numOfFrames; i++) {
-    const xOffset = framePixelWidth * i // get offest of previous crop times width
+    const xOffset = (framePixelWidth * i) + 1 // get offest of previous crop times width
     const cropData = {
       offset: {x: xOffset, y: 0},
       size: {width: framePixelWidth, height: image.height},
       displaySize: {width: framePixelWidth, height: image.height},
-      resizeMode: 'contain'
+      resizeMode: 'cover'
     }
-
-
-    console.log('for loop', numOfFrames, i, cropData)
+    console.log('for loop cover', numOfFrames, i, cropData)
 
     setTimeout(() => {
       console.log('PRINT')

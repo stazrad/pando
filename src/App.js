@@ -25,7 +25,7 @@ export default function App () {
   const [ screen, onSetScreen ] = useState('create')
 
   navigate = onSetScreen // there's gotta be a better way to do this
-  // SplashScreen.hide()
+  SplashScreen.hide()
 
   return (
     <View style={{ backgroundColor: '#4d4d4d', flex: 1 }}>
