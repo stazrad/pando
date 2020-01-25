@@ -1,9 +1,7 @@
 import React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import InstagramLogin from 'react-native-instagram-login'
-
-const APP_ID = '876030626185322'
-const APP_SECRET = '4cdb1fb02ba36f51322db7e6bcd068f7'
+import { APP_ID, APP_SECRET } from 'react-native-dotenv'
 
 function InstagramAuth (props) {
   let instagramLogin // set to ref
