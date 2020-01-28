@@ -4,7 +4,7 @@ import InstagramLogin from 'react-native-instagram-login'
 import { APP_ID, APP_SECRET } from 'react-native-dotenv'
 
 function InstagramAuth (props) {
-  let instagramLogin // set to ref
+  let instagramLogin // set to ref below
   const onSuccess = data => {
     console.log('SUCCESS!', data)
   }
