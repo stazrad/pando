@@ -3,6 +3,7 @@ import { Button, Dimensions, ImageBackground, StyleSheet, Switch, Text, View } f
 import ImagePicker from 'react-native-image-crop-picker'
 
 import InstagramAuth from './InstagramAuth'
+import ImageEditorView from './Example'
 import { executeCrop } from './utils'
 
 const DEFAULT_URL = 'https://s3.amazonaws.com/panoawards/wp-content/uploads/2016/10/Pano_Jesus-M-Garcia.jpg'
@@ -39,7 +40,11 @@ export default function Cropper (props) {
         <Button title='square' onPress={() => setFormat('square')}></Button>
         <Button title='best-fit' onPress={() => setFormat('best-fit')}></Button>
       </View>
-      <ImageBackground source={{ uri: !!image ? image.path : DEFAULT_URL }} style={styles.cropContainer}>
+      {image &&
+        <ImageEditorView
+          image={image} />
+      }
+      {/*<ImageBackground source={{ uri: !!image ? image.path : DEFAULT_URL }} style={styles.cropContainer}>
         {framesArray.map((f, i) => (
           <View
             key={i}
@@ -47,8 +52,8 @@ export default function Cropper (props) {
             width={frameWidth} />
         ))}
       </ImageBackground>
-      <InstagramAuth />
-      <Button title='Export' onPress={() => executeCrop(image, numOfFrames, frameWidth)}></Button>
+      <InstagramAuth />*/}
+      <Button title='Export' onPress={() => executeCrop(image, numOfFrames, format)}></Button>
     </View>
   )
 }

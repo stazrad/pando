@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
 import Cropper from './Cropper'
+import Example from './Example'
 
 export default function Create () {
   const [ photo, setPhoto ] = useState(null)

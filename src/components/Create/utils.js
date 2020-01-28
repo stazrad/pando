@@ -1,7 +1,7 @@
 import { ImageEditor, ImageStore, Platform } from 'react-native'
 import CameraRoll from '@react-native-community/cameraroll'
 
-export const executeCrop = (image, numOfFrames, frameWidth) => {
+export const executeCrop = (image, numOfFrames, format = 'best-fit') => {
   const success = (croppedImageUri) => {
     console.log('croppedImageUri = ', croppedImageUri)
     CameraRoll.saveToCameraRoll(croppedImageUri)
@@ -20,9 +20,16 @@ export const executeCrop = (image, numOfFrames, frameWidth) => {
     }
   }
   const failure = image => console.log('failure', image)
+  let framePixelWidth
+  if (format === 'best-fit') {
+    // best-fit workflow:
+    framePixelWidth = image.width / numOfFrames
+  } else if (format === 'square') {
+    // square workflow
+    framePixelWidth = image.height / numOfFrames
+  }
 
-  // best-fit workflow:
-  const framePixelWidth = image.width / numOfFrames
+  console.log('framePixelWidth', image, framePixelWidth)
 
   for (let i = 0; i < numOfFrames; i++) {
     const xOffset = framePixelWidth * i // get offest of previous crop times width
@@ -34,9 +41,9 @@ export const executeCrop = (image, numOfFrames, frameWidth) => {
     }
     console.log('for loop cover', numOfFrames, i, cropData)
 
-    setTimeout(() => {
-      console.log('PRINT')
-      ImageEditor.cropImage(image.path, cropData, success, failure)
-    }, i * 3000)
+    // setTimeout(() => {
+    //   console.log('PRINT')
+    //   ImageEditor.cropImage(image.path, cropData, success, failure)
+    // }, i * 3000)
   }
 }
