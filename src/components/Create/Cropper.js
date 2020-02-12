@@ -17,7 +17,7 @@ export default function Cropper (props) {
     if (format === 'square') {
       return 100
     } else if (format === 'best-fit') {
-      const frameWidth = Dimensions.get('window').width / numOfFrames // TODO get View width
+      const frameWidth = (Dimensions.get('window').width - 20) / numOfFrames // TODO get View width
 
       return frameWidth
     }
@@ -88,7 +88,7 @@ export default function Cropper (props) {
         <TouchableOpacity
           style={{ ...styles.button, marginLeft: 12 }}
           onPress={() => setFormat(format === 'square' ? 'best-fit' : 'square')}>
-          <Text style={styles.text}>{format}</Text>
+          <Text style={styles.text}>{format === 'square' ? '1:1' : 'best-fit'}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -122,38 +122,42 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
-    maxHeight: 600,
-    width: Dimensions.get('window').width,
-    margin: 5
+    margin: 10,
+    position: 'relative'
   },
   cropContainer: {
-    flex: 1,
+    position: 'absolute',
     height: '100%',
     width: '100%',
-    position: 'absolute'
+    // left: 0,
+    // right: 0,
+    // top: 0,
+    // bottom: 0,
   },
   cropLines: {
     borderColor: 'white',
     borderWidth: 1,
     borderStyle: 'solid',
-    height: '100%',
+    height: 100,
     width: 100
   },
   cropLinesRow: {
     flex: 1,
     flexDirection: 'row',
-    height: 110,
-    maxHeight: 110,
     alignItems: 'center',
     justifyContent: 'center',
-    // position: 'absolute'
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
   editor: {
-    flex: 8,
-    // display: 'flex',
-    alignItems: 'stretch',
-    position: 'relative',
-    backgroundColor: 'red'
+    flex: 6,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'red',
+    position: 'absolute'
   },
   header: {
     flex: 1,
@@ -162,11 +166,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     maxHeight: 20,
     marginBottom: 50
-  },
-  pano: {
-    height: 100,
-    width: Dimensions.get('window').width,
-    marginBottom: 10
   },
   selected: {
     height: 92,
