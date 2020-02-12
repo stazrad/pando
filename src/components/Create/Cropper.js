@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Dimensions, ImageBackground, StyleSheet, Switch, Text, View } from 'react-native'
+import { TouchableOpacity, Dimensions, Image, ImageBackground, ScrollView, StyleSheet, Switch, Text, View } from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
 
 import InstagramAuth from './InstagramAuth'
@@ -30,62 +30,157 @@ export default function Cropper (props) {
 
   return (
     <View style={styles.container}>
-      <Text>Choose crop format:</Text>
-      <View>
-        <Button title='halve' onPress={() => setNumOfFrames(2)}></Button>
-        <Button title='thirds' onPress={() => setNumOfFrames(3)}></Button>
-        <Button title='fourths' onPress={() => setNumOfFrames(4)}></Button>
+      {/*image &&
+        <ScrollView>
+          <Image source={{ uri: image.path }} style={styles.cropContainer} />
+        </ScrollView>
+
+        <ImageBackground source={{ uri: !!image ? image.path : DEFAULT_URL }} style={styles.cropContainer}>
+          {framesArray.map((f, i) => (
+            <View
+              key={i}
+              style={styles.cropLines}
+              width={frameWidth} />
+          ))}
+        </ImageBackground>
+      */}
+      <View style={styles.header}>
+        <TouchableOpacity
+          style={{ alignSelf: 'stretch' }}
+          onPress={() => {}}>
+          <Text style={styles.textButtons}>BACK</Text>
+        </TouchableOpacity>
+        <View style={{ flex: 2 }} />
+        <TouchableOpacity
+          style={{ alignSelf: 'stretch' }}
+          onPress={() => executeCrop(image, numOfFrames, format)}>
+          <Text style={styles.textButtons}>NEXT</Text>
+        </TouchableOpacity>
       </View>
-      <View>
-        <Button title='square' onPress={() => setFormat('square')}></Button>
-        <Button title='best-fit' onPress={() => setFormat('best-fit')}></Button>
-      </View>
+
       {image &&
-        <ImageEditorView
-          image={image} />
+        <View style={styles.editor}>
+          <ImageEditorView
+            image={image}
+            style={styles.cropContainer} />
+          <View style={styles.cropLinesRow}>
+            {framesArray.map((f, i) => (
+              <View
+                key={i}
+                style={styles.cropLines}
+                width={frameWidth} />
+            ))}
+          </View>
+        </View>
       }
-      {/*<ImageBackground source={{ uri: !!image ? image.path : DEFAULT_URL }} style={styles.cropContainer}>
-        {framesArray.map((f, i) => (
-          <View
-            key={i}
-            style={styles.cropLines}
-            width={frameWidth} />
-        ))}
-      </ImageBackground>
-      <InstagramAuth />*/}
-      <Button title='Export' onPress={() => executeCrop(image, numOfFrames, format)}></Button>
+      <View style={styles.buttonRow}>
+        {[2,3,4,5].map(i => {
+          const selected = numOfFrames === i ? styles.selected : {}
+          return (
+            <TouchableOpacity
+              key={i}
+              onPress={() => setNumOfFrames(i)}
+              style={{ ...styles.button, ...selected }}>
+              <Text style={styles.text}>{i}</Text>
+            </TouchableOpacity>
+          )
+        })}
+        <TouchableOpacity
+          style={{ ...styles.button, marginLeft: 12 }}
+          onPress={() => setFormat(format === 'square' ? 'best-fit' : 'square')}>
+          <Text style={styles.text}>{format}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  button: {
+    flex: 1,
+    width: 80,
+    height: 80,
+    maxWidth: 80,
+    maxHeight: 80,
+    backgroundColor: 'white',
+    color: 'black',
+    margin: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  buttonRow: {
+    flex: 2,
+    flexDirection: 'row',
+    height: 110,
+    maxHeight: 110,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40
+  },
   container: {
     flex: 1,
-    backgroundColor: '#efefef',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
     maxHeight: 600,
-    width: Dimensions.get('window').width
+    width: Dimensions.get('window').width,
+    margin: 5
   },
   cropContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    display: 'flex',
-    flexWrap:'wrap',
-    flexDirection: 'row',
-    height: 100,
-    width: Dimensions.get('window').width
+    flex: 1,
+    height: '100%',
+    width: '100%',
+    position: 'absolute'
   },
   cropLines: {
-    borderColor: 'red',
-    borderWidth: 2,
-    borderStyle: 'dashed',
-    height: 100,
+    borderColor: 'white',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    height: '100%',
     width: 100
+  },
+  cropLinesRow: {
+    flex: 1,
+    flexDirection: 'row',
+    height: 110,
+    maxHeight: 110,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // position: 'absolute'
+  },
+  editor: {
+    flex: 8,
+    // display: 'flex',
+    alignItems: 'stretch',
+    position: 'relative',
+    backgroundColor: 'red'
+  },
+  header: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    maxHeight: 20,
+    marginBottom: 50
   },
   pano: {
     height: 100,
     width: Dimensions.get('window').width,
     marginBottom: 10
+  },
+  selected: {
+    height: 92,
+    maxHeight: 92,
+    margin: 2
+  },
+  text: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: 'black'
+  },
+  textButtons: {
+    fontSize: 18,
+    color: 'white',
+    justifyContent: 'flex-start'
   }
 })

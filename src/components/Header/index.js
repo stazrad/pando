@@ -17,10 +17,10 @@ export default function Header () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0d0d0d',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
-    maxHeight: 80,
+    maxHeight: 120,
     paddingTop: 16
   },
   logo: {
@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     height: 32,
   },
   logoContainer: {
-    marginTop: 8,
-    padding: 10,
+    marginTop: 18,
+    padding: 20,
     flex: 1
   }
 })

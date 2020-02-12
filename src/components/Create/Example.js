@@ -67,9 +67,6 @@ export default class SquareImageCropper extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <Text style={styles.text} testID={'headerText'}>
-          Drag the image within the square to crop:
-        </Text>
         <ImageCropper
           image={this.state.photo}
           size={this.state.measuredSize}
@@ -204,7 +201,7 @@ class ImageCropper extends React.Component<$FlowFixMeProps, $FlowFixMeState> {
   render() {
     return (
       <ScrollView
-        alwaysBounceVertical={true}
+        alwaysBounceVertical={false}
         automaticallyAdjustContentInsets={false}
         contentOffset={this._contentOffset}
         decelerationRate="fast"

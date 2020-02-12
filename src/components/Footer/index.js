@@ -19,7 +19,7 @@ export default function Footer () {
       onStartShouldSetResponder={() => true}
       onResponderGrant={() => navigate(props.string)}>
       <SvgUri
-        fill='#fff9f0'
+        fill='white'
         width={props.width || '30'}
         height={props.height || '30'}
         source={sources[props.string]} />
@@ -52,10 +52,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#0d0d0d',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
-    maxHeight: 50
+    maxHeight: 60
   },
   icon: {
     flex: 1,

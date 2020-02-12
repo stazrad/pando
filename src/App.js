@@ -33,7 +33,6 @@ export default function App () {
       <Body>
         {screenSwitcher(screen)}
       </Body>
-      <Footer />
     </View>
   )
 }

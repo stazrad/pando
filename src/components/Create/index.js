@@ -1,36 +1,39 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
+import SvgUri from 'react-native-svg-uri'
 import Cropper from './Cropper'
 import Example from './Example'
 
 export default function Create () {
   const [ photo, setPhoto ] = useState(null)
   const DEVICE_WIDTH = Dimensions.get('window').width
-
-  useEffect(() => {
-    if (!photo) {
-      ImagePicker.openPicker({
-        smartAlbums: ['Panoramas']
-      }).then(image => {
-        console.log('IAMGE', image);
-        setPhoto(image)
-      })
-      // CameraRoll.getPhotos({
-      //   first: 5,
-      //   assetType: 'Photos'
-      // })
-      // .then(res => {
-      //   console.log('PHOTOS', res.edges)
-      //   setPhotos(res.edges)
-      // })
-      // .catch(e => console.log('GET PHOTOS ERROR', e))
-    }
-  })
+  const openPicker = () => {
+    ImagePicker.openPicker({
+      smartAlbums: ['Panoramas']
+    })
+    .then(image => {
+      console.log('IAMGE', image);
+      setPhoto(image)
+    })
+    .catch(console.warn)
+  }
 
   return (
     <View style={styles.container}>
-      {photo && <Cropper image={photo} />}
+      {photo
+        ? <Cropper image={photo} />
+        : (
+          <TouchableOpacity onPress={openPicker} style={{alignItems: 'center'}}>
+            <SvgUri
+              fill='white'
+              width='100'
+              height='100'
+              source={require('../../images/create.svg')} />
+            <Text style={styles.text}>IMPORT</Text>
+          </TouchableOpacity>
+        )
+      }
     </View>
   )
 }
@@ -38,9 +41,10 @@ export default function Create () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#efefef',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
+    color: 'white',
     maxHeight: 600,
     width: Dimensions.get('window').width
   },
@@ -48,5 +52,11 @@ const styles = StyleSheet.create({
     height: 100,
     width: Dimensions.get('window').width,
     marginBottom: 10
+  },
+  text: {
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginTop: 12
   }
 })
