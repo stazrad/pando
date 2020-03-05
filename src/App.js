@@ -26,6 +26,7 @@ export default function App () {
 
   navigate = onSetScreen // there's gotta be a better way to do this
   SplashScreen.hide()
+  console.log('HIDE')
 
   return (
     <View style={{ backgroundColor: '#4d4d4d', flex: 1 }}>
