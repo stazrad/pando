@@ -3,12 +3,6 @@ package com.pando;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.reactnativecommunity.webview.RNCWebViewPackage;
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
-import com.reactnative.ivpusic.imagepicker.PickerPackage;
-import com.chrisbianca.cameraroll.RNCameraRollPackage;
-import com.reactnativecommunity.cameraroll.CameraRollPackage;
-import com.horcrux.svg.SvgPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -46,12 +40,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNCWebViewPackage(),
-            new SplashScreenReactPackage(),
-            new PickerPackage(),
-            new RNCameraRollPackage(),
-            new CameraRollPackage(),
-            new SvgPackage(),
           new ReanimatedPackage(),
           new RNGestureHandlerPackage(),
           new RNScreensPackage(),
