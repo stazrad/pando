@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
-import SvgUri from 'react-native-svg-uri'
+// import SvgUri from 'react-native-svg-uri'
 import Cropper from './Cropper'
 import Example from './Example'
 
@@ -25,11 +25,6 @@ export default function Create () {
         ? <Cropper image={photo} />
         : (
           <TouchableOpacity onPress={openPicker} style={{alignItems: 'center'}}>
-            <SvgUri
-              fill='white'
-              width='100'
-              height='100'
-              source={require('../../images/create.svg')} />
             <Text style={styles.text}>IMPORT</Text>
           </TouchableOpacity>
         )
