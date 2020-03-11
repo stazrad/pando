@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     color: 'white',
-    maxHeight: 600,
     width: Dimensions.get('window').width
   },
   pano: {

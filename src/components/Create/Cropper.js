@@ -35,14 +35,14 @@ export default function Cropper (props) {
           <Image source={{ uri: image.path }} style={styles.cropContainer} />
         </ScrollView>
 
-        <ImageBackground source={{ uri: !!image ? image.path : DEFAULT_URL }} style={styles.cropContainer}>
-          {framesArray.map((f, i) => (
-            <View
-              key={i}
-              style={styles.cropLines}
-              width={frameWidth} />
-          ))}
-        </ImageBackground>
+        // <ImageBackground source={{ uri: !!image ? image.path : DEFAULT_URL }} style={styles.cropContainer}>
+        //   {framesArray.map((f, i) => (
+        //     <View
+        //       key={i}
+        //       style={styles.cropLines}
+        //       width={frameWidth} />
+        //   ))}
+        // </ImageBackground>
       */}
       <View style={styles.header}>
         <TouchableOpacity
@@ -115,24 +115,25 @@ const styles = StyleSheet.create({
     maxHeight: 110,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 40
+    marginTop: 10
   },
   container: {
     flex: 1,
     backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 10,
+    marginLeft: 10,
+    marginRight: 10,
     position: 'relative'
   },
   cropContainer: {
     position: 'absolute',
     height: '100%',
     width: '100%',
-    // left: 0,
-    // right: 0,
-    // top: 0,
-    // bottom: 0,
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
   cropLines: {
     borderColor: 'white',
@@ -153,11 +154,10 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   editor: {
-    flex: 6,
+    flex: 4,
     width: '100%',
     height: '100%',
-    backgroundColor: 'red',
-    position: 'absolute'
+    backgroundColor: 'black'
   },
   header: {
     flex: 1,
