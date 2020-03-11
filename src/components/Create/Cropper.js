@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { TouchableOpacity, Dimensions, Image, ImageBackground, ScrollView, StyleSheet, Switch, Text, View } from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
 
+import ButtonRow from './ButtonRow'
 import InstagramAuth from './InstagramAuth'
 import ImageEditorView from './Example'
 import { executeCrop } from './utils'
@@ -59,64 +60,32 @@ export default function Cropper (props) {
       </View>
 
       {image &&
-        <View style={styles.editor}>
-          <ImageEditorView
-            image={image}
-            style={styles.cropContainer} />
-          <View style={styles.cropLinesRow}>
-            {framesArray.map((f, i) => (
-              <View
-                key={i}
-                style={styles.cropLines}
-                width={frameWidth} />
-            ))}
+        <View style={styles.editorContainer}>
+          <View style={styles.editor}>
+            <ImageEditorView
+              image={image}
+              style={styles.cropContainer} />
+            <View style={styles.cropLinesRow}>
+              {framesArray.map((f, i) => (
+                <View
+                  key={i}
+                  style={styles.cropLines}
+                  width={frameWidth} />
+              ))}
+            </View>
           </View>
         </View>
       }
-      <View style={styles.buttonRow}>
-        {[2,3,4,5].map(i => {
-          const selected = numOfFrames === i ? styles.selected : {}
-          return (
-            <TouchableOpacity
-              key={i}
-              onPress={() => setNumOfFrames(i)}
-              style={{ ...styles.button, ...selected }}>
-              <Text style={styles.text}>{i}</Text>
-            </TouchableOpacity>
-          )
-        })}
-        <TouchableOpacity
-          style={{ ...styles.button, marginLeft: 12 }}
-          onPress={() => setFormat(format === 'square' ? 'best-fit' : 'square')}>
-          <Text style={styles.text}>{format === 'square' ? '1:1' : 'best-fit'}</Text>
-        </TouchableOpacity>
-      </View>
+      <ButtonRow
+        format={format}
+        numOfFrames={numOfFrames}
+        onSetFormat={setFormat}
+        onSetNumOfFrames={setNumOfFrames} />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  button: {
-    flex: 1,
-    width: 80,
-    height: 80,
-    maxWidth: 80,
-    maxHeight: 80,
-    backgroundColor: 'white',
-    color: 'black',
-    margin: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  buttonRow: {
-    flex: 2,
-    flexDirection: 'row',
-    height: 110,
-    maxHeight: 110,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 10
-  },
   container: {
     flex: 1,
     backgroundColor: 'black',
@@ -127,7 +96,6 @@ const styles = StyleSheet.create({
     position: 'relative'
   },
   cropContainer: {
-    position: 'absolute',
     height: '100%',
     width: '100%',
     left: 0,
@@ -157,7 +125,14 @@ const styles = StyleSheet.create({
     flex: 4,
     width: '100%',
     height: '100%',
-    backgroundColor: 'black'
+    backgroundColor: 'black',
+    position: 'absolute'
+  },
+  editorContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative'
   },
   header: {
     flex: 1,
@@ -166,16 +141,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     maxHeight: 20,
     marginBottom: 50
-  },
-  selected: {
-    height: 92,
-    maxHeight: 92,
-    margin: 2
-  },
-  text: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: 'black'
   },
   textButtons: {
     fontSize: 18,
