@@ -9,11 +9,11 @@ export default function ButtonRow (props) {
     ignoreAndroidSystemSettings: false
   }
   const setFormat = format => {
-    // ReactNativeHapticFeedback.trigger('impactLight', true)
+    ReactNativeHapticFeedback.trigger('impactHeavy', true)
     onSetFormat(format)
   }
   const setNumOfFrames = numOfFrames => {
-    // ReactNativeHapticFeedback.trigger('impactLight', hapticOpts)
+    ReactNativeHapticFeedback.trigger('impactMedium', hapticOpts)
     onSetNumOfFrames(numOfFrames)
   }
 
