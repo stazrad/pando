@@ -1,25 +1,10 @@
-import { ImageEditor, ImageStore, Platform } from 'react-native'
+import { ImageStore, Platform } from 'react-native'
 import CameraRoll from '@react-native-community/cameraroll'
+import ImageEditor from '@react-native-community/image-editor'
 
 export const executeCrop = (image, numOfFrames, format = 'best-fit') => {
-  const success = (croppedImageUri) => {
-    console.log('croppedImageUri = ', croppedImageUri)
-    CameraRoll.saveToCameraRoll(croppedImageUri)
+  const promises = []
 
-    if (Platform.OS === 'ios') {
-      ImageStore.getBase64ForTag(
-        croppedImageUri,
-        (base64Image) => {
-          // send image to server or save it locally
-          ImageStore.removeImageForTag(croppedImageUri)
-        },
-        (err) => {
-          console.log('success error', err)
-        }
-      )
-    }
-  }
-  const failure = image => console.log('failure', image)
   let framePixelWidth
   if (format === 'best-fit') {
     // best-fit workflow:
@@ -41,9 +26,41 @@ export const executeCrop = (image, numOfFrames, format = 'best-fit') => {
     }
     console.log('for loop cover', numOfFrames, i, cropData)
 
-    // setTimeout(() => {
-    //   console.log('PRINT')
-    //   ImageEditor.cropImage(image.path, cropData, success, failure)
-    // }, i * 3000)
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log('PRINT')
+        const success = croppedImageUri => {
+          console.log('croppedImageUri = ', croppedImageUri)
+          if (Platform.OS === 'ios') {
+            ImageStore.getBase64ForTag(
+              croppedImageUri,
+              (base64Image) => {
+                // send image to server or save it locally
+                ImageStore.removeImageForTag(croppedImageUri)
+                // this will be a problem for android
+                resolve(base64Image)
+              },
+              (err) => {
+                console.log('success error', err)
+              }
+            )
+          }
+        }
+
+        ImageEditor.cropImage(image.path, cropData, success, reject)
+      }, i * 3000)
+    })
+
+    promises.push(promise)
   }
+
+  return Promise.all(promises)
+    .then((...crops) => {
+      return [...crops]
+    })
+    .catch(err => console.error('crop failure', err))
+}
+
+export const saveToCameraRoll = croppedImageUri => {
+  CameraRoll.saveToCameraRoll(croppedImageUri)
 }

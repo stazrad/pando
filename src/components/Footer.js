@@ -2,14 +2,14 @@ import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import SvgUri from 'react-native-svg-uri'
 
-import { navigate } from '../../App'
+import { navigate } from 'App'
 
 const sources = {
-  create: require('../../images/create.svg'),
-  home: require('../../images/home.svg'),
-  profile: require('../../images/profile.svg'),
-  search: require('../../images/search.svg'),
-  settings: require('../../images/settings.svg')
+  create: require('../images/create.svg'),
+  home: require('../images/home.svg'),
+  profile: require('../images/profile.svg'),
+  search: require('../images/search.svg'),
+  settings: require('../images/settings.svg')
 }
 
 export default function Footer () {

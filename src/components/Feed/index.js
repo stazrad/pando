@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import { FlatList } from 'react-native'
+
+import Header from 'components/Header'
+import Body from 'components/Body'
 import FeedPost from './FeedPost'
 import POSTS from '../../data/POSTS.json'
 
@@ -14,12 +17,17 @@ export default function Feed () {
   }
 
   return (
-    <FlatList
-      data={POSTS}
-      keyExtractor={item => item.id}
-      onRefresh={onRefresh}
-      refreshing={refreshing}
-      renderItem={({ item }) => <FeedPost post={item} />}
-    />
+    <>
+      <Header />
+      <Body>
+        <FlatList
+          data={POSTS}
+          keyExtractor={item => item.id}
+          onRefresh={onRefresh}
+          refreshing={refreshing}
+          renderItem={({ item }) => <FeedPost post={item} />}
+        />
+      </Body>
+    </>
   )
 }

@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet } from 'react-native'
 
 export default function Body (props) {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{...styles.container, ...props.style}}>
       {props.children}
     </SafeAreaView>
   )
@@ -12,8 +12,8 @@ export default function Body (props) {
 const styles = StyleSheet.create({
   container: {
     flex: 8,
-    backgroundColor: 'black',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: 'black'
   },
 })

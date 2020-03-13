@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
 // import SvgUri from 'react-native-svg-uri'
 
-import { navigate } from 'App'
 import Header from 'components/Header'
 import Body from 'components/Body'
-import Cropper from './Cropper'
-import Import from 'components/Import'
 
-export default function Create () {
-  const [photo, setPhoto] = useState(null)
-  const onImagesReady = images => navigate('export', { images })
+export default function Import (props) {
+  const { onSetPhoto } = props
+  const openPicker = () => {
+    ImagePicker.openPicker({
+      smartAlbums: ['Panoramas']
+    })
+    .then(image => {
+      console.log('IAMGE', image);
+      onSetPhoto(image)
+    })
+    .catch(console.warn)
+  }
 
   return (
     <>
+      <Header style={{ backgroundColor: 'black' }} />
       <Body>
         <View style={styles.container}>
-          {photo
-            ? <Cropper image={photo} onImagesReady={onImagesReady} onPressBack={() => setPhoto(null)} />
-            : <Import onSetPhoto={setPhoto} />
-          }
+          <TouchableOpacity onPress={openPicker} style={{alignItems: 'center'}}>
+            <Text style={styles.text}>IMPORT</Text>
+          </TouchableOpacity>
         </View>
       </Body>
     </>
