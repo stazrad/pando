@@ -6,7 +6,7 @@ import Body from 'components/Body'
 import ButtonRow from './ButtonRow'
 import InstagramAuth from './InstagramAuth'
 import ImageEditorView from './Example'
-import { executeCrop } from './utils'
+import { cropFramePromises } from './utils'
 
 const DEFAULT_URL = 'https://s3.amazonaws.com/panoawards/wp-content/uploads/2016/10/Pano_Jesus-M-Garcia.jpg'
 
@@ -16,7 +16,7 @@ export default function Cropper (props) {
   const [ format, setFormat ] = useState('best-fit')
 
   const onPressNext = async () => {
-    const images = await executeCrop(image, numOfFrames, format)
+    const images = await cropFramePromises(image, numOfFrames, format)
 
     console.log('IMAGES??', images)
     onImagesReady(images)
@@ -70,11 +70,9 @@ export default function Cropper (props) {
         {image &&
           <View style={styles.editorContainer}>
             <View style={styles.editor}>
-              <View
-                image={image}
-                style={styles.cropContainer}>
-                <Image source={image} />
-              </View>
+              <ScrollView contentContainerStyle={styles.cropContainer}>
+                <Image source={{ uri: image.path }} style={styles.image} />
+              </ScrollView>
               <View style={styles.cropLinesRow}>
                 {framesArray.map((f, i) => (
                   <View
@@ -108,12 +106,15 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   cropContainer: {
-    height: '100%',
     width: '100%',
+    height: '100%',
     left: 0,
     right: 0,
     top: 0,
     bottom: 0,
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cropLines: {
     borderColor: 'white',
@@ -137,7 +138,6 @@ const styles = StyleSheet.create({
     flex: 4,
     width: '100%',
     height: '100%',
-    backgroundColor: 'red',
     position: 'absolute'
   },
   editorContainer: {
@@ -154,6 +154,10 @@ const styles = StyleSheet.create({
     maxHeight: 40,
     marginBottom: 40,
     paddingTop: 20,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
   },
   textButtons: {
     fontSize: 18,

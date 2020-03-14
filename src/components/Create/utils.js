@@ -2,7 +2,7 @@ import { ImageStore, Platform } from 'react-native'
 import CameraRoll from '@react-native-community/cameraroll'
 import ImageEditor from '@react-native-community/image-editor'
 
-export const executeCrop = (image, numOfFrames, format = 'best-fit') => {
+export const cropFramePromises = (image, numOfFrames, format = 'best-fit') => {
   let framePixelWidth
   if (format === 'best-fit') {
     // best-fit workflow:
@@ -31,7 +31,7 @@ export const executeCrop = (image, numOfFrames, format = 'best-fit') => {
         return ImageEditor.cropImage(image.path, cropData)
           .then(croppedImageUri => {
             console.log('croppedImageUri= ', croppedImageUri)
-            
+
             resolve(croppedImageUri)
             // if (Platform.OS === 'ios') {
             //   ImageStore.getBase64ForTag(
@@ -54,14 +54,7 @@ export const executeCrop = (image, numOfFrames, format = 'best-fit') => {
     promises.push(promise)
   }
 
-
-  console.log('promises', promises)
-
-  return Promise.all(promises)
-    .then((...crops) => {
-      return [...crops]
-    })
-    .catch(err => console.error('crop failure', err))
+  return promises
 }
 
 export const saveToCameraRoll = croppedImageUri => {
