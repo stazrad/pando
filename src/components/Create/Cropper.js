@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { TouchableOpacity, Dimensions, Image, ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Animated, Dimensions, Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
+import { PinchGestureHandler, State }  from 'react-native-gesture-handler'
 
 import Body from 'components/Body'
 import ButtonRow from './ButtonRow'
@@ -36,6 +37,22 @@ export default function Cropper (props) {
 
   const frameWidth = getBestFit(image, format, numOfFrames)
 
+  // pinch animation:
+  const scale = new Animated.Value(1)
+  const onZoomEvent = () => Animated.event(
+    [{ nativeEvent: { scale } }],
+    { useNativeDriver: true }
+  )
+  const onZoomStateChange = event => {
+    if (event.nativeEvent.oldState === State.ACTIVE) {
+      console.log('ZOOM CHANGE', event.nativeEvent)
+      Animated.spring(scale, {
+        toValue: event.nativeEvent.scale,
+        useNativeDriver: true
+      }).start()
+    }
+  }
+
   return (
     <Body>
       <View style={styles.container}>
@@ -69,20 +86,32 @@ export default function Cropper (props) {
 
         {image &&
           <View style={styles.editorContainer}>
-            <View style={styles.editor}>
-              <ScrollView contentContainerStyle={styles.cropContainer}>
-                <Image source={{ uri: image.path }} style={styles.image} />
-              </ScrollView>
+              <PinchGestureHandler
+                onGestureEvent={onZoomEvent}
+                onHandlerStateChange={onZoomStateChange}
+                style={styles.editor}>
+            {/*<ScrollView
+              style={styles.editor}
+              horizontal
+              maximumZoomScale={4}
+              minimumZoomScale={.2}>*/}
+              <View style={styles.cropContainer}>
+                  <Animated.Image
+                    source={{ uri: image.path }}
+                    style={{...styles.image, transform: [{ scale }]}} />
+              </View>
+
+              </PinchGestureHandler>
               <View style={styles.cropLinesRow}>
                 {framesArray.map((f, i) => (
                   <View
                     key={i}
                     style={styles.cropLines}
-                    width={frameWidth} />
+                    width={frameWidth}
+                    pointerEvents='box-none' />
                 ))}
               </View>
             </View>
-          </View>
         }
         <ButtonRow
           format={format}
@@ -106,15 +135,16 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   cropContainer: {
+    flex: 1,
     width: '100%',
     height: '100%',
     left: 0,
     right: 0,
     top: 0,
     bottom: 0,
-    position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'blue'
   },
   cropLines: {
     borderColor: 'white',
@@ -135,16 +165,15 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   editor: {
-    flex: 4,
     width: '100%',
     height: '100%',
-    position: 'absolute'
   },
   editorContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative'
+    position: 'relative',
+    backgroundColor: 'red'
   },
   header: {
     flex: 1,
@@ -158,6 +187,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
+    position: 'absolute'
   },
   textButtons: {
     fontSize: 18,
