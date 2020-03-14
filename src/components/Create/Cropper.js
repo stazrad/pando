@@ -86,22 +86,26 @@ export default function Cropper (props) {
 
         {image &&
           <View style={styles.editorContainer}>
-              <PinchGestureHandler
+              {/*<PinchGestureHandler
                 onGestureEvent={onZoomEvent}
                 onHandlerStateChange={onZoomStateChange}
-                style={styles.editor}>
-            {/*<ScrollView
+                style={styles.editor}>*/}
+            <ScrollView
               style={styles.editor}
+              bounces={false}
+              disableIntervalMomentum
+              centerContent
               horizontal
+              alwaysBounceHorizontal={false}
               maximumZoomScale={4}
-              minimumZoomScale={.2}>*/}
-              <View style={styles.cropContainer}>
-                  <Animated.Image
-                    source={{ uri: image.path }}
-                    style={{...styles.image, transform: [{ scale }]}} />
-              </View>
-
-              </PinchGestureHandler>
+              minimumZoomScale={1}
+              contentContainerStyle={styles.cropContainer}>
+                <Image
+                  source={{ uri: image.path }}
+                  style={{ ...styles.image,
+                    // transform: [{ scale }]
+                  }} />
+            </ScrollView>
               <View style={styles.cropLinesRow}>
                 {framesArray.map((f, i) => (
                   <View
@@ -144,7 +148,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'blue'
   },
   cropLines: {
     borderColor: 'white',
@@ -165,8 +168,10 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   editor: {
+    flex: 1,
     width: '100%',
     height: '100%',
+    position: 'absolute',
   },
   editorContainer: {
     flex: 1,
@@ -185,9 +190,8 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   image: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute'
+    width: 200,
+    height: 300,
   },
   textButtons: {
     fontSize: 18,
