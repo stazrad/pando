@@ -31,7 +31,7 @@ export const cropFramePromises = (image, numOfFrames, format = 'best-fit') => {
         return ImageEditor.cropImage(image.path, cropData)
           .then(croppedImageUri => {
             console.log('croppedImageUri= ', croppedImageUri)
-            saveToCameraRoll(croppedImageUri)
+            // saveToCameraRoll(croppedImageUri)
             resolve(croppedImageUri)
             // if (Platform.OS === 'ios') {
             //   ImageStore.getBase64ForTag(

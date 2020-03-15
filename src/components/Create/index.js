@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import ImagePicker from 'react-native-image-crop-picker'
-// import SvgUri from 'react-native-svg-uri'
 
 import { navigate } from 'App'
 import Header from 'components/Header'
