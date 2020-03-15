@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, SafeAreaView, Image } from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
 
 import Body from 'components/Body'
@@ -35,20 +35,16 @@ export default function App () {
   console.log('HIDE')
 
   return (
-    <View style={{ backgroundColor: '#4d4d4d', flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       {screenSwitcher(screen)}
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    backgroundColor: '#4d4d4d'
-  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
   },
