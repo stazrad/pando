@@ -13,13 +13,14 @@ import Import from 'components/Import'
 export let navigate = null // set inside App below
 
 export default function App () {
-  const screenSwitcher = (screen, data = {}) => {
-
+  const [screen, setScreen] = useState('create')
+  const [exportImages, setExportImages] = useState([])
+  const screenSwitcher = screen => {
     switch(screen) {
       case 'create':
         return <Create />
       case 'export':
-        return <Export data={data} />
+        return <Export images={exportImages} />
       case 'home':
         return <Feed />
       case 'import':
@@ -28,11 +29,11 @@ export default function App () {
         return <Feed />
       }
   }
-  const [screen, onSetScreen] = useState('create')
 
-  navigate = onSetScreen // there's gotta be a better way to do this
-  // SplashScreen.hide()
-  console.log('HIDE')
+  navigate = (screen, data) => { // there's gotta be a better way to do this
+    if (!!data.images) setExportImages(data.images)
+    setScreen(screen)
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,5 +48,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
+    fontFamily: 'Oswald-Bold',
   },
 })

@@ -51,12 +51,12 @@ const styles = StyleSheet.create({
   pano: {
     height: 100,
     width: Dimensions.get('window').width,
-    marginBottom: 10
+    marginBottom: 10,
   },
   text: {
     color: 'white',
     fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 26
+    marginTop: 26,
   }
 })

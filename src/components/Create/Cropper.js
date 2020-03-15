@@ -9,8 +9,6 @@ import ImageCropper from './ImageCropper'
 import { cropFramePromises, cropPromise, saveToCameraRoll } from './utils'
 import PANDO_MUNCH from 'images/pando_munch.gif'
 
-const DEFAULT_URL = 'https://s3.amazonaws.com/panoawards/wp-content/uploads/2016/10/Pano_Jesus-M-Garcia.jpg'
-
 export default function Cropper (props) {
   const { image, onImagesReady, onPressBack } = props
   const [ cropData, setCropData ] = useState(null)
@@ -38,7 +36,7 @@ export default function Cropper (props) {
     })
 
     return Promise.all(cropPromises)
-      .then((...uris) => {
+      .then(([...uris]) => {
         onImagesReady(uris)
         setLoading(false)
       })

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native'
-import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
+import SvgUri from 'react-native-svg-uri'
+
+import BEST_FIT from 'images/best_fit.svg'
 
 export default function ButtonRow (props) {
   const { format, numOfFrames, onSetFormat, onSetNumOfFrames } = props
@@ -33,7 +36,14 @@ export default function ButtonRow (props) {
       <TouchableOpacity
         style={{ ...styles.button, marginLeft: 12 }}
         onPress={() => setFormat(format === 'square' ? 'best-fit' : 'square')}>
-        <Text style={styles.text}>{format === 'square' ? '1:1' : 'best-fit'}</Text>
+        {format === 'square'
+          ? <Text style={styles.text}>1:1</Text>
+          : <SvgUri
+              fill='red'
+              width='80'
+              height='80'
+              source={BEST_FIT} />
+        }
       </TouchableOpacity>
     </View>
   )
@@ -69,6 +79,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 26,
     fontWeight: 'bold',
-    color: 'black'
+    color: 'black',
+    fontFamily: 'Oswald-Bold',
   }
 })
