@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
-// import SvgUri from 'react-native-svg-uri'
+import SvgUri from 'react-native-svg-uri'
 
+import PLUS_ICON from 'images/create.svg'
 import Header from 'components/Header'
 import Body from 'components/Body'
 
@@ -25,6 +26,11 @@ export default function Import (props) {
       <Body>
         <View style={styles.container}>
           <TouchableOpacity onPress={openPicker} style={{alignItems: 'center'}}>
+            <SvgUri
+              fill='white'
+              width='80'
+              height='80'
+              source={PLUS_ICON} />
             <Text style={styles.text}>IMPORT</Text>
           </TouchableOpacity>
         </View>
@@ -51,6 +57,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 12
+    marginTop: 26
   }
 })

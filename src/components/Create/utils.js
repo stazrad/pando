@@ -48,7 +48,7 @@ export const cropFramePromises = (image, numOfFrames, format = 'best-fit') => {
             //   )
             // }
           })
-      }, i * 3000)
+      }, i * 1500)
     })
 
     promises.push(promise)

@@ -77,50 +77,43 @@ export default class ImageCropper extends React.Component {
         height: this.props.image.height * sizeRatioY,
       },
     };
-    this.props.onTransformDataChange &&
-      this.props.onTransformDataChange(cropData);
+    this.props.onTransformDataChange && this.props.onTransformDataChange(cropData)
   }
 
   render() {
-    const viewWidth = Dimensions.get('window').width
+    const viewWidth = Dimensions.get('window').width - 20 // 10 margins on either side
     const measuredSize = { height: viewWidth, width: viewWidth }
 
     return (
-      <View style={styles.container}>
-        <ScrollView
-          automaticallyAdjustContentInsets={false}
-          contentOffset={this._contentOffset}
-          decelerationRate="fast"
-          horizontal={this._horizontal}
-          maximumZoomScale={this._maximumZoomScale}
-          minimumZoomScale={this._minimumZoomScale}
-          onMomentumScrollEnd={this._onScroll.bind(this)}
-          onScrollEndDrag={this._onScroll.bind(this)}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          style={[styles.imageCropper, measuredSize]}
-          pinchGestureEnabled
-          centerContent
-          scrollEventThrottle={16}>
-          <Image
-            testID={'testImage'}
-            source={{ uri: this.props.image.path }}
-            style={this._scaledImageSize}
-          />
-        </ScrollView>
-      </View>
+      <ScrollView
+        automaticallyAdjustContentInsets={false}
+        contentOffset={this._contentOffset}
+        decelerationRate="fast"
+        horizontal={this._horizontal}
+        maximumZoomScale={this._maximumZoomScale}
+        minimumZoomScale={this._minimumZoomScale}
+        onMomentumScrollEnd={this._onScroll.bind(this)}
+        onScrollEndDrag={this._onScroll.bind(this)}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        style={[styles.imageCropper, measuredSize]}
+        contentContainerStyle={this.props.style}
+        pinchGestureEnabled
+        centerContent
+        scrollEventThrottle={16}>
+        <Image
+          source={{ uri: this.props.image.path }}
+          style={this._scaledImageSize}
+        />
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignSelf: 'stretch',
-    // marginTop: 60,
-  },
   imageCropper: {
     alignSelf: 'center',
-    // marginTop: 12,
+    width: '100%',
+    height: '100%',
   },
 })

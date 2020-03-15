@@ -5,7 +5,7 @@ import { PinchGestureHandler, State }  from 'react-native-gesture-handler'
 import Body from 'components/Body'
 import ButtonRow from './ButtonRow'
 import InstagramAuth from './InstagramAuth'
-import ImageEditorView from './ImageEditorView'
+import ImageCropper from './ImageCropper'
 import { cropFramePromises, cropPromise, saveToCameraRoll } from './utils'
 import PANDO_MUNCH from 'images/pando_munch.gif'
 
@@ -95,10 +95,11 @@ export default function Cropper (props) {
             {image &&
               <View style={styles.editorContainer}>
 
-                <ImageEditorView
+                <ImageCropper
                   image={image}
-                  size={{ width: Dimensions.get('window').width - 20, height: 400 }}
-                  onTransformDataChange={e => setCropData(e)}/>
+                  size={{ width: Dimensions.get('window').width - 20, height: 100 }}
+                  onTransformDataChange={e => setCropData(e)}
+                  style={styles.cropLinesRow} />
                 {/*<ScrollView
                   style={styles.editor}
                   maximumZoomScale={.8}
