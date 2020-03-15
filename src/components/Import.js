@@ -13,7 +13,7 @@ export default function Import (props) {
       smartAlbums: ['Panoramas']
     })
     .then(image => {
-      console.log('IAMGE', image);
+      console.log('IAMGE', image.height);
       onSetPhoto(image)
     })
     .catch(console.warn)

@@ -88,7 +88,6 @@ export default class ImageCropper extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView
-          alwaysBounceVertical={true}
           automaticallyAdjustContentInsets={false}
           contentOffset={this._contentOffset}
           decelerationRate="fast"
@@ -100,10 +99,12 @@ export default class ImageCropper extends React.Component {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           style={[styles.imageCropper, measuredSize]}
+          pinchGestureEnabled
+          centerContent
           scrollEventThrottle={16}>
           <Image
             testID={'testImage'}
-            source={this.props.image}
+            source={{ uri: this.props.image.path }}
             style={this._scaledImageSize}
           />
         </ScrollView>
@@ -116,15 +117,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignSelf: 'stretch',
-    marginTop: 60,
-    width: Dimensions.get('window').width,
-    height: 120,
-    backgroundColor: 'blue'
+    // marginTop: 60,
   },
   imageCropper: {
     alignSelf: 'center',
-    marginTop: 12,
-    width: '100%',
-    height: '100%'
+    // marginTop: 12,
   },
 })

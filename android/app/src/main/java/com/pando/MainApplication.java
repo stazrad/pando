@@ -3,6 +3,7 @@ package com.pando;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import com.mkuczera.RNReactNativeHapticFeedbackPackage;
 import com.reactnativecommunity.imageeditor.ImageEditorPackage;
 import com.horcrux.svg.SvgPackage;
@@ -43,6 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new CameraRollPackage(),
             new RNReactNativeHapticFeedbackPackage(),
             new ImageEditorPackage(),
             new SvgPackage(),

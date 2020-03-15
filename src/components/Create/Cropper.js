@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { Animated, Dimensions, Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import ImagePicker from 'react-native-image-crop-picker'
 import { PinchGestureHandler, State }  from 'react-native-gesture-handler'
 
 import Body from 'components/Body'
 import ButtonRow from './ButtonRow'
 import InstagramAuth from './InstagramAuth'
-import ImageEditorView from './Example'
-import { cropFramePromises } from './utils'
+import ImageEditorView from './ImageEditorView'
+import { cropFramePromises, cropPromise, saveToCameraRoll } from './utils'
 
 const DEFAULT_URL = 'https://s3.amazonaws.com/panoawards/wp-content/uploads/2016/10/Pano_Jesus-M-Garcia.jpg'
 
 export default function Cropper (props) {
   const { image, onImagesReady, onPressBack } = props
+  const [ cropData, setCropData ] = useState(null)
   const [ numOfFrames, setNumOfFrames ] = useState(3)
   const [ format, setFormat ] = useState('best-fit')
 
   const onPressNext = async () => {
-    const images = await cropFramePromises(image, numOfFrames, format)
+    const croppedFullImage = await cropPromise(image, cropData)
+    console.log('reolve?', croppedFullImage)
+    const imageFrames = await cropFramePromises(croppedFullImage, numOfFrames, format)
 
-    console.log('IMAGES??', images)
-    onImagesReady(images)
+    console.log('IMAGES??', imageFrames)
+    return Promise.all(imageFrames)
+      .then((...uris) => {
+        onImagesReady(uris)
+      })
   }
   const getBestFit = (image, format, numOfFrames) => {
     if (format === 'square') {
@@ -37,39 +42,9 @@ export default function Cropper (props) {
 
   const frameWidth = getBestFit(image, format, numOfFrames)
 
-  // pinch animation:
-  const scale = new Animated.Value(1)
-  const onZoomEvent = () => Animated.event(
-    [{ nativeEvent: { scale } }],
-    { useNativeDriver: true }
-  )
-  const onZoomStateChange = event => {
-    if (event.nativeEvent.oldState === State.ACTIVE) {
-      console.log('ZOOM CHANGE', event.nativeEvent)
-      Animated.spring(scale, {
-        toValue: event.nativeEvent.scale,
-        useNativeDriver: true
-      }).start()
-    }
-  }
-
   return (
     <Body>
       <View style={styles.container}>
-        {/*image &&
-          <ScrollView>
-            <Image source={{ uri: image.path }} style={styles.cropContainer} />
-          </ScrollView>
-
-          // <ImageBackground source={{ uri: !!image ? image.path : DEFAULT_URL }} style={styles.cropContainer}>
-          //   {framesArray.map((f, i) => (
-          //     <View
-          //       key={i}
-          //       style={styles.cropLines}
-          //       width={frameWidth} />
-          //   ))}
-          // </ImageBackground>
-        */}
         <View style={styles.header}>
           <TouchableOpacity
             style={{ alignSelf: 'stretch' }}
@@ -86,36 +61,34 @@ export default function Cropper (props) {
 
         {image &&
           <View style={styles.editorContainer}>
-              {/*<PinchGestureHandler
-                onGestureEvent={onZoomEvent}
-                onHandlerStateChange={onZoomStateChange}
-                style={styles.editor}>*/}
-            <ScrollView
+
+            <ImageEditorView
+              image={image}
+              size={{ height: 400, width: 400 }}
+              onTransformDataChange={e => setCropData(e)}/>
+            {/*<ScrollView
               style={styles.editor}
-              bounces={false}
-              disableIntervalMomentum
-              centerContent
-              horizontal
-              alwaysBounceHorizontal={false}
-              maximumZoomScale={4}
-              minimumZoomScale={1}
+              maximumZoomScale={.8}
+              minimumZoomScale={.2}
+              pinchGestureEnabledpersistentScrollbar
+              overScrollMode={true}
+              directionalLockEnabled
+              alwaysBounceVertical={true}
               contentContainerStyle={styles.cropContainer}>
-                <Image
-                  source={{ uri: image.path }}
-                  style={{ ...styles.image,
-                    // transform: [{ scale }]
-                  }} />
-            </ScrollView>
-              <View style={styles.cropLinesRow}>
-                {framesArray.map((f, i) => (
-                  <View
-                    key={i}
-                    style={styles.cropLines}
-                    width={frameWidth}
-                    pointerEvents='box-none' />
-                ))}
-              </View>
+              <Image
+                source={{ uri: image.path }}
+                style={{ ...styles.image, width: image.width, height: image.height }} />
+            </ScrollView>*/}
+            <View style={styles.cropLinesRow} pointerEvents='box-none' >
+              {framesArray.map((f, i) => (
+                <View
+                  key={i}
+                  style={styles.cropLines}
+                  width={frameWidth}
+                  pointerEvents='box-none' />
+              ))}
             </View>
+          </View>
         }
         <ButtonRow
           format={format}
@@ -135,19 +108,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginLeft: 10,
     marginRight: 10,
-    position: 'relative',
     paddingTop: 20,
   },
   cropContainer: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   cropLines: {
     borderColor: 'white',
@@ -168,17 +131,11 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   editor: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
+    // width: '100%',
+    // height: '100%',
   },
   editorContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-    backgroundColor: 'red'
   },
   header: {
     flex: 1,
@@ -190,8 +147,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   image: {
-    width: 200,
-    height: 300,
+    position: 'absolute',
   },
   textButtons: {
     fontSize: 18,
