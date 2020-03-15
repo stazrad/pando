@@ -15,7 +15,7 @@ export default function Cropper (props) {
   const { image, onImagesReady, onPressBack } = props
   const [ cropData, setCropData ] = useState(null)
   const [ loading, setLoading ] = useState(false)
-  const [ loadingPercent, setLoadingPercent ] = useState(0)
+  const [ loadingPercent, setLoadingPercent ] = useState({})
   const [ numOfFrames, setNumOfFrames ] = useState(3)
   const [ format, setFormat ] = useState('best-fit')
 
@@ -25,11 +25,11 @@ export default function Cropper (props) {
     const cropPromises = cropFramePromises(croppedFullImage, numOfFrames, format)
 
     cropPromises.forEach((promise, i) => {
-      const number = i + 1
+      const complete = i + 1
       const total = cropPromises.length
-      const percentComplete = number / total
+      const percentComplete = complete / total
       const loadingPercent = {
-        number,
+        complete,
         percentComplete,
         total
       }
@@ -66,9 +66,11 @@ export default function Cropper (props) {
             <ImageBackground
               source={PANDO_MUNCH}
               style={{ height: 200, width: 200}} />
-            <Text style={{ color: 'white' }}>
-              {`Chopping photo ${loadingPercent.number} of ${loadingPercent.total}`}
-            </Text>
+            {!!loadingPercent.total &&
+              <Text style={{ color: 'white' }}>
+                {`Chopping photo ${loadingPercent.complete + 1} of ${loadingPercent.total}`}
+              </Text>
+            }
             <ProgressViewIOS
               progress={loadingPercent.percentComplete}
               progressTintColor='pink'
@@ -95,7 +97,7 @@ export default function Cropper (props) {
 
                 <ImageEditorView
                   image={image}
-                  size={{ width: image.width, height: image.height }}
+                  size={{ width: Dimensions.get('window').width - 20, height: 400 }}
                   onTransformDataChange={e => setCropData(e)}/>
                 {/*<ScrollView
                   style={styles.editor}
