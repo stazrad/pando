@@ -13,24 +13,25 @@ import Import from 'components/Import'
 export let navigate = null // set inside App below
 
 export default function App () {
-  const [screen, setScreen] = useState('create')
+  const [screen, setScreen] = useState('import')
+  const [image, setImage] = useState(null)
   const [exportImages, setExportImages] = useState([])
   const screenSwitcher = screen => {
     switch(screen) {
       case 'create':
-        return <Create />
+        return <Create image={image} />
       case 'export':
         return <Export images={exportImages} />
       case 'home':
         return <Feed />
       case 'import':
-        return <Import />
+        return <Import onSetImage={setImage} />
       default:
         return <Feed />
       }
   }
 
-  navigate = (screen, data) => { // there's gotta be a better way to do this
+  navigate = (screen, data = {}) => { // there's gotta be a better way to do this
     if (!!data.images) setExportImages(data.images)
     setScreen(screen)
   }

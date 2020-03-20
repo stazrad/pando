@@ -31,7 +31,15 @@ export default function Cropper (props) {
         percentComplete,
         total
       }
+      const defaultLoadingPercent = {
+        complete: 0,
+        percentComplete: 0,
+        total
+      }
 
+      // set the text for the first pic before any promises resolve
+      setLoadingPercent(defaultLoadingPercent)
+      // loop through promises to add percentage
       promise.then(() => setLoadingPercent(loadingPercent))
     })
 
@@ -64,11 +72,9 @@ export default function Cropper (props) {
             <ImageBackground
               source={PANDO_MUNCH}
               style={{ height: 200, width: 200}} />
-            {!!loadingPercent.total &&
               <Text style={{ color: 'white' }}>
                 {`Chopping photo ${loadingPercent.complete + 1} of ${loadingPercent.total}`}
               </Text>
-            }
             <ProgressViewIOS
               progress={loadingPercent.percentComplete}
               progressTintColor='pink'

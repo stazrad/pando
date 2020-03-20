@@ -7,18 +7,18 @@ import Body from 'components/Body'
 import Cropper from './Cropper'
 import Import from 'components/Import'
 
-export default function Create () {
-  const [photo, setPhoto] = useState(null)
+export default function Create (props) {
+  const { image } = props
   const onImagesReady = images => navigate('export', { images })
 
   return (
     <>
       <Body>
         <View style={styles.container}>
-          {photo
-            ? <Cropper image={photo} onImagesReady={onImagesReady} onPressBack={() => setPhoto(null)} />
-            : <Import onSetPhoto={setPhoto} />
-          }
+          <Cropper
+            image={image}
+            onImagesReady={onImagesReady}
+            onPressBack={() => navigate('import')} />
         </View>
       </Body>
     </>

@@ -3,19 +3,21 @@ import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 import ImagePicker from 'react-native-image-crop-picker'
 import SvgUri from 'react-native-svg-uri'
 
+import { navigate } from 'App'
 import PLUS_ICON from 'images/create.svg'
 import Header from 'components/Header'
 import Body from 'components/Body'
 
 export default function Import (props) {
-  const { onSetPhoto } = props
+  const { onSetImage } = props
   const openPicker = () => {
     ImagePicker.openPicker({
       smartAlbums: ['Panoramas']
     })
     .then(image => {
       console.log('IAMGE', image.height);
-      onSetPhoto(image)
+      onSetImage(image)
+      navigate('create')
     })
     .catch(console.warn)
   }
