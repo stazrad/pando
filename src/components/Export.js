@@ -22,10 +22,14 @@ export default function Export (props) {
         saveToCameraRoll(image)
         setDownloadText(`SAVING ${i+1}`)
         ReactNativeHapticFeedback.trigger('impactMedium', hapticOpts)
-        if (i+1 === images.length) setTimeout(() => {setDownloadText('SAVED')}, 280)
+        if (i+1 === images.length) setTimeout(() => {
+          setSavedToCameraRoll(true)
+          setDownloadText('OPEN CAMERA ROLL')
+        }, 280)
       }, i * 280)
     })
   }
+  const onOpenCameraRoll = () => Linking.openURL('photos-redirect://')
   const onOpenInstagram = images => {
     images.forEach(image => saveToCameraRoll(image))
     Linking.openURL(`instagram://library?AssetPath=${images[0]}`)
@@ -54,9 +58,8 @@ export default function Export (props) {
           <View style={styles.buttonsContainer}>
             <View style={styles.bigButtonsContainer}>
               <TouchableOpacity
-                disabled={savedToCameraRoll}
                 style={styles.buttonBig}
-                onPress={() => onSaveToCameraRoll(images)}>
+                onPress={() => savedToCameraRoll ? onOpenCameraRoll() : onSaveToCameraRoll(images)}>
                 <Text style={styles.buttonBigText}>
                   {downloadText}
                 </Text>
