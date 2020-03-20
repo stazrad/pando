@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: Dimensions.get('window').width,
-    maxHeight: 48
+    maxHeight: 98,
+    paddingTop: 40,
   },
   logo: {
     width: 170,

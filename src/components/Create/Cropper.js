@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Animated, Dimensions, Image, ImageBackground, ProgressViewIOS, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { PinchGestureHandler, State }  from 'react-native-gesture-handler'
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
 import Body from 'components/Body'
 import ButtonRow from './ButtonRow'
@@ -11,14 +12,29 @@ import PANDO_MUNCH from 'images/pando_munch.gif'
 
 export default function Cropper (props) {
   const { image, onImagesReady, onPressBack } = props
-  const [ cropData, setCropData ] = useState(null)
-  const [ loading, setLoading ] = useState(false)
-  const [ loadingPercent, setLoadingPercent ] = useState({})
-  const [ numOfFrames, setNumOfFrames ] = useState(3)
-  const [ format, setFormat ] = useState('best-fit')
+  const [cropData, setCropData] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [loadingPercent, setLoadingPercent] = useState({})
+  const [numOfFrames, setNumOfFrames] = useState(3)
+  const [format, setFormat] = useState('best-fit')
 
   const onPressNext = async () => {
     setLoading(true)
+    const hapticOpts = {
+      enableVibrateFallback: true,
+      ignoreAndroidSystemSettings: false
+    }
+    ReactNativeHapticFeedback.trigger('impactMedium', hapticOpts)
+
+    const defaultLoadingPercent = {
+      complete: 0,
+      percentComplete: 0,
+      total: numOfFrames
+    }
+
+    // set the text for the first pic before any promises resolve
+    setLoadingPercent(defaultLoadingPercent)
+
     const croppedFullImage = await cropPromise(image, cropData)
     const cropPromises = cropFramePromises(croppedFullImage, numOfFrames, format)
 
@@ -31,14 +47,6 @@ export default function Cropper (props) {
         percentComplete,
         total
       }
-      const defaultLoadingPercent = {
-        complete: 0,
-        percentComplete: 0,
-        total
-      }
-
-      // set the text for the first pic before any promises resolve
-      setLoadingPercent(defaultLoadingPercent)
       // loop through promises to add percentage
       promise.then(() => setLoadingPercent(loadingPercent))
     })
@@ -82,20 +90,6 @@ export default function Cropper (props) {
           </View>
         ):(
           <View style={styles.container}>
-            <View style={styles.header}>
-              <TouchableOpacity
-                style={{ alignSelf: 'stretch' }}
-                onPress={onPressBack}>
-                <Text style={styles.textButtons}>BACK</Text>
-              </TouchableOpacity>
-              <View style={{ flex: 2 }} />
-              <TouchableOpacity
-                style={{ alignSelf: 'stretch' }}
-                onPress={onPressNext}>
-                <Text style={styles.textButtons}>NEXT</Text>
-              </TouchableOpacity>
-            </View>
-
             {image &&
               <View style={styles.editorContainer}>
 
@@ -133,6 +127,19 @@ export default function Cropper (props) {
               numOfFrames={numOfFrames}
               onSetFormat={setFormat}
               onSetNumOfFrames={setNumOfFrames} />
+              <View style={styles.header}>
+            <TouchableOpacity
+              style={{ alignSelf: 'stretch' }}
+              onPress={onPressBack}>
+              <Text style={styles.textButtons}>BACK</Text>
+            </TouchableOpacity>
+            <View style={{ flex: 2 }} />
+            <TouchableOpacity
+              style={{ alignSelf: 'stretch' }}
+              onPress={onPressNext}>
+              <Text style={styles.textButtons}>NEXT</Text>
+            </TouchableOpacity>
+          </View>
           </View>
         )
       }
@@ -182,16 +189,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    maxHeight: 40,
+    maxHeight: 60,
     marginBottom: 40,
+    padding: 10,
     paddingTop: 20,
   },
   image: {
     position: 'absolute',
   },
   textButtons: {
-    fontSize: 18,
+    fontSize: 20,
     color: 'white',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    fontFamily: 'Oswald-Regular',
   }
 })

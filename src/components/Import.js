@@ -12,6 +12,7 @@ export default function Import (props) {
   const { onSetImage } = props
   const openPicker = () => {
     ImagePicker.openPicker({
+      mediaType: 'photo',
       smartAlbums: ['Panoramas']
     })
     .then(image => {
@@ -57,8 +58,9 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white',
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     marginTop: 26,
+    fontFamily: 'Oswald-Regular',
   }
 })

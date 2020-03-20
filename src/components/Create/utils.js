@@ -27,11 +27,11 @@ export const cropFramePromises = (image, numOfFrames, format = 'best-fit') => {
 
     const promise = new Promise((resolve, reject) => {
       setTimeout(() => {
-        console.log(`PRINT ${i+1} of ${numOfFrames}`)
         return ImageEditor.cropImage(image.path, cropData)
           .then(croppedImageUri => {
             console.log('croppedImageUri= ', croppedImageUri)
             // saveToCameraRoll(croppedImageUri)
+            console.log(`PRINT ${i+1} of ${numOfFrames}`)
             resolve(croppedImageUri)
             // if (Platform.OS === 'ios') {
             //   ImageStore.getBase64ForTag(
@@ -48,7 +48,7 @@ export const cropFramePromises = (image, numOfFrames, format = 'best-fit') => {
             //   )
             // }
           })
-      }, i * 800)
+      }, i * 1500)
     })
 
     promises.push(promise)

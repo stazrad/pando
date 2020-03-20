@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SliderBox } from 'react-native-image-slider-box'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
@@ -20,11 +20,15 @@ export default function Export (props) {
     images.forEach((image, i) => {
       setTimeout(() => {
         saveToCameraRoll(image)
-        setDownloadText(i === images.length ? 'SAVED!' : `SAVING ${i+1}`)
+        setDownloadText(`SAVING ${i+1}`)
         ReactNativeHapticFeedback.trigger('impactMedium', hapticOpts)
-        if (i+1 === images.length) setTimeout(() => {setDownloadText('SAVED!')}, 280)
+        if (i+1 === images.length) setTimeout(() => {setDownloadText('SAVED')}, 280)
       }, i * 280)
     })
+  }
+  const onOpenInstagram = images => {
+    images.forEach(image => saveToCameraRoll(image))
+    Linking.openURL(`instagram://library?AssetPath=${images[0]}`)
   }
 
   return (
@@ -38,6 +42,7 @@ export default function Export (props) {
               sliderBoxHeight={420}
               dotColor='black'
               inactiveDotColor='grey'
+              disableOnPress
               currentImageEmitter={e => ReactNativeHapticFeedback.trigger('impactLight', hapticOpts)}
               dotStyle={{
                 width: 8,
@@ -55,6 +60,12 @@ export default function Export (props) {
                 <Text style={styles.buttonBigText}>
                   {downloadText}
                 </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                disabled={savedToCameraRoll}
+                style={styles.buttonBig}
+                onPress={() => onOpenInstagram(images)}>
+                <Text style={styles.buttonBigText}>OPEN INSTAGRAM</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.footer}>
@@ -85,8 +96,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   bigButtonsContainer: {
-    marginBottom: 80,
-    marginTop: 60,
+    marginBottom: 50,
+    marginTop: 30,
   },
   button: {
     alignSelf: 'stretch',
@@ -96,6 +107,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     height: 60,
     width: 240,
+    marginBottom: 8,
   },
   buttonBigText: {
     color: 'white',
@@ -112,9 +124,10 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontSize: 16,
+    fontSize: 18,
     width: 120,
     justifyContent: 'flex-start',
+    fontFamily: 'Oswald-Regular',
   },
   footer: {
     flexDirection: 'row',

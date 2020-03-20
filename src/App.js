@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, SafeAreaView, Image } from 'react-native'
+import { StyleSheet, Text, View, Image } from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
 
 import Body from 'components/Body'
@@ -37,9 +37,9 @@ export default function App () {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {screenSwitcher(screen)}
-    </SafeAreaView>
+    </View>
   )
 }
 
