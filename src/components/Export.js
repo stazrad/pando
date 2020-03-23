@@ -17,21 +17,25 @@ export default function Export (props) {
     ignoreAndroidSystemSettings: false
   }
   const onSaveToCameraRoll = images => {
-    images.forEach((image, i) => {
-      setTimeout(() => {
-        saveToCameraRoll(image)
-        setDownloadText(`SAVING ${i+1}`)
-        ReactNativeHapticFeedback.trigger('impactMedium', hapticOpts)
-        if (i+1 === images.length) setTimeout(() => {
-          setSavedToCameraRoll(true)
-          setDownloadText('OPEN CAMERA ROLL')
-        }, 280)
-      }, i * 280)
+    return new Promise((resolve) => {
+      images.forEach((image, i) => {
+        setTimeout(() => {
+          saveToCameraRoll(image)
+          setDownloadText(`SAVING ${i+1}`)
+          ReactNativeHapticFeedback.trigger('impactMedium', hapticOpts)
+          if (i+1 === images.length) setTimeout(() => {
+            setSavedToCameraRoll(true)
+            setDownloadText('OPEN CAMERA ROLL')
+            resolve()
+          }, 280)
+        }, i * 280)
+      })
     })
   }
   const onOpenCameraRoll = () => Linking.openURL('photos-redirect://')
-  const onOpenInstagram = images => {
-    images.forEach(image => saveToCameraRoll(image))
+  const onOpenInstagram = async images => {
+    // only store images if necessary
+    if (!savedToCameraRoll) await onSaveToCameraRoll(images.reverse())
     Linking.openURL(`instagram://library?AssetPath=${images[0]}`)
   }
 
@@ -65,7 +69,6 @@ export default function Export (props) {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                disabled={savedToCameraRoll}
                 style={styles.buttonBig}
                 onPress={() => onOpenInstagram(images)}>
                 <Text style={styles.buttonBigText}>OPEN INSTAGRAM</Text>
