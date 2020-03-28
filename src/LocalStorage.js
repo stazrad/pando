@@ -14,6 +14,8 @@ export const saveProject = async ({ id: foundId, image }) => {
   const id = foundId ? foundId : uuidv4()
   const keys = await AsyncStorage.getAllKeys()
 
+  // await AsyncStorage.multiRemove(keys) to clear all keys in storage
+
   // check to see if this pic has been saved before
   if (!keys.includes(id)) {
     const project = {

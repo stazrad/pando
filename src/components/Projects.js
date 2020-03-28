@@ -10,7 +10,7 @@ export function ProjectPreview (props) {
     onSetImage(project?.image)
     navigate('create')
   }
-  // console.log('preview', project?.image?.path)
+  console.log('preview', project?.image?.path)
 
   return (
     <TouchableOpacity style={styles.preview} onPress={onPress}>

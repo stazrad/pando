@@ -58,4 +58,6 @@ target 'Pando' do
 
   pod 'react-native-get-random-values', :path => '../node_modules/react-native-get-random-values'
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
 end

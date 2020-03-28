@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import CameraRoll from '@react-native-community/cameraroll'
-import ImagePicker from 'react-native-image-crop-picker'
+import ImagePicker from 'react-native-image-picker'
 import SvgUri from 'react-native-svg-uri'
 
 import { navigate } from 'App'
@@ -13,34 +13,43 @@ import Projects from 'components/Projects'
 export default function Import (props) {
   const { onSetImage } = props
   const openPicker = () => {
-    ImagePicker.openPicker({
-      // includeBase64: true,
-      includeExif: true,
-      writeTempFile: false,
+    ImagePicker.launchImageLibrary({
+      noData: true,
       mediaType: 'photo',
-      smartAlbums: ['Panoramas']
-    })
-    .then(image => {
-      console.log('cropped IMAGe', image)
-      const opts = {
-        first: 1,
-        assetType: 'Photos',
-        fromTime: image.creationDate,
-        toTime: image.creationDate,
+      smartAlbums: ['Panoramas'],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+        cameraRoll: true,
+        waitUntilSaved: true
+      }
+    }, response => {
+      if (response.didCancel) {
+        return console.log('User cancelled image picker');
+      } else if (response.error) {
+        return console.log('ImagePicker Error: ', response.error);
       }
 
-      return CameraRoll.getPhotos(opts)
-    })
-    .then(r => {
-      console.log('IAMGE', r.edges.length, { ...r.edges[0].node })
+      let path = response.uri
+      if (Platform.OS === 'ios') {
+        path = '~' + path.substring(path.indexOf('/Documents'));
+      }
+      const { height, isVertical, latitude, timestamp, type, width } = response
+      const image = {
+        height,
+        isVertical,
+        latitude,
+        path,
+        timestamp,
+        type,
+        width,
+      }
 
-      return { ...r.edges[0].node.image, path: r.edges[0].node.image.uri }
-    })
-    .then(image => {
+      console.log('response', response)
+
       onSetImage(image)
       navigate('create')
     })
-    .catch(console.warn)
   }
 
   return (
