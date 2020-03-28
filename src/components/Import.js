@@ -7,6 +7,7 @@ import { navigate } from 'App'
 import PLUS_ICON from 'images/create.svg'
 import Header from 'components/Header'
 import Body from 'components/Body'
+import Projects from 'components/Projects'
 
 export default function Import (props) {
   const { onSetImage } = props
@@ -16,12 +17,13 @@ export default function Import (props) {
       smartAlbums: ['Panoramas']
     })
     .then(image => {
-      console.log('IAMGE', image.height);
+      console.log('IAMGE', image.path);
       onSetImage(image)
       navigate('create')
     })
     .catch(console.warn)
   }
+  console.log('RENDER')
 
   return (
     <>
@@ -37,6 +39,9 @@ export default function Import (props) {
             <Text style={styles.text}>IMPORT</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.container}>
+          <Projects />
+        </View>
       </Body>
     </>
   )
@@ -49,6 +54,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     color: 'white',
+    marginLeft: 10,
+    marginRight: 10,
     width: Dimensions.get('window').width
   },
   pano: {

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Animated, Dimensions, Image, ImageBackground, ProgressViewIOS, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { PinchGestureHandler, State }  from 'react-native-gesture-handler'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
 import Body from 'components/Body'
+import { saveProject } from 'LocalStorage'
 import ButtonRow from './ButtonRow'
 import InstagramAuth from './InstagramAuth'
 import ImageCropper from './ImageCropper'
@@ -20,6 +21,9 @@ export default function Cropper (props) {
 
   const onPressNext = async () => {
     setLoading(true)
+    // persist the project to local storage
+    saveProject({ image })
+
     const hapticOpts = {
       enableVibrateFallback: true,
       ignoreAndroidSystemSettings: false
