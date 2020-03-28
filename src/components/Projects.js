@@ -1,8 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, FlatList , Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { navigate } from 'App'
 import { fetchProjects } from 'LocalStorage'
 
+export function ProjectPreview (props) {
+  const { onSetImage,project } = props
+  const onPress = e => {
+    onSetImage(project?.image)
+    navigate('create')
+  }
+
+  return (
+    <TouchableOpacity style={styles.preview} onPress={onPress}>
+      <Image
+        source={{ uri: project?.image?.path }}
+        style={{ width: Dimensions.get('window').width, height: 100 }} />
+    </TouchableOpacity>
+  )
+}
+
 export default function Projects (props) {
+  const { onSetImage } = props
   const [projects, setProjects] = useState([])
 
   useEffect(() => {
@@ -21,20 +39,20 @@ export default function Projects (props) {
   }, [])
 
   return (
-    <View>
-      <Text style={styles.title}>Projects</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>My Pandos</Text>
       <View>
         {
           !projects.length
-            ? null
+            ? <Text>Import above to create your first pando!</Text>
             : (
-              projects.map(project => (
-                <View>
-                  <Image
-                    source={{ uri: project?.image?.path }}
-                    style={{ width: Dimensions.get('window').width, height: 100 }} />
-                </View>
-              ))
+              <FlatList
+                data={projects}
+                keyExtractor={item => item.id}
+                renderItem={({ item }) => (
+                  <ProjectPreview project={item} onSetImage={onSetImage} />
+                )}
+              />
             )
         }
       </View>
@@ -43,8 +61,15 @@ export default function Projects (props) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    margin: 10,
+  },
+  preview: {
+    marginBottom: 5,
+  },
   title: {
-    fontSize: 20,
+    fontSize: 24,
+    marginBottom: 5,
     color: 'white',
     justifyContent: 'flex-start',
     fontFamily: 'Oswald-Regular',

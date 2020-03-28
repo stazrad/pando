@@ -40,7 +40,7 @@ export default function Import (props) {
           </TouchableOpacity>
         </View>
         <View style={styles.container}>
-          <Projects />
+          <Projects onSetImage={onSetImage} />
         </View>
       </Body>
     </>
