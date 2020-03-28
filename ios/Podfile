@@ -56,4 +56,6 @@ target 'Pando' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
+  pod 'react-native-get-random-values', :path => '../node_modules/react-native-get-random-values'
+
 end

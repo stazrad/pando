@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
-import SplashScreen from 'react-native-splash-screen'
 
 import Body from 'components/Body'
 import Create from 'components/Create'

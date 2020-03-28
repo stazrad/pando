@@ -3,6 +3,7 @@ package com.pando;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.linusu.RNGetRandomValuesPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.reactnativecommunity.cameraroll.CameraRollPackage;
@@ -46,6 +47,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNGetRandomValuesPackage(),
             new AsyncStoragePackage(),
             new SplashScreenReactPackage(),
             new CameraRollPackage(),

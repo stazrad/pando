@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import CameraRoll from '@react-native-community/cameraroll'
 import ImagePicker from 'react-native-image-crop-picker'
 import SvgUri from 'react-native-svg-uri'
 
@@ -13,17 +14,34 @@ export default function Import (props) {
   const { onSetImage } = props
   const openPicker = () => {
     ImagePicker.openPicker({
+      // includeBase64: true,
+      includeExif: true,
+      writeTempFile: false,
       mediaType: 'photo',
       smartAlbums: ['Panoramas']
     })
     .then(image => {
-      console.log('IAMGE', image.path);
+      console.log('cropped IMAGe', image)
+      const opts = {
+        first: 1,
+        assetType: 'Photos',
+        fromTime: image.creationDate,
+        toTime: image.creationDate,
+      }
+
+      return CameraRoll.getPhotos(opts)
+    })
+    .then(r => {
+      console.log('IAMGE', r.edges.length, { ...r.edges[0].node })
+
+      return { ...r.edges[0].node.image, path: r.edges[0].node.image.uri }
+    })
+    .then(image => {
       onSetImage(image)
       navigate('create')
     })
     .catch(console.warn)
   }
-  console.log('RENDER')
 
   return (
     <>

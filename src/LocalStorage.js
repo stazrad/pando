@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage'
+import 'react-native-get-random-values'
+import { v4 as uuidv4 } from 'uuid'
 
 export const fetchProjects = async () => {
   const keys = await AsyncStorage.getAllKeys()
@@ -7,19 +9,19 @@ export const fetchProjects = async () => {
   return projects.map(([ key, value]) => JSON.parse(value))
 }
 
-export const saveProject = async ({ image }) => {
-  const { localIdentifier } = image
+export const saveProject = async ({ id: foundId, image }) => {
+  // set uuid to make multiple edits/projects of the same pic
+  const id = foundId ? foundId : uuidv4()
   const keys = await AsyncStorage.getAllKeys()
-  // TODO this might be better as a set uuid to make
-  // multiple edits/projects of the same pic?
 
   // check to see if this pic has been saved before
-  if (!keys.includes(localIdentifier)) {
+  if (!keys.includes(id)) {
     const project = {
+      id,
       image
     }
 
-    await AsyncStorage.setItem(localIdentifier, JSON.stringify(project))
+    await AsyncStorage.setItem(id, JSON.stringify(project))
   }
   console.log('KEYS', keys)
 }
