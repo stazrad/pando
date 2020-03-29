@@ -35,6 +35,7 @@ export function ProjectPreview (props) {
     <Swipeable
       onRightActionRelease={onDeleteProject}
       rightButtons={rightButtons}
+      rightButtonWidth={100}
       style={styles.preview}>
       <TouchableOpacity onPress={onPress}>
         <Image
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
   },
   delete: {
     backgroundColor: '#da3535',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     width:  100,
     height: '100%',
   },
