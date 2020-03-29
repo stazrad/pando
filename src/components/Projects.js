@@ -1,56 +1,65 @@
 import React, { useEffect, useState } from 'react'
 import { Dimensions, FlatList , Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import GestureRecognizer from 'react-native-swipe-gestures'
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
+import Swipeable from 'react-native-swipeable-row'
 import { navigate } from 'App'
 import { deleteProject, fetchProjects } from 'LocalStorage'
 const TMP_URL = 'https://legal.thomsonreuters.com/content/dam/ewp-m/images/legal/en/photography/photography/hero-medium-panoramic.png.transform/hero-m/q90/image.png'
 
 export function ProjectPreview (props) {
-  const { onSetImage,project } = props
+  const { onSetImage, project, refreshProjects } = props
   const onPress = e => {
     onSetImage(project?.image)
     navigate('create')
   }
-  const onSwipe = () => {
+  const onDeleteProject = () => {
     console.log('SWIPE!')
     deleteProject(project)
+    const hapticOpts = {
+      enableVibrateFallback: true,
+      ignoreAndroidSystemSettings: false
+    }
+    ReactNativeHapticFeedback.trigger('impactMedium', hapticOpts)
+    refreshProjects()
   }
-  const swipeConfig = {
-    velocityThreshold: 0.3,
-    directionalOffsetThreshold: 80
-  }
+  const rightButtons = [
+    <TouchableOpacity
+      onPress={onDeleteProject}
+      style={styles.delete}>
+      <Text style={styles.deleteText}>Delete</Text>
+    </TouchableOpacity>
+  ]
   console.log('preview', project?.image?.path)
 
   return (
-    <GestureRecognizer
-      onSwipeLeft={onSwipe}
-      config={swipeConfig}>
-      <TouchableOpacity style={styles.preview} onPress={onPress}>
+    <Swipeable
+      onRightActionRelease={onDeleteProject}
+      rightButtons={rightButtons}
+      style={styles.preview}>
+      <TouchableOpacity onPress={onPress}>
         <Image
           source={{ uri: project?.image?.path }}
           style={{ width: Dimensions.get('window').width, height: 100 }} />
       </TouchableOpacity>
-    </GestureRecognizer>
+    </Swipeable>
   )
 }
 
 export default function Projects (props) {
   const { onSetImage } = props
   const [projects, setProjects] = useState([])
+  const refreshProjects = async () => {
+    try {
+      const projects = await fetchProjects()
+
+      setProjects(projects)
+    } catch (err) {
+      console.log('Projects error', err)
+    }
+  }
 
   useEffect(() => {
-    const fetcher = async () => {
-      try {
-        const projects = await fetchProjects()
-        console.log('MOUNT', projects.length)
-
-        setProjects(projects)
-      } catch (err) {
-        console.log('Projects error', err)
-      }
-    }
-
-    fetcher()
+    refreshProjects()
   }, [])
 
   return (
@@ -59,13 +68,16 @@ export default function Projects (props) {
       <View>
         {
           !projects.length
-            ? <Text>Import above to create your first pando!</Text>
+            ? <Text style={styles.noProjectsText}>Import above to create your first pando!</Text>
             : (
               <FlatList
                 data={projects}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
-                  <ProjectPreview project={item} onSetImage={onSetImage} />
+                  <ProjectPreview
+                    project={item}
+                    onSetImage={onSetImage}
+                    refreshProjects={refreshProjects} />
                 )}
               />
             )
@@ -78,9 +90,27 @@ export default function Projects (props) {
 const styles = StyleSheet.create({
   container: {
     margin: 10,
-    backgroundColor: 'black'
+    backgroundColor: 'black',
+  },
+  delete: {
+    backgroundColor: '#da3535',
+    alignItems: 'center',
+    width:  100,
+    height: '100%',
+  },
+  deleteText: {
+    color: 'white',
+    fontSize: 20,
+    justifyContent: 'flex-start',
+    fontFamily: 'Oswald-Regular',
+  },
+  noProjectsText: {
+    color: 'white',
+    marginTop: 20,
+    fontFamily: 'Oswald-Light',
   },
   preview: {
+    width: Dimensions.get('window').width,
     marginBottom: 5,
   },
   title: {
