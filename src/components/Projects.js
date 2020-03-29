@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Dimensions, FlatList , Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import GestureRecognizer from 'react-native-swipe-gestures'
 import { navigate } from 'App'
-import { fetchProjects } from 'LocalStorage'
+import { deleteProject, fetchProjects } from 'LocalStorage'
 const TMP_URL = 'https://legal.thomsonreuters.com/content/dam/ewp-m/images/legal/en/photography/photography/hero-medium-panoramic.png.transform/hero-m/q90/image.png'
 
 export function ProjectPreview (props) {
@@ -10,14 +11,26 @@ export function ProjectPreview (props) {
     onSetImage(project?.image)
     navigate('create')
   }
+  const onSwipe = () => {
+    console.log('SWIPE!')
+    deleteProject(project)
+  }
+  const swipeConfig = {
+    velocityThreshold: 0.3,
+    directionalOffsetThreshold: 80
+  }
   console.log('preview', project?.image?.path)
 
   return (
-    <TouchableOpacity style={styles.preview} onPress={onPress}>
-      <Image
-        source={{ uri: project?.image?.path }}
-        style={{ width: Dimensions.get('window').width, height: 100 }} />
-    </TouchableOpacity>
+    <GestureRecognizer
+      onSwipeLeft={onSwipe}
+      config={swipeConfig}>
+      <TouchableOpacity style={styles.preview} onPress={onPress}>
+        <Image
+          source={{ uri: project?.image?.path }}
+          style={{ width: Dimensions.get('window').width, height: 100 }} />
+      </TouchableOpacity>
+    </GestureRecognizer>
   )
 }
 

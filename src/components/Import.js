@@ -3,6 +3,7 @@ import { Dimensions, Platform, StyleSheet, Text, TouchableOpacity, View } from '
 import CameraRoll from '@react-native-community/cameraroll'
 import ImagePicker from 'react-native-image-picker'
 import SvgUri from 'react-native-svg-uri'
+import RNFS from 'react-native-fs'
 
 import { navigate } from 'App'
 import PLUS_ICON from 'images/create.svg'
@@ -16,7 +17,6 @@ export default function Import (props) {
     ImagePicker.launchImageLibrary({
       noData: true,
       mediaType: 'photo',
-      smartAlbums: ['Panoramas'],
       storageOptions: {
         skipBackup: true,
         path: 'images',
@@ -32,7 +32,7 @@ export default function Import (props) {
 
       let path = response.uri
       if (Platform.OS === 'ios') {
-        path = '~' + path.substring(path.indexOf('/Documents'));
+        path = '~' + path.substring(path.indexOf('/Documents'))
       }
       const { height, isVertical, latitude, timestamp, type, width } = response
       const image = {
