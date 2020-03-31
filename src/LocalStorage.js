@@ -8,7 +8,7 @@ export const deleteProject = async project => {
     // TODO this substring seems fragile
     const path = RNFS.DocumentDirectoryPath + project.image.path.substring(11)
     await RNFS.unlink(path)
-    await AsyncStorage.removeItem(project.id)
+    return await AsyncStorage.removeItem(project.id)
   } catch (err) {
     console.log('DELETE ERR', err)
   }
@@ -16,26 +16,29 @@ export const deleteProject = async project => {
 
 export const fetchProjects = async () => {
   const keys = await AsyncStorage.getAllKeys()
-  const projects = await AsyncStorage.multiGet(keys)
+  const fetchProjects = await AsyncStorage.multiGet(keys)
+  const projects = fetchProjects
+    .map(([ key, value]) => JSON.parse(value))
+    .sort((a, b) => new Date(b.dateLastEdit) - new Date(a.dateLastEdit))
 
-  return projects.map(([ key, value]) => JSON.parse(value))
+  projects.forEach(proj => console.log(proj))
+
+  return projects
 }
 
 export const saveProject = async ({ id: foundId, image }) => {
   // set uuid to make multiple edits/projects of the same pic
   const id = foundId ? foundId : uuidv4()
-  const keys = await AsyncStorage.getAllKeys()
+  // const keys = await AsyncStorage.getAllKeys()
 
   // await AsyncStorage.multiRemove(keys) // to clear all keys in storage
 
-  // check to see if this pic has been saved before
-  if (!keys.includes(id)) {
-    const project = {
-      id,
-      image
-    }
-
-    await AsyncStorage.setItem(id, JSON.stringify(project))
+  const project = {
+    dateLastEdit: new Date(),
+    id,
+    image
   }
-  console.log('KEYS', keys)
+
+  // if id exists, project will overwrite
+  return await AsyncStorage.setItem(id, JSON.stringify(project))
 }

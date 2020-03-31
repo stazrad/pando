@@ -1,15 +1,33 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, Dimensions, StyleSheet, View } from 'react-native'
 
 import { navigate } from 'App'
+import { saveProject } from 'LocalStorage'
 import Header from 'components/Header'
 import Body from 'components/Body'
 import Cropper from './Cropper'
 import Import from 'components/Import'
 
 export default function Create (props) {
-  const { image } = props
+  const { image, project = {} } = props
   const onImagesReady = images => navigate('export', { images })
+  const saveDraft = async () => {
+    const project = !!project?.image ? project : { image }
+
+    await saveProject(project)
+    navigate('import')
+  }
+  const onPressBack = () => {
+    Alert.alert(
+      '',
+      'If you go back now, your image edits will be discarded.',
+      [
+        {text: 'Discard', onPress: () => navigate('import'), style: styles.discard},
+        {text: 'Save ', onPress: saveDraft},
+      ],
+      { cancelable: true }
+    )
+  }
 
   return (
     <>
@@ -18,7 +36,7 @@ export default function Create (props) {
           <Cropper
             image={image}
             onImagesReady={onImagesReady}
-            onPressBack={() => navigate('import')} />
+            onPressBack={onPressBack} />
         </View>
       </Body>
     </>
@@ -33,6 +51,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: 'white',
     width: Dimensions.get('window').width
+  },
+  discard: {
+    color: 'red',
+    backgroundColor: 'blue',
   },
   pano: {
     height: 100,

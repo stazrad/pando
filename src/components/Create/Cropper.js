@@ -3,8 +3,8 @@ import { Animated, Dimensions, Image, ImageBackground, ProgressViewIOS, ScrollVi
 import { PinchGestureHandler, State }  from 'react-native-gesture-handler'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
-import Body from 'components/Body'
 import { saveProject } from 'LocalStorage'
+import Body from 'components/Body'
 import ButtonRow from './ButtonRow'
 import InstagramAuth from './InstagramAuth'
 import ImageCropper from './ImageCropper'
@@ -21,7 +21,6 @@ export default function Cropper (props) {
 
   const onPressNext = async () => {
     setLoading(true)
-    // persist the project to local storage
     saveProject({ image })
 
     const hapticOpts = {

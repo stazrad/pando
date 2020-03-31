@@ -14,11 +14,12 @@ export let navigate = null // set inside App below
 export default function App () {
   const [screen, setScreen] = useState('import')
   const [image, setImage] = useState(null)
+  const [project, setProject] = useState(null)
   const [exportImages, setExportImages] = useState([])
   const screenSwitcher = screen => {
     switch(screen) {
       case 'create':
-        return <Create image={image} />
+        return <Create image={image} project={project} />
       case 'export':
         return <Export images={exportImages} />
       case 'home':

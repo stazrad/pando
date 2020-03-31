@@ -4,7 +4,6 @@ import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 import Swipeable from 'react-native-swipeable-row'
 import { navigate } from 'App'
 import { deleteProject, fetchProjects } from 'LocalStorage'
-const TMP_URL = 'https://legal.thomsonreuters.com/content/dam/ewp-m/images/legal/en/photography/photography/hero-medium-panoramic.png.transform/hero-m/q90/image.png'
 
 export function ProjectPreview (props) {
   const { onSetImage, project, refreshProjects } = props
@@ -12,14 +11,14 @@ export function ProjectPreview (props) {
     onSetImage(project?.image)
     navigate('create')
   }
-  const onDeleteProject = () => {
-    console.log('SWIPE!')
-    deleteProject(project)
+  const onDeleteProject = async () => {
     const hapticOpts = {
       enableVibrateFallback: true,
       ignoreAndroidSystemSettings: false
     }
+
     ReactNativeHapticFeedback.trigger('impactMedium', hapticOpts)
+    await deleteProject(project)
     refreshProjects()
   }
   const rightButtons = [
@@ -33,14 +32,16 @@ export function ProjectPreview (props) {
 
   return (
     <Swipeable
+      onRightSwipe={onDeleteProject}
       onRightActionRelease={onDeleteProject}
       rightButtons={rightButtons}
       rightButtonWidth={100}
+      // bounceOnMount
       style={styles.preview}>
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={onPress} style={styles.image}>
         <Image
           source={{ uri: project?.image?.path }}
-          style={{ width: Dimensions.get('window').width, height: 100 }} />
+          style={styles.image} />
       </TouchableOpacity>
     </Swipeable>
   )
@@ -69,7 +70,7 @@ export default function Projects (props) {
       <View>
         {
           !projects.length
-            ? <Text style={styles.noProjectsText}>Import above to create your first pando!</Text>
+            ? <Text style={styles.noProjectsText}>Import above to create a pando!</Text>
             : (
               <FlatList
                 data={projects}
@@ -90,24 +91,34 @@ export default function Projects (props) {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 10,
+    flex: 1,
+    width: '100%',
+    padding: 10,
     backgroundColor: 'black',
+    alignItems: 'center',
   },
   delete: {
     backgroundColor: '#da3535',
-    alignItems: 'flex-start',
+    alignItems: 'center',
+    justifyContent: 'center',
     width:  100,
-    height: '100%',
+    height: 100,
   },
   deleteText: {
     color: 'white',
-    fontSize: 20,
-    justifyContent: 'flex-start',
+    fontSize: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
     fontFamily: 'Oswald-Regular',
+  },
+  image: {
+    width: Dimensions.get('window').width,
+    height: 100,
   },
   noProjectsText: {
     color: 'white',
-    marginTop: 20,
+    marginTop: 28,
+    fontSize: 18,
     fontFamily: 'Oswald-Light',
   },
   preview: {
@@ -115,7 +126,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     marginBottom: 5,
     color: 'white',
     justifyContent: 'flex-start',
