@@ -2,39 +2,44 @@ import React, { useEffect, useState } from 'react'
 import { Alert, Dimensions, StyleSheet, View } from 'react-native'
 
 import { navigate } from 'App'
-import { saveProject } from 'LocalStorage'
+import { deleteProject, updateProject } from 'LocalStorage'
 import Header from 'components/Header'
 import Body from 'components/Body'
 import Cropper from './Cropper'
 import Import from 'components/Import'
 
 export default function Create (props) {
-  const { image, project = {} } = props
+  const { isNewImport, project } = props
   const onImagesReady = images => navigate('export', { images })
   const saveDraft = async () => {
-    const project = !!project?.image ? project : { image }
+    const updatedProject = await updateProject(project)
 
-    await saveProject(project)
-    navigate('import')
+    navigate('import', { project: updatedProject })
+  }
+  const deleteDraft = async () => {
+    // only delete new imports; leave existing projects
+    if (project.draft) await deleteProject(project)
+    navigate('import', { project: null })
   }
   const onPressBack = () => {
     Alert.alert(
       '',
       'If you go back now, your image edits will be discarded.',
       [
-        {text: 'Discard', onPress: () => navigate('import'), style: styles.discard},
+        {text: 'Discard', onPress: deleteDraft, style: styles.discard},
         {text: 'Save ', onPress: saveDraft},
       ],
       { cancelable: true }
     )
   }
+  console.log('Create index.js project', project)
 
   return (
     <>
       <Body>
         <View style={styles.container}>
           <Cropper
-            image={image}
+            image={project?.image}
             onImagesReady={onImagesReady}
             onPressBack={onPressBack} />
         </View>

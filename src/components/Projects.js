@@ -6,10 +6,9 @@ import { navigate } from 'App'
 import { deleteProject, fetchProjects } from 'LocalStorage'
 
 export function ProjectPreview (props) {
-  const { onSetImage, project, refreshProjects } = props
-  const onPress = e => {
-    onSetImage(project?.image)
-    navigate('create')
+  const { project, refreshProjects } = props
+  const openProject = e => {
+    navigate('create', { project })
   }
   const onDeleteProject = async () => {
     const hapticOpts = {
@@ -28,17 +27,16 @@ export function ProjectPreview (props) {
       <Text style={styles.deleteText}>Delete</Text>
     </TouchableOpacity>
   ]
-  console.log('preview', project?.image?.path)
 
   return (
     <Swipeable
       onRightSwipe={onDeleteProject}
       onRightActionRelease={onDeleteProject}
       rightButtons={rightButtons}
-      rightButtonWidth={100}
+      rightButtonWidth={200}
       // bounceOnMount
       style={styles.preview}>
-      <TouchableOpacity onPress={onPress} style={styles.image}>
+      <TouchableOpacity onPress={openProject} style={styles.image}>
         <Image
           source={{ uri: project?.image?.path }}
           style={styles.image} />
@@ -48,7 +46,6 @@ export function ProjectPreview (props) {
 }
 
 export default function Projects (props) {
-  const { onSetImage } = props
   const [projects, setProjects] = useState([])
   const refreshProjects = async () => {
     try {
@@ -66,7 +63,9 @@ export default function Projects (props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{`My Pandos (${projects.length})`}</Text>
+      <Text style={styles.title}>My Pandos
+        <Text style={{ fontSize: 18 }}>{` (${projects.length})`}</Text>
+      </Text>
       <View>
         {
           !projects.length
@@ -78,7 +77,6 @@ export default function Projects (props) {
                 renderItem={({ item }) => (
                   <ProjectPreview
                     project={item}
-                    onSetImage={onSetImage}
                     refreshProjects={refreshProjects} />
                 )}
               />
@@ -101,7 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#da3535',
     alignItems: 'center',
     justifyContent: 'center',
-    width:  100,
+    width:  200,
     height: 100,
   },
   deleteText: {

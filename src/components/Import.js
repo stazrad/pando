@@ -6,13 +6,13 @@ import SvgUri from 'react-native-svg-uri'
 import RNFS from 'react-native-fs'
 
 import { navigate } from 'App'
+import { createProject } from 'LocalStorage'
 import PLUS_ICON from 'images/create.svg'
 import Header from 'components/Header'
 import Body from 'components/Body'
 import Projects from 'components/Projects'
 
 export default function Import (props) {
-  const { onSetImage } = props
   const openPicker = () => {
     ImagePicker.launchImageLibrary({
       noData: true,
@@ -23,7 +23,7 @@ export default function Import (props) {
         cameraRoll: true,
         waitUntilSaved: true
       }
-    }, response => {
+    }, async response => {
       if (response.didCancel) {
         return console.log('User cancelled image picker');
       } else if (response.error) {
@@ -44,11 +44,9 @@ export default function Import (props) {
         type,
         width,
       }
+      const project = await createProject({ image })
 
-      console.log('response', response)
-
-      onSetImage(image)
-      navigate('create')
+      navigate('create', { project })
     })
   }
 
@@ -67,7 +65,7 @@ export default function Import (props) {
           </TouchableOpacity>
         </View>
         <View style={styles.container}>
-          <Projects onSetImage={onSetImage} />
+          <Projects />
         </View>
       </Body>
     </>

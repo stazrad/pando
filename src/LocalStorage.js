@@ -3,6 +3,26 @@ import RNFS from 'react-native-fs'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
+export const createProject = async ({ image }) => {
+  // set uuid to make multiple edits/projects of the same pic
+  const id = uuidv4()
+  const project = {
+    dateLastEdit: new Date(),
+    draft: true,
+    id,
+    image
+  }
+
+  // const keys = await AsyncStorage.getAllKeys()
+  //
+  // await AsyncStorage.multiRemove(keys) // to clear all keys in storage
+
+  // store under new id
+  await AsyncStorage.setItem(id, JSON.stringify(project))
+
+  return project
+}
+
 export const deleteProject = async project => {
   try {
     // TODO this substring seems fragile
@@ -26,19 +46,15 @@ export const fetchProjects = async () => {
   return projects
 }
 
-export const saveProject = async ({ id: foundId, image }) => {
-  // set uuid to make multiple edits/projects of the same pic
-  const id = foundId ? foundId : uuidv4()
-  // const keys = await AsyncStorage.getAllKeys()
-
-  // await AsyncStorage.multiRemove(keys) // to clear all keys in storage
-
+export const updateProject = async proj => {
   const project = {
+    ...proj,
     dateLastEdit: new Date(),
-    id,
-    image
+    draft: undefined // remove draft key added by createProject
   }
 
-  // if id exists, project will overwrite
-  return await AsyncStorage.setItem(id, JSON.stringify(project))
+  // project will overwrite existing id
+  await AsyncStorage.setItem(project.id, JSON.stringify(project))
+
+  return project
 }

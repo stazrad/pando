@@ -3,7 +3,7 @@ import { Animated, Dimensions, Image, ImageBackground, ProgressViewIOS, ScrollVi
 import { PinchGestureHandler, State }  from 'react-native-gesture-handler'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
-import { saveProject } from 'LocalStorage'
+import { updateProject } from 'LocalStorage'
 import Body from 'components/Body'
 import ButtonRow from './ButtonRow'
 import InstagramAuth from './InstagramAuth'
@@ -21,7 +21,7 @@ export default function Cropper (props) {
 
   const onPressNext = async () => {
     setLoading(true)
-    saveProject({ image })
+    updateProject({ image })
 
     const hapticOpts = {
       enableVibrateFallback: true,

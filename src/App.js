@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
 
 import Body from 'components/Body'
@@ -13,26 +13,27 @@ export let navigate = null // set inside App below
 
 export default function App () {
   const [screen, setScreen] = useState('import')
-  const [image, setImage] = useState(null)
   const [project, setProject] = useState(null)
   const [exportImages, setExportImages] = useState([])
-  const screenSwitcher = screen => {
+  const screenSwitcher = (screen) => {
     switch(screen) {
       case 'create':
-        return <Create image={image} project={project} />
+        return <Create project={project} />
       case 'export':
         return <Export images={exportImages} />
       case 'home':
         return <Feed />
       case 'import':
-        return <Import onSetImage={setImage} />
+        return <Import />
       default:
         return <Feed />
       }
   }
 
-  navigate = (screen, data = {}) => { // there's gotta be a better way to do this
-    if (!!data.images) setExportImages(data.images)
+  navigate = (screen, data = {}) => { // there's gotta be a better way to export this
+    if (data.hasOwnProperty('images')) setExportImages(data.images)
+    if (data.hasOwnProperty('project')) setProject(data.project)
+    
     setScreen(screen)
   }
 

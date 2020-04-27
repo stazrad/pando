@@ -97,7 +97,7 @@ export default class ImageCropper extends React.Component {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         style={[styles.imageCropper, measuredSize]}
-        contentContainerStyle={this.props.style}
+        contentContainerStyle={[this.props.style, this._scaledImageSize]}
         pinchGestureEnabled
         centerContent
         scrollEventThrottle={16}>

@@ -83,7 +83,7 @@ export default function Export (props) {
               <View style={{ flex: 2 }} />
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => navigate('import')}>
+                onPress={() => navigate('import', { project: null })}>
                 <Text style={styles.buttonText}>CREATE NEW</Text>
               </TouchableOpacity>
             </View>
