@@ -3,11 +3,14 @@ package com.pando;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.reactnativecommunity.webview.RNCWebViewPackage;
+import com.rnfs.RNFSPackage;
+import com.imagepicker.ImagePickerPackage;
+import org.linusu.RNGetRandomValuesPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
-import com.reactnative.ivpusic.imagepicker.PickerPackage;
-import com.chrisbianca.cameraroll.RNCameraRollPackage;
 import com.reactnativecommunity.cameraroll.CameraRollPackage;
+import com.mkuczera.RNReactNativeHapticFeedbackPackage;
+import com.reactnativecommunity.imageeditor.ImageEditorPackage;
 import com.horcrux.svg.SvgPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -46,11 +49,14 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNCWebViewPackage(),
+            new RNFSPackage(),
+            new ImagePickerPackage(),
+            new RNGetRandomValuesPackage(),
+            new AsyncStoragePackage(),
             new SplashScreenReactPackage(),
-            new PickerPackage(),
-            new RNCameraRollPackage(),
             new CameraRollPackage(),
+            new RNReactNativeHapticFeedbackPackage(),
+            new ImageEditorPackage(),
             new SvgPackage(),
           new ReanimatedPackage(),
           new RNGestureHandlerPackage(),

@@ -1,52 +1,55 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
-import SplashScreen from 'react-native-splash-screen'
 
-import Body from './components/Body'
-import Create from './components/Create'
-import Feed from './components/Feed'
-import Footer from './components/Footer'
-import Header from './components/Header'
+import Body from 'components/Body'
+import Create from 'components/Create'
+import Export from 'components/Export'
+import Feed from 'components/Feed'
+import Footer from 'components/Footer'
+import Header from 'components/Header'
+import Import from 'components/Import'
 
 export let navigate = null // set inside App below
 
 export default function App () {
-  const screenSwitcher = screen => {
-
+  const [screen, setScreen] = useState('import')
+  const [project, setProject] = useState(null)
+  const [exportImages, setExportImages] = useState([])
+  const screenSwitcher = (screen) => {
     switch(screen) {
       case 'create':
-        return <Create />
+        return <Create project={project} />
+      case 'export':
+        return <Export images={exportImages} />
       case 'home':
         return <Feed />
+      case 'import':
+        return <Import />
       default:
         return <Feed />
       }
   }
-  const [ screen, onSetScreen ] = useState('create')
 
-  navigate = onSetScreen // there's gotta be a better way to do this
-  SplashScreen.hide()
+  navigate = (screen, data = {}) => { // there's gotta be a better way to export this
+    if (data.hasOwnProperty('images')) setExportImages(data.images)
+    if (data.hasOwnProperty('project')) setProject(data.project)
+    
+    setScreen(screen)
+  }
 
   return (
-    <View style={{ backgroundColor: '#4d4d4d', flex: 1 }}>
-      <Header />
-      <Body>
-        {screenSwitcher(screen)}
-      </Body>
-      <Footer />
+    <View style={styles.container}>
+      {screenSwitcher(screen)}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    backgroundColor: '#4d4d4d'
-  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
+    fontFamily: 'Oswald-Bold',
   },
 })
