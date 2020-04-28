@@ -2,7 +2,7 @@ import { ImageStore, Platform } from 'react-native'
 import CameraRoll from '@react-native-community/cameraroll'
 import ImageEditor from '@react-native-community/image-editor'
 
-export const cropFramePromises = (image, numOfFrames, format = 'best-fit') => {
+export const cropFramePromises = (image, numOfFrames, format) => {
   const framePixelWidth = image.width / numOfFrames
   const promises = []
 

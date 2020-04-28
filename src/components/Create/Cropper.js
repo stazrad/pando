@@ -9,15 +9,36 @@ import ImageCropper from './ImageCropper'
 import { cropFramePromises, cropPromise, saveToCameraRoll } from './utils'
 import PANDO_MUNCH from 'images/pando_munch.gif'
 
+const MAX_RATIO_LANDSCAPE = 1.8 // max allowed by instagram landscape best-fit
+const MAX_RATIO_PORTRAIT = 0.8 // max allowed by instagram portrait best-fit
+
 export default function Cropper (props) {
   const { onCancel, onImagesReady, persistCropState, project } = props
   console.log('Cropper project', project)
   const { cropState = {}, image } = project || {}
   const [numOfFrames, setNumOfFrames] = useState(cropState.numOfFrames || 3)
-  const [format, setFormat] = useState(cropState.format || 'best-fit')
+  const [format, setFormat] = useState(cropState.format || 'square')
   const [cropData, setCropData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [loadingPercent, setLoadingPercent] = useState({})
+
+  const fullWidth = Dimensions.get('window').width - 20
+  const getBestFit = (image, format, numOfFrames) => {
+    const frameWidth = fullWidth / numOfFrames
+    const dims = {
+      height: frameWidth, // defaulted to square format
+      width: frameWidth
+    }
+
+    if (format === 'landscape') {
+      dims.height = frameWidth / MAX_RATIO_LANDSCAPE
+    } else if (format === 'portrait') {
+      dims.height = frameWidth / MAX_RATIO_PORTRAIT
+    }
+
+    return dims
+  }
+  const frameDimensions = getBestFit(image, format, numOfFrames)
 
   const cancelCrop = async () => {
     await persistCropState({ format, numOfFrames })
@@ -45,6 +66,7 @@ export default function Cropper (props) {
     await persistCropState({ format, numOfFrames })
 
     const croppedFullImage = await cropPromise(image, cropData)
+    console.log('cropData', cropData, frameDimensions, croppedFullImage, image)
     const cropPromises = cropFramePromises(croppedFullImage, numOfFrames, format)
 
     cropPromises.forEach((promise, i) => {
@@ -66,26 +88,6 @@ export default function Cropper (props) {
         setLoading(false)
       })
   }
-  const fullWidth = Dimensions.get('window').width - 20
-  const getBestFit = (image, format, numOfFrames) => {
-    const dims = {
-      height: 100,
-      width: 100
-    }
-
-    if (format === 'square') {
-      const distance = fullWidth / numOfFrames
-      dims.height = distance
-      dims.width = distance
-    } else if (format === 'best-fit') {
-      const frameWidth = fullWidth / numOfFrames // TODO get View width
-
-      dims.width = frameWidth
-    }
-
-    return dims
-  }
-  const frameDimensions = getBestFit(image, format, numOfFrames)
 
   const framesArray = []
   // setup array to render grid lines
@@ -111,7 +113,6 @@ export default function Cropper (props) {
           <View style={styles.container}>
             {image &&
               <View style={styles.editorContainer}>
-
                 <ImageCropper
                   image={image}
                   size={{ width: fullWidth, height: frameDimensions.height }}
@@ -181,8 +182,6 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 1,
     borderStyle: 'solid',
-    height: 100,
-    width: 100
   },
   cropLinesRow: {
     flex: 1,

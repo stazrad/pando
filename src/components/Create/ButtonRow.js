@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 import SvgUri from 'react-native-svg-uri'
 
-import BEST_FIT from 'images/best_fit.svg'
+import ARROW_LANDSCAPE from 'images/arrow_landscape.png'
+import ARROW_PORTRAIT from 'images/arrow_portrait.png'
 
 export default function ButtonRow (props) {
   const { format, numOfFrames, onSetFormat, onSetNumOfFrames } = props
@@ -35,14 +36,16 @@ export default function ButtonRow (props) {
       })}
       <TouchableOpacity
         style={{ ...styles.button, marginLeft: 12 }}
-        onPress={() => setFormat(format === 'square' ? 'best-fit' : 'square')}>
+        onPress={() => setFormat(format === 'square' ? 'landscape' : format === 'landscape' ? 'portrait' : 'square')}>
         {format === 'square'
           ? <Text style={styles.text}>1:1</Text>
-          : <SvgUri
-              fill='red'
-              width='80'
-              height='80'
-              source={BEST_FIT} />
+          : format === 'landscape'
+            ? <Image
+                style={{ height: 16, width: 56 }}
+                source={ARROW_LANDSCAPE} />
+            : <Image
+                style={{ height: 58, width: 16 }}
+                source={ARROW_PORTRAIT} />
         }
       </TouchableOpacity>
     </View>
@@ -60,7 +63,8 @@ const styles = StyleSheet.create({
     color: 'black',
     margin: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: 20,
   },
   buttonRow: {
     flex: 2,
