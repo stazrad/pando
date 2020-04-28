@@ -3,16 +3,7 @@ import CameraRoll from '@react-native-community/cameraroll'
 import ImageEditor from '@react-native-community/image-editor'
 
 export const cropFramePromises = (image, numOfFrames, format = 'best-fit') => {
-  let framePixelWidth
-  if (format === 'best-fit') {
-    // best-fit workflow:
-    framePixelWidth = image.width / numOfFrames
-  } else if (format === 'square') {
-    // square workflow
-    framePixelWidth = image.height / numOfFrames
-  }
-  console.log('framePixelWidth', image, framePixelWidth)
-
+  const framePixelWidth = image.width / numOfFrames
   const promises = []
 
   for (let i = 0; i < numOfFrames; i++) {
@@ -23,7 +14,6 @@ export const cropFramePromises = (image, numOfFrames, format = 'best-fit') => {
       displaySize: {width: framePixelWidth, height: image.height},
       resizeMode: 'cover'
     }
-    console.log('for loop cover', numOfFrames, i, cropData)
 
     const promise = new Promise((resolve, reject) => {
       setTimeout(() => {
