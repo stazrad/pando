@@ -18,7 +18,7 @@ export default function App () {
   const screenSwitcher = (screen) => {
     switch(screen) {
       case 'create':
-        return <Create project={project} />
+        return <Create project={project} setProject={setProject} />
       case 'export':
         return <Export images={exportImages} />
       case 'home':
@@ -33,7 +33,7 @@ export default function App () {
   navigate = (screen, data = {}) => { // there's gotta be a better way to export this
     if (data.hasOwnProperty('images')) setExportImages(data.images)
     if (data.hasOwnProperty('project')) setProject(data.project)
-    
+
     setScreen(screen)
   }
 

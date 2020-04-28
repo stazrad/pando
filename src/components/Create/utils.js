@@ -29,24 +29,7 @@ export const cropFramePromises = (image, numOfFrames, format = 'best-fit') => {
       setTimeout(() => {
         return ImageEditor.cropImage(image.path, cropData)
           .then(croppedImageUri => {
-            console.log('croppedImageUri= ', croppedImageUri)
-            // saveToCameraRoll(croppedImageUri)
-            console.log(`PRINT ${i+1} of ${numOfFrames}`)
             resolve(croppedImageUri)
-            // if (Platform.OS === 'ios') {
-            //   ImageStore.getBase64ForTag(
-            //     croppedImageUri,
-            //     (base64Image) => {
-            //       // send image to server or save it locally
-            //       ImageStore.removeImageForTag(croppedImageUri)
-            //       // this will be a problem for android
-            //       resolve(base64Image)
-            //   },
-            //     (err) => {
-            //       console.log('success error', err)
-            //     }
-            //   )
-            // }
           })
       }, i * 1500)
     })

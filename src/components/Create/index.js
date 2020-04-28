@@ -9,7 +9,7 @@ import Cropper from './Cropper'
 import Import from 'components/Import'
 
 export default function Create (props) {
-  const { isNewImport, project } = props
+  const { project, setProject } = props
   const onImagesReady = images => navigate('export', { images })
   const saveDraft = async () => {
     const updatedProject = await updateProject(project)
@@ -21,7 +21,7 @@ export default function Create (props) {
     if (project.draft) await deleteProject(project)
     navigate('import', { project: null })
   }
-  const onPressBack = () => {
+  const onCancel = () => {
     Alert.alert(
       '',
       'If you go back now, your image edits will be discarded.',
@@ -32,16 +32,26 @@ export default function Create (props) {
       { cancelable: true }
     )
   }
-  console.log('Create index.js project', project)
+  const persistCropState = async cropState => {
+    const projectEnhanced = {
+      ...project,
+      cropState
+    }
+    const updatedProject = await updateProject(projectEnhanced)
+    console.log('persistCropState', cropState, updatedProject)
+
+    setProject(updatedProject)
+  }
 
   return (
     <>
       <Body>
         <View style={styles.container}>
           <Cropper
-            image={project?.image}
+            onCancel={onCancel}
             onImagesReady={onImagesReady}
-            onPressBack={onPressBack} />
+            persistCropState={persistCropState}
+            project={project} />
         </View>
       </Body>
     </>

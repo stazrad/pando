@@ -50,6 +50,7 @@ export default function Projects (props) {
   const refreshProjects = async () => {
     try {
       const projects = await fetchProjects()
+      console.log('REFRESH PROJECTS', projects)
 
       setProjects(projects)
     } catch (err) {

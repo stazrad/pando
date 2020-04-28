@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import { Animated, Dimensions, Image, ImageBackground, ProgressViewIOS, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { PinchGestureHandler, State }  from 'react-native-gesture-handler'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
-import { updateProject } from 'LocalStorage'
 import Body from 'components/Body'
 import ButtonRow from './ButtonRow'
 import InstagramAuth from './InstagramAuth'
@@ -12,17 +10,20 @@ import { cropFramePromises, cropPromise, saveToCameraRoll } from './utils'
 import PANDO_MUNCH from 'images/pando_munch.gif'
 
 export default function Cropper (props) {
-  const { image, onImagesReady, onPressBack } = props
+  const { onCancel, onImagesReady, persistCropState, project } = props
+  console.log('Cropper project', project)
+  const { cropState = {}, image } = project || {}
+  const [numOfFrames, setNumOfFrames] = useState(cropState.numOfFrames || 3)
+  const [format, setFormat] = useState(cropState.format || 'best-fit')
   const [cropData, setCropData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [loadingPercent, setLoadingPercent] = useState({})
-  const [numOfFrames, setNumOfFrames] = useState(3)
-  const [format, setFormat] = useState('best-fit')
 
-  const onPressNext = async () => {
-    setLoading(true)
-    updateProject({ image })
-
+  const cancelCrop = async () => {
+    await persistCropState({ format, numOfFrames })
+    onCancel()
+  }
+  const executeCrop = async () => {
     const hapticOpts = {
       enableVibrateFallback: true,
       ignoreAndroidSystemSettings: false
@@ -37,6 +38,11 @@ export default function Cropper (props) {
 
     // set the text for the first pic before any promises resolve
     setLoadingPercent(defaultLoadingPercent)
+    // trigger loading state
+    setLoading(true)
+
+    // update project
+    await persistCropState({ format, numOfFrames })
 
     const croppedFullImage = await cropPromise(image, cropData)
     const cropPromises = cropFramePromises(croppedFullImage, numOfFrames, format)
@@ -60,20 +66,30 @@ export default function Cropper (props) {
         setLoading(false)
       })
   }
+  const fullWidth = Dimensions.get('window').width - 20
   const getBestFit = (image, format, numOfFrames) => {
-    if (format === 'square') {
-      return 100
-    } else if (format === 'best-fit') {
-      const frameWidth = (Dimensions.get('window').width - 20) / numOfFrames // TODO get View width
-
-      return frameWidth
+    const dims = {
+      height: 100,
+      width: 100
     }
+
+    if (format === 'square') {
+      const distance = fullWidth / numOfFrames
+      dims.height = distance
+      dims.width = distance
+    } else if (format === 'best-fit') {
+      const frameWidth = fullWidth / numOfFrames // TODO get View width
+
+      dims.width = frameWidth
+    }
+
+    return dims
   }
+  const frameDimensions = getBestFit(image, format, numOfFrames)
+
   const framesArray = []
   // setup array to render grid lines
   for (let i = 0; i < numOfFrames; i++) { framesArray.push(true) }
-
-  const frameWidth = getBestFit(image, format, numOfFrames)
 
   return (
     <Body>
@@ -98,7 +114,7 @@ export default function Cropper (props) {
 
                 <ImageCropper
                   image={image}
-                  size={{ width: Dimensions.get('window').width - 20, height: 100 }}
+                  size={{ width: fullWidth, height: frameDimensions.height }}
                   onTransformDataChange={e => setCropData(e)}
                   style={styles.cropLinesRow} />
                 {/*<ScrollView
@@ -118,8 +134,7 @@ export default function Cropper (props) {
                   {framesArray.map((f, i) => (
                     <View
                       key={i}
-                      style={styles.cropLines}
-                      width={frameWidth}
+                      style={[styles.cropLines, frameDimensions]}
                       pointerEvents='box-none' />
                   ))}
                 </View>
@@ -133,13 +148,13 @@ export default function Cropper (props) {
               <View style={styles.header}>
             <TouchableOpacity
               style={{ alignSelf: 'stretch' }}
-              onPress={onPressBack}>
+              onPress={cancelCrop}>
               <Text style={styles.textButtons}>BACK</Text>
             </TouchableOpacity>
             <View style={{ flex: 2 }} />
             <TouchableOpacity
               style={{ alignSelf: 'stretch' }}
-              onPress={onPressNext}>
+              onPress={executeCrop}>
               <Text style={styles.textButtons}>NEXT</Text>
             </TouchableOpacity>
           </View>
