@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Animated, Dimensions, Image, ImageBackground, ProgressViewIOS, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
+import { BlurView, VibrancyView } from '@react-native-community/blur'
 
 import Body from 'components/Body'
 import ButtonRow from './ButtonRow'
@@ -116,8 +117,8 @@ export default function Cropper (props) {
                 <ImageCropper
                   image={image}
                   size={{ width: fullWidth, height: frameDimensions.height }}
-                  onTransformDataChange={e => setCropData(e)}
-                  style={styles.cropLinesRow} />
+                  style={{ backgroundColor: 'yellow' }}
+                  onTransformDataChange={e => setCropData(e)} />
                 {/*<ScrollView
                   style={styles.editor}
                   maximumZoomScale={.8}
@@ -167,6 +168,9 @@ export default function Cropper (props) {
 }
 
 const styles = StyleSheet.create({
+  blur: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: 'black',
@@ -200,6 +204,7 @@ const styles = StyleSheet.create({
   },
   editorContainer: {
     flex: 1,
+    justifyContent: 'center'
   },
   header: {
     flex: 1,

@@ -9,6 +9,10 @@ import {
 } from 'react-native'
 
 export default class ImageCropper extends React.Component {
+  state = {
+    scrollHeight: 0
+  }
+
   UNSAFE_componentWillMount() {
     // Scale an image to the minimum size that is large enough to completely
     // fill the crop box.
@@ -54,6 +58,7 @@ export default class ImageCropper extends React.Component {
   }
 
   _onScroll(event) {
+    // console.log('_onScroll', event.nativeEvent.contentOffset, event.nativeEvent.contentSize, event.nativeEvent.layoutMeasurement,)
     this._updateTransformData(
       event.nativeEvent.contentOffset,
       event.nativeEvent.contentSize,
@@ -67,10 +72,11 @@ export default class ImageCropper extends React.Component {
     const sizeRatioX = croppedImageSize.width / scaledImageSize.width;
     const sizeRatioY = croppedImageSize.height / scaledImageSize.height;
 
+    const fillerSize = (this.state.scrollHeight - this.props.size.height) / 2
     const cropData: ImageCropData = {
       offset: {
         x: this.props.image.width * offsetRatioX,
-        y: this.props.image.height * offsetRatioY,
+        y: (this.props.image.height * offsetRatioY) - fillerSize,
       },
       size: {
         width: this.props.image.width * sizeRatioX,
@@ -80,15 +86,24 @@ export default class ImageCropper extends React.Component {
     this.props.onTransformDataChange && this.props.onTransformDataChange(cropData)
   }
 
+  onLayout = e => {
+    const {x, y, height, width} = e.nativeEvent.layout
+
+    this.setState({ scrollHeight: height })
+  }
+
   render() {
     const viewWidth = Dimensions.get('window').width - 20 // 10 margins on either side
-    const measuredSize = { height: viewWidth, width: viewWidth }
+    const measuredSize = { maxHeight: this.props.size.height, maxWidth: viewWidth }
+    const { height: imageHeight, width: imageWidth } = this._scaledImageSize
+    const { height, width } = this.props.size
+    const fillerSize = { height: (this.state.scrollHeight - height) / 2, width: viewWidth }
 
     return (
       <ScrollView
         automaticallyAdjustContentInsets={false}
         contentOffset={this._contentOffset}
-        decelerationRate="fast"
+        decelerationRate='fast'
         horizontal={this._horizontal}
         maximumZoomScale={this._maximumZoomScale}
         minimumZoomScale={this._minimumZoomScale}
@@ -97,13 +112,14 @@ export default class ImageCropper extends React.Component {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         style={[styles.imageCropper, measuredSize]}
-        contentContainerStyle={[this.props.style, this._scaledImageSize]}
+        contentContainerStyle={[this.props.style]}
         pinchGestureEnabled
         centerContent
-        scrollEventThrottle={16}>
+        scrollEventThrottle={16}
+        onLayout={e => this.onLayout(e)}>
         <Image
           source={{ uri: this.props.image.path }}
-          style={this._scaledImageSize}
+          style={[styles.image, this._scaledImageSize]}
         />
       </ScrollView>
     );
@@ -111,9 +127,17 @@ export default class ImageCropper extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  filler: {
+    flex: 1,
+    backgroundColor: 'blue',
+  },
+  image: {
+    display: 'flex',
+  },
   imageCropper: {
     alignSelf: 'center',
     width: '100%',
     height: '100%',
+    backgroundColor: 'red',
   },
 })
