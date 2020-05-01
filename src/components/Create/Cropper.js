@@ -9,6 +9,7 @@ import InstagramAuth from './InstagramAuth'
 import ImageCropper from './ImageCropper'
 import { cropFramePromises, cropPromise, saveToCameraRoll } from './utils'
 import PANDO_MUNCH from 'images/pando_munch.gif'
+import PANDO_LOADING from 'images/pando_loading.gif'
 
 const MAX_RATIO_LANDSCAPE = 1.8 // max allowed by instagram landscape best-fit
 const MAX_RATIO_PORTRAIT = 0.8 // max allowed by instagram portrait best-fit
@@ -41,9 +42,8 @@ export default function Cropper (props) {
   }
   const frameDimensions = getBestFit(image, format, numOfFrames)
 
-  const cancelCrop = async () => {
-    await persistCropState({ format, numOfFrames })
-    onCancel()
+  const cancelCrop = () => {
+    onCancel({ format, numOfFrames })
   }
   const executeCrop = async () => {
     const hapticOpts = {
@@ -100,9 +100,9 @@ export default function Cropper (props) {
         ? (
           <View style={styles.container}>
             <ImageBackground
-              source={PANDO_MUNCH}
-              style={{ height: 200, width: 200}} />
-              <Text style={{ color: 'white' }}>
+              source={PANDO_LOADING}
+              style={{ height: 200, width: 200 }} />
+              <Text style={{ color: 'white', fontFamily: 'Oswald-Regular' }}>
                 {`Chopping photo ${loadingPercent.complete + 1} of ${loadingPercent.total}`}
               </Text>
             <ProgressViewIOS
@@ -223,6 +223,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
     justifyContent: 'flex-start',
-    fontFamily: 'Oswald-Regular',
   }
 })

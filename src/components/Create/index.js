@@ -11,8 +11,8 @@ import Import from 'components/Import'
 export default function Create (props) {
   const { project, setProject } = props
   const onImagesReady = images => navigate('export', { images })
-  const saveDraft = async () => {
-    const updatedProject = await updateProject(project)
+  const saveDraft = async cropState => {
+    const updatedProject = await persistCropState(cropState)
 
     navigate('import', { project: updatedProject })
   }
@@ -21,13 +21,13 @@ export default function Create (props) {
     if (project.draft) await deleteProject(project)
     navigate('import', { project: null })
   }
-  const onCancel = () => {
+  const onCancel = cropState => {
     Alert.alert(
       '',
       'If you go back now, your image edits will be discarded.',
       [
-        {text: 'Discard', onPress: deleteDraft, style: styles.discard},
-        {text: 'Save ', onPress: saveDraft},
+        {text: 'Discard', onPress: deleteDraft},
+        {text: 'Save ', onPress: saveDraft.bind(cropState)},
       ],
       { cancelable: true }
     )
@@ -40,7 +40,7 @@ export default function Create (props) {
     const updatedProject = await updateProject(projectEnhanced)
     console.log('persistCropState', cropState, updatedProject)
 
-    setProject(updatedProject)
+    return await setProject(updatedProject)
   }
 
   return (
@@ -66,10 +66,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: 'white',
     width: Dimensions.get('window').width
-  },
-  discard: {
-    color: 'red',
-    backgroundColor: 'blue',
   },
   pano: {
     height: 100,

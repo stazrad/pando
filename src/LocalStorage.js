@@ -54,7 +54,7 @@ export const updateProject = async proj => {
   }
 
   delete project.draft // remove draft key added by createProject
-  
+
   // project will overwrite existing id
   await AsyncStorage.setItem(project.id, JSON.stringify(project))
 

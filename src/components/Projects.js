@@ -50,12 +50,17 @@ export default function Projects (props) {
   const refreshProjects = async () => {
     try {
       const projects = await fetchProjects()
-      console.log('REFRESH PROJECTS', projects)
 
+      props.expandProjects(projects.length > 4)
       setProjects(projects)
     } catch (err) {
       console.log('Projects error', err)
     }
+  }
+  const onScroll = e => {
+    // const { y } = e.nativeEvent.contentOffset
+    //
+    // props.expandProjects(y > 100)
   }
 
   useEffect(() => {

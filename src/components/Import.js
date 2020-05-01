@@ -13,6 +13,7 @@ import Body from 'components/Body'
 import Projects from 'components/Projects'
 
 export default function Import (props) {
+  const [expandProjects, setExpandProjects] = useState(false)
   const openPicker = () => {
     ImagePicker.launchImageLibrary({
       noData: true,
@@ -64,8 +65,8 @@ export default function Import (props) {
             <Text style={styles.text}>IMPORT</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.container}>
-          <Projects />
+        <View style={{...styles.container, ...{ flex: expandProjects ? 2 : 1 }}}>
+          <Projects expandProjects={setExpandProjects} />
         </View>
       </Body>
     </>
