@@ -31,7 +31,6 @@ export function ProjectPreview (props) {
   return (
     <Swipeable
       onRightSwipe={onDeleteProject}
-      onRightActionRelease={onDeleteProject}
       rightButtons={rightButtons}
       rightButtonWidth={200}
       // bounceOnMount

@@ -10,7 +10,8 @@ import Body from 'components/Body'
 import PreInsta from 'components/PreInsta'
 
 export default function Export (props) {
-  const { images } = props
+  const { images, project } = props
+  console.log('project', project)
   const [downloadText, setDownloadText] = useState('SAVE TO CAMERA ROLL')
   const [savedToCameraRoll, setSavedToCameraRoll] = useState(false)
   const [showPreInsta, setShowPreInsta] = useState(false)
@@ -46,7 +47,8 @@ export default function Export (props) {
         onCancel={() => setShowPreInsta(false)}
         onSaveToCameraRoll={onSaveToCameraRoll}
         savedToCameraRoll={savedToCameraRoll}
-        show={showPreInsta} />
+        show={showPreInsta}
+        showExpand={project?.cropState?.format !== 'square'} />
       <Header style={{ backgroundColor: 'white' }} />
       <Body style={{ backgroundColor: 'white' }}>
         <View style={{...styles.container, ...props.style}}>

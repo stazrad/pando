@@ -9,10 +9,10 @@ import MULTI from 'images/icon_instagram_multi.png'
 import EXPAND from 'images/icon_instagram_expand.png'
 
 export default function PreInsta (props) {
-  const { images, onCancel, onSaveToCameraRoll, savedToCameraRoll, show } = props
+  const { images, onCancel, onSaveToCameraRoll, savedToCameraRoll, show, showExpand } = props
   const saveToCameraRoll = async () => {
     // only store images if necessary
-    if (!savedToCameraRoll) await onSaveToCameraRoll(images.reverse())
+    if (!savedToCameraRoll) await onSaveToCameraRoll([...images].reverse())
     Linking.openURL(`instagram://library?AssetPath=${images[0]}`)
   }
 
@@ -33,19 +33,21 @@ export default function PreInsta (props) {
           </View>
           <Text style={styles.text}>Tap "Feed" to create a new post</Text>
         </View>
+        {showExpand &&
+          <View style={styles.row}>
+            <View style={styles.icon}>
+              <Image
+                source={EXPAND} />
+            </View>
+            <Text style={styles.text}>Since your crops are not 1:1, be sure to tap this button to line up your slices</Text>
+          </View>
+        }
         <View style={styles.row}>
           <View style={styles.icon}>
             <Image
               source={MULTI} />
           </View>
           <Text style={styles.text}>Choose "Multi Post" to make a slider of your Pando</Text>
-        </View>
-        <View style={styles.row}>
-          <View style={styles.icon}>
-            <Image
-              source={EXPAND} />
-          </View>
-          <Text style={styles.text}>Be sure to tap this button to line up your slices</Text>
         </View>
         <TouchableOpacity
           style={styles.buttonBig}

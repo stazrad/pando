@@ -20,7 +20,7 @@ export default function App () {
       case 'create':
         return <Create project={project} setProject={setProject} />
       case 'export':
-        return <Export images={exportImages} />
+        return <Export images={exportImages} project={project} />
       case 'home':
         return <Feed />
       case 'import':
