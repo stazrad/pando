@@ -7,11 +7,13 @@ import { navigate } from 'App'
 import { saveToCameraRoll } from 'components/Create/utils'
 import Header from 'components/Header'
 import Body from 'components/Body'
+import PreInsta from 'components/PreInsta'
 
 export default function Export (props) {
   const { images } = props
   const [downloadText, setDownloadText] = useState('SAVE TO CAMERA ROLL')
   const [savedToCameraRoll, setSavedToCameraRoll] = useState(false)
+  const [showPreInsta, setShowPreInsta] = useState(false)
   const hapticOpts = {
     enableVibrateFallback: true,
     ignoreAndroidSystemSettings: false
@@ -34,13 +36,17 @@ export default function Export (props) {
   }
   const onOpenCameraRoll = () => Linking.openURL('photos-redirect://')
   const onOpenInstagram = async images => {
-    // only store images if necessary
-    if (!savedToCameraRoll) await onSaveToCameraRoll(images.reverse())
-    Linking.openURL(`instagram://library?AssetPath=${images[0]}`)
+    setShowPreInsta(true)
   }
 
   return (
     <>
+      <PreInsta
+        images={images}
+        onCancel={() => setShowPreInsta(false)}
+        onSaveToCameraRoll={onSaveToCameraRoll}
+        savedToCameraRoll={savedToCameraRoll}
+        show={showPreInsta} />
       <Header style={{ backgroundColor: 'white' }} />
       <Body style={{ backgroundColor: 'white' }}>
         <View style={{...styles.container, ...props.style}}>
@@ -70,7 +76,7 @@ export default function Export (props) {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.buttonBig}
-                onPress={() => onOpenInstagram(images)}>
+                onPress={onOpenInstagram}>
                 <Text style={styles.buttonBigText}>OPEN INSTAGRAM</Text>
               </TouchableOpacity>
             </View>

@@ -107,7 +107,7 @@ export default function Cropper (props) {
               </Text>
             <ProgressViewIOS
               progress={loadingPercent.percentComplete}
-              progressTintColor='pink'
+              progressTintColor='white'
               style={{ flex: 1, width: '80%', height: 400, position: 'absolute', bottom: 0 }} />
           </View>
         ):(
