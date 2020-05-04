@@ -1,6 +1,9 @@
-import { ImageStore, Platform } from 'react-native'
+import { Image, Platform } from 'react-native'
 import CameraRoll from '@react-native-community/cameraroll'
 import ImageEditor from '@react-native-community/image-editor'
+import ImageMarker from 'react-native-image-marker'
+
+import PANDO from 'images/watermark.png'
 
 export const cropFramePromises = (image, numOfFrames, format) => {
   const framePixelWidth = image.width / numOfFrames
@@ -16,11 +19,26 @@ export const cropFramePromises = (image, numOfFrames, format) => {
     }
 
     const promise = new Promise((resolve, reject) => {
-      setTimeout(() => {
+      setTimeout(async () => {
         return ImageEditor.cropImage(image.path, cropData)
           .then(croppedImageUri => {
-            resolve(croppedImageUri)
+            if (i !== numOfFrames - 1) {
+              resolve(croppedImageUri)
+            } else {
+              // add the watermark to the last crop frame
+              const lastImage = {
+                height: image.height,
+                path: croppedImageUri,
+                width: framePixelWidth
+              }
+
+              return addWatermark(lastImage)
+            }
           })
+          .then(watermarkedImageUri => {
+            resolve(watermarkedImageUri)
+          })
+          .catch(e => console.error('cropping ERROR:', e))
       }, i * 1500)
     })
 
@@ -41,6 +59,22 @@ export async function cropPromise (image, cropData) {
   } catch (cropError) {
     throw Error(cropError)
   }
+}
+
+export async function addWatermark (image) {
+  const path = await ImageMarker.markImage({
+      src: image.path,
+      markerSrc: PANDO, // icon uri
+      X: image.width - 240, // left
+      Y: image.height - 180, // top
+      scale: 1, // scale of bg
+      markerScale: 0.1, // scale of icon
+      quality: 100, // quality of image
+      saveFormat: 'jpg',
+  })
+  const markedImage = Platform.OS === 'android' ? 'file://' + path : path
+
+  return markedImage
 }
 
 export const saveToCameraRoll = croppedImageUri => {

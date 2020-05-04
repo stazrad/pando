@@ -41,6 +41,7 @@ target 'Pando' do
   pod 'RNReanimated', :podspec => '../node_modules/react-native-reanimated/RNReanimated.podspec'
   pod 'RNScreens', :path => '../node_modules/react-native-screens'
   pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
+  pod 'RNImageMarker', :path => '../node_modules/react-native-image-marker'
 
   # Automatically detect installed unimodules
   use_unimodules!
