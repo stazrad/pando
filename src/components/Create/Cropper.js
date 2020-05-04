@@ -7,6 +7,7 @@ import Body from 'components/Body'
 import ButtonRow from './ButtonRow'
 import InstagramAuth from './InstagramAuth'
 import ImageCropper from './ImageCropper'
+import Loading from './Loading'
 import { cropFramePromises, cropPromise, saveToCameraRoll } from './utils'
 import PANDO_MUNCH from 'images/pando_munch.gif'
 import PANDO_LOADING from 'images/pando_loading.gif'
@@ -16,7 +17,6 @@ const MAX_RATIO_PORTRAIT = 0.8 // max allowed by instagram portrait best-fit
 
 export default function Cropper (props) {
   const { onCancel, onImagesReady, persistCropState, project } = props
-  console.log('Cropper project', project)
   const { cropState = {}, image } = project || {}
   const [numOfFrames, setNumOfFrames] = useState(cropState.numOfFrames || 3)
   const [format, setFormat] = useState(cropState.format || 'square')
@@ -67,7 +67,6 @@ export default function Cropper (props) {
     await persistCropState({ format, numOfFrames })
 
     const croppedFullImage = await cropPromise(image, cropData)
-    console.log('cropData', cropData, frameDimensions, croppedFullImage, image)
     const cropPromises = cropFramePromises(croppedFullImage, numOfFrames, format)
 
     cropPromises.forEach((promise, i) => {
@@ -96,73 +95,59 @@ export default function Cropper (props) {
 
   return (
     <Body>
-      {loading
-        ? (
-          <View style={styles.container}>
-            <ImageBackground
-              source={PANDO_LOADING}
-              style={{ height: 200, width: 200 }} />
-              <Text style={{ color: 'white', fontFamily: 'Oswald-Regular' }}>
-                {`Chopping photo ${loadingPercent.complete + 1} of ${loadingPercent.total}`}
-              </Text>
-            <ProgressViewIOS
-              progress={loadingPercent.percentComplete}
-              progressTintColor='white'
-              style={{ flex: 1, width: '80%', height: 400, position: 'absolute', bottom: 0 }} />
-          </View>
-        ):(
-          <View style={styles.container}>
-            {image &&
-              <View style={styles.editorContainer}>
-                <ImageCropper
-                  image={image}
-                  size={{ width: fullWidth, height: frameDimensions.height }}
-                  style={{ backgroundColor: 'yellow' }}
-                  onTransformDataChange={e => setCropData(e)} />
-                {/*<ScrollView
-                  style={styles.editor}
-                  maximumZoomScale={.8}
-                  minimumZoomScale={.2}
-                  pinchGestureEnabledpersistentScrollbar
-                  overScrollMode={true}
-                  directionalLockEnabled
-                  alwaysBounceVertical={true}
-                  contentContainerStyle={styles.cropContainer}>
-                  <Image
-                    source={{ uri: image.path }}
-                    style={{ ...styles.image, width: image.width, height: image.height }} />
-                </ScrollView>*/}
-                <View style={styles.cropLinesRow} pointerEvents='box-none' >
-                  {framesArray.map((f, i) => (
-                    <View
-                      key={i}
-                      style={[styles.cropLines, frameDimensions]}
-                      pointerEvents='box-none' />
-                  ))}
-                </View>
+      <>
+        <Loading loading={loading} loadingPercent={loadingPercent} />
+        <View style={styles.container}>
+          {image &&
+            <View style={styles.editorContainer}>
+              <ImageCropper
+                image={image}
+                size={{ width: fullWidth, height: frameDimensions.height }}
+                style={{ backgroundColor: 'yellow' }}
+                onTransformDataChange={e => setCropData(e)} />
+              {/*<ScrollView
+                style={styles.editor}
+                maximumZoomScale={.8}
+                minimumZoomScale={.2}
+                pinchGestureEnabledpersistentScrollbar
+                overScrollMode={true}
+                directionalLockEnabled
+                alwaysBounceVertical={true}
+                contentContainerStyle={styles.cropContainer}>
+                <Image
+                  source={{ uri: image.path }}
+                  style={{ ...styles.image, width: image.width, height: image.height }} />
+              </ScrollView>*/}
+              <View style={styles.cropLinesRow} pointerEvents='box-none' >
+                {framesArray.map((f, i) => (
+                  <View
+                    key={i}
+                    style={[styles.cropLines, frameDimensions]}
+                    pointerEvents='box-none' />
+                ))}
               </View>
-            }
-            <ButtonRow
-              format={format}
-              numOfFrames={numOfFrames}
-              onSetFormat={setFormat}
-              onSetNumOfFrames={setNumOfFrames} />
-              <View style={styles.header}>
-            <TouchableOpacity
-              style={{ alignSelf: 'stretch' }}
-              onPress={cancelCrop}>
-              <Text style={styles.textButtons}>BACK</Text>
-            </TouchableOpacity>
-            <View style={{ flex: 2 }} />
-            <TouchableOpacity
-              style={{ alignSelf: 'stretch' }}
-              onPress={executeCrop}>
-              <Text style={styles.textButtons}>NEXT</Text>
-            </TouchableOpacity>
-          </View>
-          </View>
-        )
-      }
+            </View>
+          }
+          <ButtonRow
+            format={format}
+            numOfFrames={numOfFrames}
+            onSetFormat={setFormat}
+            onSetNumOfFrames={setNumOfFrames} />
+            <View style={styles.header}>
+          <TouchableOpacity
+            style={{ alignSelf: 'stretch' }}
+            onPress={cancelCrop}>
+            <Text style={styles.textButtons}>BACK</Text>
+          </TouchableOpacity>
+          <View style={{ flex: 2 }} />
+          <TouchableOpacity
+            style={{ alignSelf: 'stretch' }}
+            onPress={executeCrop}>
+            <Text style={styles.textButtons}>NEXT</Text>
+          </TouchableOpacity>
+        </View>
+        </View>
+      </>
     </Body>
   )
 }

@@ -17,7 +17,7 @@ export default function PreInsta (props) {
   }
 
   return (
-    <SafeAreaView style={{ ...styles.container, display: show ? 'flex' : 'none' }}>
+    <SafeAreaView style={{ ...styles.container, zIndex: show ? 99 : 0 }}>
       <Body style={styles.body}>
         <View style={styles.row}>
           <View style={styles.icon}>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    zIndex: 99,
+    zIndex: 0,
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
