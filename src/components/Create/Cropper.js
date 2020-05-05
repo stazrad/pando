@@ -103,19 +103,6 @@ export default function Cropper (props) {
                 size={{ width: fullWidth, height: frameDimensions.height }}
                 style={{ backgroundColor: 'yellow' }}
                 onTransformDataChange={e => setCropData(e)} />
-              {/*<ScrollView
-                style={styles.editor}
-                maximumZoomScale={.8}
-                minimumZoomScale={.2}
-                pinchGestureEnabledpersistentScrollbar
-                overScrollMode={true}
-                directionalLockEnabled
-                alwaysBounceVertical={true}
-                contentContainerStyle={styles.cropContainer}>
-                <Image
-                  source={{ uri: image.path }}
-                  style={{ ...styles.image, width: image.width, height: image.height }} />
-              </ScrollView>*/}
               <View style={styles.cropLinesRow} pointerEvents='box-none' >
                 {framesArray.map((f, i) => (
                   <View
@@ -131,19 +118,19 @@ export default function Cropper (props) {
             numOfFrames={numOfFrames}
             onSetFormat={setFormat}
             onSetNumOfFrames={setNumOfFrames} />
-            <View style={styles.header}>
-          <TouchableOpacity
-            style={{ alignSelf: 'stretch' }}
-            onPress={cancelCrop}>
-            <Text style={styles.textButtons}>BACK</Text>
-          </TouchableOpacity>
-          <View style={{ flex: 2 }} />
-          <TouchableOpacity
-            style={{ alignSelf: 'stretch' }}
-            onPress={executeCrop}>
-            <Text style={styles.textButtons}>NEXT</Text>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.header}>
+            <TouchableOpacity
+              style={{ alignSelf: 'stretch' }}
+              onPress={cancelCrop}>
+              <Text style={styles.textButtons}>BACK</Text>
+            </TouchableOpacity>
+            <View style={{ flex: 2 }} />
+            <TouchableOpacity
+              style={{ alignSelf: 'stretch' }}
+              onPress={executeCrop}>
+              <Text style={styles.textButtons}>NEXT</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </>
     </Body>
