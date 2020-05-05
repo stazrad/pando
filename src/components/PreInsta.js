@@ -11,6 +11,8 @@ import EXPAND from 'images/icon_instagram_expand.png'
 export default function PreInsta (props) {
   const { images, onCancel, onSaveToCameraRoll, savedToCameraRoll, show, showExpand } = props
   const saveToCameraRoll = async () => {
+    // close this modal before moving over to insta
+    onCancel()
     // only store images if necessary
     if (!savedToCameraRoll) await onSaveToCameraRoll([...images].reverse())
     Linking.openURL(`instagram://library?AssetPath=${images[0]}`)
@@ -57,7 +59,7 @@ export default function PreInsta (props) {
         <TouchableOpacity
           style={{...styles.buttonBig, backgroundColor: 'white'}}
           onPress={onCancel}>
-          <Text style={{...styles.buttonBigText, color: 'black'}}>BACK</Text>
+          <Text style={{...styles.buttonBigText, color: 'black', fontFamily: 'Oswald-Regular'}}>BACK</Text>
         </TouchableOpacity>
       </Body>
     </SafeAreaView>

@@ -65,8 +65,8 @@ export async function addWatermark (image) {
   const path = await ImageMarker.markImage({
       src: image.path,
       markerSrc: PANDO, // icon uri
-      X: image.width - 240, // left
-      Y: image.height - 180, // top
+      X: image.width - 250, // left
+      Y: image.height - 50, // top
       scale: 1, // scale of bg
       markerScale: 0.1, // scale of icon
       quality: 100, // quality of image

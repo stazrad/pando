@@ -9,8 +9,6 @@ import InstagramAuth from './InstagramAuth'
 import ImageCropper from './ImageCropper'
 import Loading from './Loading'
 import { cropFramePromises, cropPromise, saveToCameraRoll } from './utils'
-import PANDO_MUNCH from 'images/pando_munch.gif'
-import PANDO_LOADING from 'images/pando_loading.gif'
 
 const MAX_RATIO_LANDSCAPE = 1.8 // max allowed by instagram landscape best-fit
 const MAX_RATIO_PORTRAIT = 0.8 // max allowed by instagram portrait best-fit
