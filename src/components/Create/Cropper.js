@@ -27,7 +27,7 @@ export default function Cropper (props) {
     const frameWidth = fullWidth / numOfFrames
     const dims = {
       height: frameWidth, // defaulted to square format
-      width: frameWidth
+      width: frameWidth,
     }
 
     if (format === 'landscape') {
