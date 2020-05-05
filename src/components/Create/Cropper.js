@@ -44,12 +44,6 @@ export default function Cropper (props) {
     onCancel({ format, numOfFrames })
   }
   const executeCrop = async () => {
-    const hapticOpts = {
-      enableVibrateFallback: true,
-      ignoreAndroidSystemSettings: false
-    }
-    ReactNativeHapticFeedback.trigger('impactMedium', hapticOpts)
-
     const defaultLoadingPercent = {
       complete: 0,
       percentComplete: 0,
@@ -77,7 +71,15 @@ export default function Cropper (props) {
         total
       }
       // loop through promises to add percentage
-      promise.then(() => setLoadingPercent(loadingPercent))
+      promise.then(() => {
+        const hapticOpts = {
+          enableVibrateFallback: true,
+          ignoreAndroidSystemSettings: false
+        }
+
+        ReactNativeHapticFeedback.trigger('impactMedium', hapticOpts)
+        setLoadingPercent(loadingPercent)
+      })
     })
 
     return Promise.all(cropPromises)
@@ -101,7 +103,6 @@ export default function Cropper (props) {
               <ImageCropper
                 image={image}
                 size={{ width: fullWidth, height: frameDimensions.height }}
-                style={{ backgroundColor: 'yellow' }}
                 onTransformDataChange={e => setCropData(e)} />
               <View style={styles.cropLinesRow} pointerEvents='box-none' >
                 {framesArray.map((f, i) => (

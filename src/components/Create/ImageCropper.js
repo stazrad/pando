@@ -112,7 +112,7 @@ export default class ImageCropper extends React.Component {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         style={[styles.imageCropper, measuredSize]}
-        contentContainerStyle={[this.props.style]}
+        contentContainerStyle={[styles.contentContainer, measuredSize]}
         pinchGestureEnabled
         centerContent
         scrollEventThrottle={16}
@@ -127,16 +127,20 @@ export default class ImageCropper extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    alignItems: 'center',
+    backgroundColor: 'purple',
+    overflow: 'hidden',
+  },
   filler: {
     flex: 1,
-    backgroundColor: 'blue',
+    backgroundColor: 'green',
   },
   image: {
     display: 'flex',
   },
   imageCropper: {
     alignSelf: 'center',
-    width: '100%',
-    height: '100%',
+    overflow: 'hidden',
   },
 })
