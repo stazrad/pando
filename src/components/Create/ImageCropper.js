@@ -20,7 +20,6 @@ export default class ImageCropper extends React.Component {
         width: 0
       }
     },
-    scrollHeight: 0,
   }
 
   UNSAFE_componentWillMount() {
@@ -59,8 +58,8 @@ export default class ImageCropper extends React.Component {
       }
     }
     this._contentOffset = {
-      x: (this._scaledImageSize.width - this.props.containerSize.width) / 2,
-      y: (this._scaledImageSize.height - this.props.containerSize.height) / 2,
+      x: (this._scaledImageSize.width - this.props.size.width) / 2,
+      y: (this._scaledImageSize.height - this.props.size.height) / 2,
     };
     this._maximumZoomScale = Math.min(
       this.props.image.width / this._scaledImageSize.width,
@@ -78,7 +77,6 @@ export default class ImageCropper extends React.Component {
   }
 
   _onScroll(event) {
-    // console.log('_onScroll', event.nativeEvent.contentOffset, event.nativeEvent.contentSize, event.nativeEvent.layoutMeasurement,)
     this._updateTransformData(
       event.nativeEvent.contentOffset,
       event.nativeEvent.contentSize,
@@ -107,12 +105,6 @@ export default class ImageCropper extends React.Component {
     this.props.onTransformDataChange && this.props.onTransformDataChange(cropData)
   }
 
-  onLayout = e => {
-    const {x, y, height, width} = e.nativeEvent.layout
-
-    this.setState({ scrollHeight: height })
-  }
-
   render() {
     const viewWidth = Dimensions.get('window').width - 20 // 10 margins on either side
     const measuredSize = { maxHeight: this.props.size.height, maxWidth: viewWidth }
@@ -139,8 +131,7 @@ export default class ImageCropper extends React.Component {
         pinchGestureEnabled
         centerContent
         directionalLockEnabled
-        scrollEventThrottle={16}
-        onLayout={e => this.onLayout(e)}>
+        scrollEventThrottle={16}>
         <Image
           source={{ uri: this.props.image.path }}
           style={[styles.image, this._scaledImageSize]}
