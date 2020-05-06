@@ -7,7 +7,7 @@ export const createProject = async ({ image }) => {
   // set uuid to make multiple edits/projects of the same pic
   const id = uuidv4()
   const project = {
-    cropState: {},
+    imageCropperState: {},
     dateLastEdit: new Date(),
     draft: true,
     id,

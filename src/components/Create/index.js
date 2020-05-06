@@ -38,7 +38,6 @@ export default function Create (props) {
       cropState
     }
     const updatedProject = await updateProject(projectEnhanced)
-    console.log('persistCropState', cropState, updatedProject)
 
     return await setProject(updatedProject)
   }

@@ -18,7 +18,7 @@ export default function Cropper (props) {
   const { cropState = {}, image } = project || {}
   const [numOfFrames, setNumOfFrames] = useState(cropState.numOfFrames || 3)
   const [format, setFormat] = useState(cropState.format || 'square')
-  const [cropData, setCropData] = useState(null)
+  const [imageCropperState, setImageCropperState] = useState(null)
   const [loading, setLoading] = useState(false)
   const [loadingPercent, setLoadingPercent] = useState({})
   const [containerSize, setContainerSize] = useState(null)
@@ -42,7 +42,7 @@ export default function Cropper (props) {
   const frameDimensions = getBestFit(image, format, numOfFrames)
 
   const cancelCrop = () => {
-    onCancel({ cropData, format, numOfFrames })
+    onCancel({ imageCropperState, format, numOfFrames })
   }
   const executeCrop = async () => {
     const defaultLoadingPercent = {
@@ -57,9 +57,9 @@ export default function Cropper (props) {
     setLoading(true)
 
     // update project
-    await persistCropState({ cropData, format, numOfFrames })
+    await persistCropState({ imageCropperState, format, numOfFrames })
 
-    const croppedFullImage = await cropPromise(image, cropData)
+    const croppedFullImage = await cropPromise(image, imageCropperState.cropData)
     const cropPromises = cropFramePromises(croppedFullImage, numOfFrames, format)
 
     cropPromises.forEach((promise, i) => {
@@ -107,7 +107,8 @@ export default function Cropper (props) {
                     image={image}
                     size={{ width: fullWidth, height: frameDimensions.height }}
                     containerSize={containerSize}
-                    onTransformDataChange={e => setCropData(e)} />
+                    imageCropperState={project?.cropState?.imageCropperState}
+                    onTransformDataChange={e => setImageCropperState(e)} />
                   <View style={styles.cropLinesRow} pointerEvents='box-none'>
                     {framesArray.map((f, i) => (
                       <View
