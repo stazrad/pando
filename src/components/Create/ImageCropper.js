@@ -10,34 +10,43 @@ import {
 
 export default class ImageCropper extends React.Component {
   state = {
-    scrollHeight: 0
+    cropData: {
+      offset: {
+        x: 0,
+        y: 0,
+      },
+      size: {
+        height: 0,
+        width: 0
+      }
+    },
+    scrollHeight: 0,
   }
 
   UNSAFE_componentWillMount() {
-    this.resetImageSize()
+    this.resetImageSize(this.props.size)
   }
 
   UNSAFE_componentWillReceiveProps (nextProps) {
     if (this.props.size.height !== nextProps.size.height || this.props.size.width !== nextProps.size.width) {
-      console.log('PROPS')
-      setTimeout(() => this.resetImageSize(), 800)
+      this.resetImageSize(nextProps.size)
     }
   }
 
-  resetImageSize () {
+  resetImageSize (size) {
     // Scale an image to the minimum size that is large enough to completely
     // fill the crop box.
-    const widthRatio = this.props.image.width / this.props.size.width;
-    const heightRatio = this.props.image.height / this.props.size.height;
+    const widthRatio = this.props.image.width / size.width;
+    const heightRatio = this.props.image.height / size.height;
     this._horizontal = widthRatio > heightRatio;
     if (this._horizontal) {
       this._scaledImageSize = {
         width: this.props.image.width / heightRatio,
-        height: this.props.size.height,
+        height: size.height,
       };
     } else {
       this._scaledImageSize = {
-        width: this.props.size.width,
+        width: size.width,
         height: this.props.image.height / widthRatio,
       };
       if (Platform.OS === 'android') {
@@ -50,21 +59,21 @@ export default class ImageCropper extends React.Component {
       }
     }
     this._contentOffset = {
-      x: (this._scaledImageSize.width - this.props.size.width) / 2,
-      y: (this._scaledImageSize.height - this.props.size.height) / 2,
+      x: (this._scaledImageSize.width - this.props.containerSize.width) / 2,
+      y: (this._scaledImageSize.height - this.props.containerSize.height) / 2,
     };
     this._maximumZoomScale = Math.min(
       this.props.image.width / this._scaledImageSize.width,
       this.props.image.height / this._scaledImageSize.height,
     );
     this._minimumZoomScale = Math.max(
-      this.props.size.width / this._scaledImageSize.width,
-      this.props.size.height / this._scaledImageSize.height,
+      size.width / this._scaledImageSize.width,
+      size.height / this._scaledImageSize.height,
     );
     this._updateTransformData(
       this._contentOffset,
       this._scaledImageSize,
-      this.props.size,
+      size,
     );
   }
 
@@ -83,11 +92,10 @@ export default class ImageCropper extends React.Component {
     const sizeRatioX = croppedImageSize.width / scaledImageSize.width;
     const sizeRatioY = croppedImageSize.height / scaledImageSize.height;
 
-    const fillerSize = (this.state.scrollHeight - this.props.size.height) / 2
-    const cropData: ImageCropData = {
+    const cropData = {
       offset: {
         x: this.props.image.width * offsetRatioX,
-        y: (this.props.image.height * offsetRatioY) - fillerSize,
+        y: (this.props.image.height * offsetRatioY),
       },
       size: {
         width: this.props.image.width * sizeRatioX,
@@ -95,7 +103,7 @@ export default class ImageCropper extends React.Component {
       },
     };
 
-    this.forceUpdate()
+    this.setState({ cropData })
     this.props.onTransformDataChange && this.props.onTransformDataChange(cropData)
   }
 
@@ -110,7 +118,9 @@ export default class ImageCropper extends React.Component {
     const measuredSize = { maxHeight: this.props.size.height, maxWidth: viewWidth }
     const { height: imageHeight, width: imageWidth } = this._scaledImageSize
     const { height, width } = this.props.size
-    const fillerSize = { height: (this.state.scrollHeight - height) / 2, width: viewWidth }
+    const { containerSize = {} } = this.props
+    const { cropData } = this.state
+    const fillerSize = { height: containerSize?.height + (imageHeight - height), width: containerSize?.width || viewWidth }
 
     return (
       <ScrollView
@@ -125,9 +135,10 @@ export default class ImageCropper extends React.Component {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         style={[styles.imageCropper, measuredSize]}
-        contentContainerStyle={[styles.contentContainer, measuredSize]}
+        contentContainerStyle={[styles.contentContainer]}
         pinchGestureEnabled
         centerContent
+        directionalLockEnabled
         scrollEventThrottle={16}
         onLayout={e => this.onLayout(e)}>
         <Image
@@ -142,6 +153,7 @@ export default class ImageCropper extends React.Component {
 const styles = StyleSheet.create({
   contentContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: 'purple',
     overflow: 'hidden',
   },

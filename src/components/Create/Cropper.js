@@ -21,6 +21,7 @@ export default function Cropper (props) {
   const [cropData, setCropData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [loadingPercent, setLoadingPercent] = useState({})
+  const [containerSize, setContainerSize] = useState(null)
 
   const fullWidth = Dimensions.get('window').width - 20
   const getBestFit = (image, format, numOfFrames) => {
@@ -99,19 +100,24 @@ export default function Cropper (props) {
         <Loading loading={loading} loadingPercent={loadingPercent} />
         <View style={styles.container}>
           {image &&
-            <View style={styles.editorContainer}>
-              <ImageCropper
-                image={image}
-                size={{ width: fullWidth, height: frameDimensions.height }}
-                onTransformDataChange={e => setCropData(e)} />
-              <View style={styles.cropLinesRow} pointerEvents='box-none' >
-                {framesArray.map((f, i) => (
-                  <View
-                    key={i}
-                    style={[styles.cropLines, frameDimensions]}
-                    pointerEvents='box-none' />
-                ))}
-              </View>
+            <View style={styles.editorContainer} onLayout={e => setContainerSize(e.nativeEvent.layout)}>
+              {containerSize &&
+                <>
+                  <ImageCropper
+                    image={image}
+                    size={{ width: fullWidth, height: frameDimensions.height }}
+                    containerSize={containerSize}
+                    onTransformDataChange={e => setCropData(e)} />
+                  <View style={styles.cropLinesRow} pointerEvents='box-none'>
+                    {framesArray.map((f, i) => (
+                      <View
+                        key={i}
+                        style={[styles.cropLines, frameDimensions]}
+                        pointerEvents='box-none' />
+                    ))}
+                  </View>
+                </>
+              }
             </View>
           }
           <ButtonRow
@@ -175,7 +181,8 @@ const styles = StyleSheet.create({
   },
   editorContainer: {
     flex: 1,
-    justifyContent: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   header: {
     flex: 1,
