@@ -42,8 +42,6 @@ export const fetchProjects = async () => {
     .map(([ key, value]) => JSON.parse(value))
     .sort((a, b) => new Date(b.dateLastEdit) - new Date(a.dateLastEdit))
 
-  projects.forEach(proj => console.log(proj))
-
   return projects
 }
 

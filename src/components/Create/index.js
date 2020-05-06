@@ -13,6 +13,7 @@ export default function Create (props) {
   const onImagesReady = images => navigate('export', { images })
   const saveDraft = async cropState => {
     const updatedProject = await persistCropState(cropState)
+    console.log('saveDraft', cropState)
 
     navigate('import', { project: updatedProject })
   }
@@ -27,7 +28,7 @@ export default function Create (props) {
       'If you go back now, your image edits will be discarded.',
       [
         {text: 'Discard', onPress: deleteDraft},
-        {text: 'Save ', onPress: saveDraft.bind(cropState)},
+        {text: 'Save ', onPress: () => saveDraft(cropState)},
       ],
       { cancelable: true }
     )
