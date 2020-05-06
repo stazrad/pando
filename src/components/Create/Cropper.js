@@ -18,16 +18,17 @@ export default function Cropper (props) {
   const { cropState = {}, image } = project || {}
   const [numOfFrames, setNumOfFrames] = useState(cropState.numOfFrames || 3)
   const [format, setFormat] = useState(cropState.format || 'square')
-  const [cropData, setCropData] = useState(null)
+  const [imageCropperState, setImageCropperState] = useState(null)
   const [loading, setLoading] = useState(false)
   const [loadingPercent, setLoadingPercent] = useState({})
+  const [containerSize, setContainerSize] = useState(null)
 
   const fullWidth = Dimensions.get('window').width - 20
   const getBestFit = (image, format, numOfFrames) => {
     const frameWidth = fullWidth / numOfFrames
     const dims = {
       height: frameWidth, // defaulted to square format
-      width: frameWidth
+      width: frameWidth,
     }
 
     if (format === 'landscape') {
@@ -41,7 +42,7 @@ export default function Cropper (props) {
   const frameDimensions = getBestFit(image, format, numOfFrames)
 
   const cancelCrop = () => {
-    onCancel({ format, numOfFrames })
+    onCancel({ imageCropperState, format, numOfFrames })
   }
   const executeCrop = async () => {
     const defaultLoadingPercent = {
@@ -56,9 +57,9 @@ export default function Cropper (props) {
     setLoading(true)
 
     // update project
-    await persistCropState({ format, numOfFrames })
+    await persistCropState({ imageCropperState, format, numOfFrames })
 
-    const croppedFullImage = await cropPromise(image, cropData)
+    const croppedFullImage = await cropPromise(image, imageCropperState.cropData)
     const cropPromises = cropFramePromises(croppedFullImage, numOfFrames, format)
 
     cropPromises.forEach((promise, i) => {
@@ -99,19 +100,25 @@ export default function Cropper (props) {
         <Loading loading={loading} loadingPercent={loadingPercent} />
         <View style={styles.container}>
           {image &&
-            <View style={styles.editorContainer}>
-              <ImageCropper
-                image={image}
-                size={{ width: fullWidth, height: frameDimensions.height }}
-                onTransformDataChange={e => setCropData(e)} />
-              <View style={styles.cropLinesRow} pointerEvents='box-none' >
-                {framesArray.map((f, i) => (
-                  <View
-                    key={i}
-                    style={[styles.cropLines, frameDimensions]}
-                    pointerEvents='box-none' />
-                ))}
-              </View>
+            <View style={styles.editorContainer} onLayout={e => setContainerSize(e.nativeEvent.layout)}>
+              {containerSize &&
+                <>
+                  <ImageCropper
+                    image={image}
+                    size={{ width: fullWidth, height: frameDimensions.height }}
+                    containerSize={containerSize}
+                    imageCropperState={project?.cropState?.imageCropperState}
+                    onTransformDataChange={e => setImageCropperState(e)} />
+                  <View style={styles.cropLinesRow} pointerEvents='box-none'>
+                    {framesArray.map((f, i) => (
+                      <View
+                        key={i}
+                        style={[styles.cropLines, frameDimensions]}
+                        pointerEvents='box-none' />
+                    ))}
+                  </View>
+                </>
+              }
             </View>
           }
           <ButtonRow
@@ -175,7 +182,8 @@ const styles = StyleSheet.create({
   },
   editorContainer: {
     flex: 1,
-    justifyContent: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   header: {
     flex: 1,

@@ -14,7 +14,7 @@ export default function Create (props) {
   const saveDraft = async cropState => {
     const updatedProject = await persistCropState(cropState)
 
-    navigate('import', { project: updatedProject })
+    navigate('import', { project: null })
   }
   const deleteDraft = async () => {
     // only delete new imports; leave existing projects
@@ -27,7 +27,7 @@ export default function Create (props) {
       'If you go back now, your image edits will be discarded.',
       [
         {text: 'Discard', onPress: deleteDraft},
-        {text: 'Save ', onPress: saveDraft.bind(cropState)},
+        {text: 'Save ', onPress: () => saveDraft(cropState)},
       ],
       { cancelable: true }
     )
@@ -38,9 +38,10 @@ export default function Create (props) {
       cropState
     }
     const updatedProject = await updateProject(projectEnhanced)
-    console.log('persistCropState', cropState, updatedProject)
 
-    return await setProject(updatedProject)
+    await setProject(updatedProject)
+
+    return updatedProject
   }
 
   return (
