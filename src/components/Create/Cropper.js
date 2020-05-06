@@ -57,7 +57,6 @@ export default function Cropper (props) {
     setLoading(true)
 
     // update project
-    console.log('cropData', cropData)
     await persistCropState({ cropData, format, numOfFrames })
 
     const croppedFullImage = await cropPromise(image, cropData)

@@ -110,9 +110,6 @@ export default class ImageCropper extends React.Component {
     const measuredSize = { maxHeight: this.props.size.height, maxWidth: viewWidth }
     const { height: imageHeight, width: imageWidth } = this._scaledImageSize
     const { height, width } = this.props.size
-    const { containerSize = {} } = this.props
-    const { cropData } = this.state
-    const fillerSize = { height: containerSize?.height + (imageHeight - height), width: containerSize?.width || viewWidth }
 
     return (
       <ScrollView
