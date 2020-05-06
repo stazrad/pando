@@ -7,6 +7,7 @@ export const createProject = async ({ image }) => {
   // set uuid to make multiple edits/projects of the same pic
   const id = uuidv4()
   const project = {
+    imageCropperState: {},
     dateLastEdit: new Date(),
     draft: true,
     id,
@@ -41,8 +42,6 @@ export const fetchProjects = async () => {
     .map(([ key, value]) => JSON.parse(value))
     .sort((a, b) => new Date(b.dateLastEdit) - new Date(a.dateLastEdit))
 
-  projects.forEach(proj => console.log(proj))
-
   return projects
 }
 
@@ -50,8 +49,9 @@ export const updateProject = async proj => {
   const project = {
     ...proj,
     dateLastEdit: new Date(),
-    draft: undefined // remove draft key added by createProject
   }
+
+  delete project.draft // remove draft key added by createProject
 
   // project will overwrite existing id
   await AsyncStorage.setItem(project.id, JSON.stringify(project))

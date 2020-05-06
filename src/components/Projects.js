@@ -31,7 +31,6 @@ export function ProjectPreview (props) {
   return (
     <Swipeable
       onRightSwipe={onDeleteProject}
-      onRightActionRelease={onDeleteProject}
       rightButtons={rightButtons}
       rightButtonWidth={200}
       // bounceOnMount
@@ -51,10 +50,16 @@ export default function Projects (props) {
     try {
       const projects = await fetchProjects()
 
+      props.expandProjects(projects.length > 4)
       setProjects(projects)
     } catch (err) {
       console.log('Projects error', err)
     }
+  }
+  const onScroll = e => {
+    // const { y } = e.nativeEvent.contentOffset
+    //
+    // props.expandProjects(y > 100)
   }
 
   useEffect(() => {

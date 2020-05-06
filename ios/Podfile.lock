@@ -271,6 +271,8 @@ PODS:
     - React-Core
     - React-RCTImage
     - RSKImageCropper
+  - RNImageMarker (0.6.1):
+    - React
   - RNReactNativeHapticFeedback (1.9.0):
     - React
   - RNReanimated (1.4.0):
@@ -345,6 +347,7 @@ DEPENDENCIES:
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler/RNGestureHandler.podspec`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
+  - RNImageMarker (from `../node_modules/react-native-image-marker`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated/RNReanimated.podspec`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -468,6 +471,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native-gesture-handler/RNGestureHandler.podspec"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
+  RNImageMarker:
+    :path: "../node_modules/react-native-image-marker"
   RNReactNativeHapticFeedback:
     :path: "../node_modules/react-native-haptic-feedback"
   RNReanimated:
@@ -561,6 +566,7 @@ SPEC CHECKSUMS:
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: 911d3b110a7a233a34c4f800e7188a84b75319c6
   RNImageCropPicker: cf129d17e042ce3e96fb9ada967c28f21f977c82
+  RNImageMarker: 3d2ad96afe3db0965ecff23ca97d65b812d06b47
   RNReactNativeHapticFeedback: 2566b468cc8d0e7bb2f84b23adc0f4614594d071
   RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
   RNScreens: 72136224c789172bb14bb59a51d511e07f773138
@@ -580,6 +586,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: ee5b1ee1056eb338ff2d521ba79460d8cd0bae7d
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 2003ee6e746f1dd68f3bf32a23de80d34adc9223
+PODFILE CHECKSUM: 09bf8727123895639c9b5c8b14e5a29d7711ff84
 
 COCOAPODS: 1.6.1

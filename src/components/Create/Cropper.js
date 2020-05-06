@@ -1,34 +1,50 @@
 import React, { useState } from 'react'
 import { Animated, Dimensions, Image, ImageBackground, ProgressViewIOS, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { PinchGestureHandler, State }  from 'react-native-gesture-handler'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
+import { BlurView, VibrancyView } from '@react-native-community/blur'
 
-import { updateProject } from 'LocalStorage'
 import Body from 'components/Body'
 import ButtonRow from './ButtonRow'
 import InstagramAuth from './InstagramAuth'
 import ImageCropper from './ImageCropper'
+import Loading from './Loading'
 import { cropFramePromises, cropPromise, saveToCameraRoll } from './utils'
-import PANDO_MUNCH from 'images/pando_munch.gif'
+
+const MAX_RATIO_LANDSCAPE = 1.8 // max allowed by instagram landscape best-fit
+const MAX_RATIO_PORTRAIT = 0.8 // max allowed by instagram portrait best-fit
 
 export default function Cropper (props) {
-  const { image, onImagesReady, onPressBack } = props
-  const [cropData, setCropData] = useState(null)
+  const { onCancel, onImagesReady, persistCropState, project } = props
+  const { cropState = {}, image } = project || {}
+  const [numOfFrames, setNumOfFrames] = useState(cropState.numOfFrames || 3)
+  const [format, setFormat] = useState(cropState.format || 'square')
+  const [imageCropperState, setImageCropperState] = useState(null)
   const [loading, setLoading] = useState(false)
   const [loadingPercent, setLoadingPercent] = useState({})
-  const [numOfFrames, setNumOfFrames] = useState(3)
-  const [format, setFormat] = useState('best-fit')
+  const [containerSize, setContainerSize] = useState(null)
 
-  const onPressNext = async () => {
-    setLoading(true)
-    updateProject({ image })
-
-    const hapticOpts = {
-      enableVibrateFallback: true,
-      ignoreAndroidSystemSettings: false
+  const fullWidth = Dimensions.get('window').width - 20
+  const getBestFit = (image, format, numOfFrames) => {
+    const frameWidth = fullWidth / numOfFrames
+    const dims = {
+      height: frameWidth, // defaulted to square format
+      width: frameWidth,
     }
-    ReactNativeHapticFeedback.trigger('impactMedium', hapticOpts)
 
+    if (format === 'landscape') {
+      dims.height = frameWidth / MAX_RATIO_LANDSCAPE
+    } else if (format === 'portrait') {
+      dims.height = frameWidth / MAX_RATIO_PORTRAIT
+    }
+
+    return dims
+  }
+  const frameDimensions = getBestFit(image, format, numOfFrames)
+
+  const cancelCrop = () => {
+    onCancel({ imageCropperState, format, numOfFrames })
+  }
+  const executeCrop = async () => {
     const defaultLoadingPercent = {
       complete: 0,
       percentComplete: 0,
@@ -37,8 +53,13 @@ export default function Cropper (props) {
 
     // set the text for the first pic before any promises resolve
     setLoadingPercent(defaultLoadingPercent)
+    // trigger loading state
+    setLoading(true)
 
-    const croppedFullImage = await cropPromise(image, cropData)
+    // update project
+    await persistCropState({ imageCropperState, format, numOfFrames })
+
+    const croppedFullImage = await cropPromise(image, imageCropperState.cropData)
     const cropPromises = cropFramePromises(croppedFullImage, numOfFrames, format)
 
     cropPromises.forEach((promise, i) => {
@@ -51,7 +72,15 @@ export default function Cropper (props) {
         total
       }
       // loop through promises to add percentage
-      promise.then(() => setLoadingPercent(loadingPercent))
+      promise.then(() => {
+        const hapticOpts = {
+          enableVibrateFallback: true,
+          ignoreAndroidSystemSettings: false
+        }
+
+        ReactNativeHapticFeedback.trigger('impactMedium', hapticOpts)
+        setLoadingPercent(loadingPercent)
+      })
     })
 
     return Promise.all(cropPromises)
@@ -60,97 +89,66 @@ export default function Cropper (props) {
         setLoading(false)
       })
   }
-  const getBestFit = (image, format, numOfFrames) => {
-    if (format === 'square') {
-      return 100
-    } else if (format === 'best-fit') {
-      const frameWidth = (Dimensions.get('window').width - 20) / numOfFrames // TODO get View width
 
-      return frameWidth
-    }
-  }
   const framesArray = []
   // setup array to render grid lines
   for (let i = 0; i < numOfFrames; i++) { framesArray.push(true) }
 
-  const frameWidth = getBestFit(image, format, numOfFrames)
-
   return (
     <Body>
-      {loading
-        ? (
-          <View style={styles.container}>
-            <ImageBackground
-              source={PANDO_MUNCH}
-              style={{ height: 200, width: 200}} />
-              <Text style={{ color: 'white' }}>
-                {`Chopping photo ${loadingPercent.complete + 1} of ${loadingPercent.total}`}
-              </Text>
-            <ProgressViewIOS
-              progress={loadingPercent.percentComplete}
-              progressTintColor='pink'
-              style={{ flex: 1, width: '80%', height: 400, position: 'absolute', bottom: 0 }} />
-          </View>
-        ):(
-          <View style={styles.container}>
-            {image &&
-              <View style={styles.editorContainer}>
-
-                <ImageCropper
-                  image={image}
-                  size={{ width: Dimensions.get('window').width - 20, height: 100 }}
-                  onTransformDataChange={e => setCropData(e)}
-                  style={styles.cropLinesRow} />
-                {/*<ScrollView
-                  style={styles.editor}
-                  maximumZoomScale={.8}
-                  minimumZoomScale={.2}
-                  pinchGestureEnabledpersistentScrollbar
-                  overScrollMode={true}
-                  directionalLockEnabled
-                  alwaysBounceVertical={true}
-                  contentContainerStyle={styles.cropContainer}>
-                  <Image
-                    source={{ uri: image.path }}
-                    style={{ ...styles.image, width: image.width, height: image.height }} />
-                </ScrollView>*/}
-                <View style={styles.cropLinesRow} pointerEvents='box-none' >
-                  {framesArray.map((f, i) => (
-                    <View
-                      key={i}
-                      style={styles.cropLines}
-                      width={frameWidth}
-                      pointerEvents='box-none' />
-                  ))}
-                </View>
-              </View>
-            }
-            <ButtonRow
-              format={format}
-              numOfFrames={numOfFrames}
-              onSetFormat={setFormat}
-              onSetNumOfFrames={setNumOfFrames} />
-              <View style={styles.header}>
+      <>
+        <Loading loading={loading} loadingPercent={loadingPercent} />
+        <View style={styles.container}>
+          {image &&
+            <View style={styles.editorContainer} onLayout={e => setContainerSize(e.nativeEvent.layout)}>
+              {containerSize &&
+                <>
+                  <ImageCropper
+                    image={image}
+                    size={{ width: fullWidth, height: frameDimensions.height }}
+                    containerSize={containerSize}
+                    imageCropperState={project?.cropState?.imageCropperState}
+                    onTransformDataChange={e => setImageCropperState(e)} />
+                  <View style={styles.cropLinesRow} pointerEvents='box-none'>
+                    {framesArray.map((f, i) => (
+                      <View
+                        key={i}
+                        style={[styles.cropLines, frameDimensions]}
+                        pointerEvents='box-none' />
+                    ))}
+                  </View>
+                </>
+              }
+            </View>
+          }
+          <ButtonRow
+            format={format}
+            numOfFrames={numOfFrames}
+            onSetFormat={setFormat}
+            onSetNumOfFrames={setNumOfFrames} />
+          <View style={styles.header}>
             <TouchableOpacity
               style={{ alignSelf: 'stretch' }}
-              onPress={onPressBack}>
+              onPress={cancelCrop}>
               <Text style={styles.textButtons}>BACK</Text>
             </TouchableOpacity>
             <View style={{ flex: 2 }} />
             <TouchableOpacity
               style={{ alignSelf: 'stretch' }}
-              onPress={onPressNext}>
+              onPress={executeCrop}>
               <Text style={styles.textButtons}>NEXT</Text>
             </TouchableOpacity>
           </View>
-          </View>
-        )
-      }
+        </View>
+      </>
     </Body>
   )
 }
 
 const styles = StyleSheet.create({
+  blur: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: 'black',
@@ -166,8 +164,6 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 1,
     borderStyle: 'solid',
-    height: 100,
-    width: 100
   },
   cropLinesRow: {
     flex: 1,
@@ -186,6 +182,8 @@ const styles = StyleSheet.create({
   },
   editorContainer: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   header: {
     flex: 1,
@@ -204,6 +202,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
     justifyContent: 'flex-start',
-    fontFamily: 'Oswald-Regular',
   }
 })

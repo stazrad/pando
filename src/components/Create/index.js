@@ -9,39 +9,50 @@ import Cropper from './Cropper'
 import Import from 'components/Import'
 
 export default function Create (props) {
-  const { isNewImport, project } = props
+  const { project, setProject } = props
   const onImagesReady = images => navigate('export', { images })
-  const saveDraft = async () => {
-    const updatedProject = await updateProject(project)
+  const saveDraft = async cropState => {
+    const updatedProject = await persistCropState(cropState)
 
-    navigate('import', { project: updatedProject })
+    navigate('import', { project: null })
   }
   const deleteDraft = async () => {
     // only delete new imports; leave existing projects
     if (project.draft) await deleteProject(project)
     navigate('import', { project: null })
   }
-  const onPressBack = () => {
+  const onCancel = cropState => {
     Alert.alert(
       '',
       'If you go back now, your image edits will be discarded.',
       [
-        {text: 'Discard', onPress: deleteDraft, style: styles.discard},
-        {text: 'Save ', onPress: saveDraft},
+        {text: 'Discard', onPress: deleteDraft},
+        {text: 'Save ', onPress: () => saveDraft(cropState)},
       ],
       { cancelable: true }
     )
   }
-  console.log('Create index.js project', project)
+  const persistCropState = async cropState => {
+    const projectEnhanced = {
+      ...project,
+      cropState
+    }
+    const updatedProject = await updateProject(projectEnhanced)
+
+    await setProject(updatedProject)
+
+    return updatedProject
+  }
 
   return (
     <>
       <Body>
         <View style={styles.container}>
           <Cropper
-            image={project?.image}
+            onCancel={onCancel}
             onImagesReady={onImagesReady}
-            onPressBack={onPressBack} />
+            persistCropState={persistCropState}
+            project={project} />
         </View>
       </Body>
     </>
@@ -56,10 +67,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: 'white',
     width: Dimensions.get('window').width
-  },
-  discard: {
-    color: 'red',
-    backgroundColor: 'blue',
   },
   pano: {
     height: 100,
