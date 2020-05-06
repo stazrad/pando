@@ -20,7 +20,7 @@ export default class ImageCropper extends React.Component {
   UNSAFE_componentWillReceiveProps (nextProps) {
     if (this.props.size.height !== nextProps.size.height || this.props.size.width !== nextProps.size.width) {
       console.log('PROPS')
-      setTimeout(() => this.resetImageSize(), 400)
+      setTimeout(() => this.resetImageSize(), 800)
     }
   }
 
@@ -30,18 +30,24 @@ export default class ImageCropper extends React.Component {
     const widthRatio = this.props.image.width / this.props.size.width;
     const heightRatio = this.props.image.height / this.props.size.height;
     this._horizontal = widthRatio > heightRatio;
-
-    this._scaledImageSize = {
-      width: this.props.image.width / heightRatio,
-      height: this.props.image.height / widthRatio,
-    };
-    if (Platform.OS === 'android') {
-      // hack to work around Android ScrollView a) not supporting zoom, and
-      // b) not supporting vertical scrolling when nested inside another
-      // vertical ScrollView (which it is, when displayed inside UIExplorer)
-      this._scaledImageSize.width *= 2;
-      this._scaledImageSize.height *= 2;
-      this._horizontal = true;
+    if (this._horizontal) {
+      this._scaledImageSize = {
+        width: this.props.image.width / heightRatio,
+        height: this.props.size.height,
+      };
+    } else {
+      this._scaledImageSize = {
+        width: this.props.size.width,
+        height: this.props.image.height / widthRatio,
+      };
+      if (Platform.OS === 'android') {
+        // hack to work around Android ScrollView a) not supporting zoom, and
+        // b) not supporting vertical scrolling when nested inside another
+        // vertical ScrollView (which it is, when displayed inside UIExplorer)
+        this._scaledImageSize.width *= 2;
+        this._scaledImageSize.height *= 2;
+        this._horizontal = true;
+      }
     }
     this._contentOffset = {
       x: (this._scaledImageSize.width - this.props.size.width) / 2,
@@ -81,7 +87,7 @@ export default class ImageCropper extends React.Component {
     const cropData: ImageCropData = {
       offset: {
         x: this.props.image.width * offsetRatioX,
-        y: (this.props.image.height * offsetRatioY),
+        y: (this.props.image.height * offsetRatioY) - fillerSize,
       },
       size: {
         width: this.props.image.width * sizeRatioX,
