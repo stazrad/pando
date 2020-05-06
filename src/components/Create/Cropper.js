@@ -42,7 +42,7 @@ export default function Cropper (props) {
   const frameDimensions = getBestFit(image, format, numOfFrames)
 
   const cancelCrop = () => {
-    onCancel({ format, numOfFrames })
+    onCancel({ cropData, format, numOfFrames })
   }
   const executeCrop = async () => {
     const defaultLoadingPercent = {
@@ -57,6 +57,7 @@ export default function Cropper (props) {
     setLoading(true)
 
     // update project
+    console.log('cropData', cropData)
     await persistCropState({ cropData, format, numOfFrames })
 
     const croppedFullImage = await cropPromise(image, cropData)

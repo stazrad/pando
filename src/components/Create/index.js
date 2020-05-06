@@ -13,7 +13,6 @@ export default function Create (props) {
   const onImagesReady = images => navigate('export', { images })
   const saveDraft = async cropState => {
     const updatedProject = await persistCropState(cropState)
-    console.log('saveDraft', cropState)
 
     navigate('import', { project: updatedProject })
   }
