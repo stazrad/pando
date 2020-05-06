@@ -14,7 +14,7 @@ export default function Create (props) {
   const saveDraft = async cropState => {
     const updatedProject = await persistCropState(cropState)
 
-    navigate('import', { project: updatedProject })
+    navigate('import', { project: null })
   }
   const deleteDraft = async () => {
     // only delete new imports; leave existing projects
@@ -39,7 +39,9 @@ export default function Create (props) {
     }
     const updatedProject = await updateProject(projectEnhanced)
 
-    return await setProject(updatedProject)
+    await setProject(updatedProject)
+
+    return updatedProject
   }
 
   return (
