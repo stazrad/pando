@@ -39,11 +39,7 @@ export default class ImageCropper extends React.Component {
     if (imageCropperState) {
       // hydrate state from project
       this.setState({ ...imageCropperState }, () => {
-        this._updateTransformData(
-          imageCropperState.contentOffset,
-          imageCropperState.scaledImageSize,
-          size,
-        )
+        this.resetImageSize(size)
       })
     } else {
       this.resetImageSize(size)
@@ -52,6 +48,7 @@ export default class ImageCropper extends React.Component {
 
   UNSAFE_componentWillReceiveProps (nextProps) {
     if (this.props.size.height !== nextProps.size.height || this.props.size.width !== nextProps.size.width) {
+      console.log('TOGGLE! prop')
       this.resetImageSize(nextProps.size)
     }
   }
@@ -111,6 +108,7 @@ export default class ImageCropper extends React.Component {
   }
 
   _onScroll(event) {
+    // this.resetImageSize(event.nativeEvent.contentSize)
     this._updateTransformData(
       event.nativeEvent.contentOffset,
       event.nativeEvent.contentSize,
@@ -136,7 +134,7 @@ export default class ImageCropper extends React.Component {
     };
 
     this.setState(({ contentOffset, cropData, scaledImageSize }), () => {
-      this.props.onTransformDataChange && this.props.onTransformDataChange(this.state)
+      // this.props.onTransformDataChange && this.props.onTransformDataChange(this.state)
     })
   }
 
@@ -153,7 +151,6 @@ export default class ImageCropper extends React.Component {
         horizontal={horizontal}
         maximumZoomScale={maximumZoomScale}
         minimumZoomScale={minimumZoomScale}
-        onMomentumScrollEnd={this._onScroll.bind(this)}
         onScrollEndDrag={this._onScroll.bind(this)}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}

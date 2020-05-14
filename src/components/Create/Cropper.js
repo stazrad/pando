@@ -108,7 +108,10 @@ export default function Cropper (props) {
                     size={{ width: fullWidth, height: frameDimensions.height }}
                     containerSize={containerSize}
                     imageCropperState={project?.cropState?.imageCropperState}
-                    onTransformDataChange={e => setImageCropperState(e)} />
+                    onTransformDataChange={e => {
+                      console.log('onTrsnform PROP', e)
+                      setImageCropperState(e)
+                    }} />
                   <View style={styles.cropLinesRow} pointerEvents='box-none'>
                     {framesArray.map((f, i) => (
                       <View
