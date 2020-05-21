@@ -7,6 +7,7 @@ import {
   Platform,
   StyleSheet,
 } from 'react-native'
+import debounce from 'lodash.debounce'
 
 export default class ImageCropper extends React.Component {
   state = {
@@ -39,6 +40,7 @@ export default class ImageCropper extends React.Component {
     if (imageCropperState) {
       // hydrate state from project
       this.setState({ ...imageCropperState }, () => {
+        console.log('HYDRATE')
         this._updateTransformData(
           imageCropperState.contentOffset,
           imageCropperState.scaledImageSize,
@@ -57,6 +59,7 @@ export default class ImageCropper extends React.Component {
   }
 
   resetImageSize (size) {
+    console.log('resetImageSize', size)
     // Scale an image to the minimum size that is large enough to completely
     // fill the crop box.
     const widthRatio = this.props.image.width / size.width;
@@ -97,11 +100,9 @@ export default class ImageCropper extends React.Component {
     );
 
     this.setState({
-      contentOffset: _contentOffset,
       horizontal: _horizontal,
       maximumZoomScale: _maximumZoomScale,
       minimumZoomScale: _minimumZoomScale,
-      scaledImageSize: _scaledImageSize,
     })
     this._updateTransformData(
       _contentOffset,
@@ -110,19 +111,21 @@ export default class ImageCropper extends React.Component {
     );
   }
 
-  _onScroll(event) {
+  _onScroll = event => {
     this._updateTransformData(
       event.nativeEvent.contentOffset,
       event.nativeEvent.contentSize,
       event.nativeEvent.layoutMeasurement,
-    );
+    )
   }
 
   _updateTransformData(contentOffset, scaledImageSize, croppedImageSize) {
-    const offsetRatioX = contentOffset.x / scaledImageSize.width;
-    const offsetRatioY = contentOffset.y / scaledImageSize.height;
+    console.log('_updateTransformData', contentOffset, scaledImageSize, croppedImageSize)
+    const offsetRatioX = contentOffset.x / croppedImageSize.width;
+    const offsetRatioY = contentOffset.y / croppedImageSize.height;
     const sizeRatioX = croppedImageSize.width / scaledImageSize.width;
     const sizeRatioY = croppedImageSize.height / scaledImageSize.height;
+    console.log('sizeRatio', sizeRatioX, sizeRatioY)
 
     const cropData = {
       offset: {
@@ -135,7 +138,7 @@ export default class ImageCropper extends React.Component {
       },
     };
 
-    this.setState(({ contentOffset, cropData, scaledImageSize }), () => {
+    this.setState(({ contentOffset, cropData, scaledImageSize: croppedImageSize }), () => {
       this.props.onTransformDataChange && this.props.onTransformDataChange(this.state)
     })
   }
@@ -153,12 +156,14 @@ export default class ImageCropper extends React.Component {
         horizontal={horizontal}
         maximumZoomScale={maximumZoomScale}
         minimumZoomScale={minimumZoomScale}
-        onMomentumScrollEnd={this._onScroll.bind(this)}
-        onScrollEndDrag={this._onScroll.bind(this)}
+        onMomentumScrollEnd={this._onScroll}
+        onScrollEndDrag={this._onScroll}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         style={[styles.imageCropper, measuredSize]}
         contentContainerStyle={[styles.contentContainer]}
+        disableIntervalMomentum={true}
+        bouncesZoom={false}
         pinchGestureEnabled
         centerContent
         directionalLockEnabled
