@@ -42,6 +42,7 @@ export default class ImageCropper extends React.Component {
     const { imageCropperState, onTransformDataChange, size } = this.props
 
     if (imageCropperState) {
+      console.log('HYDRATE', imageCropperState)
       // hydrate state from project
       this.setState({ ...imageCropperState }, () => {
         this._updateTransformData(
@@ -89,6 +90,9 @@ export default class ImageCropper extends React.Component {
         _horizontal = true;
       }
     }
+    // set class variable only on resetImageSize()
+    this._scaledImageSize = _scaledImageSize
+
     const _contentOffset = {
       x: (_scaledImageSize.width - this.props.size.width) / 2,
       y: (_scaledImageSize.height - this.props.size.height) / 2,
@@ -128,8 +132,6 @@ export default class ImageCropper extends React.Component {
     const offsetRatioY = contentOffset.y / scaledImageSize.height;
     const sizeRatioX = croppedImageSize.width / scaledImageSize.width;
     const sizeRatioY = croppedImageSize.height / scaledImageSize.height;
-    console.log('offsetRatio', offsetRatioX, offsetRatioY)
-    console.log('sizeRatio', sizeRatioX, sizeRatioY, this.props.image.width, this.props.image.height)
 
     const cropData = {
       offset: {
@@ -142,7 +144,7 @@ export default class ImageCropper extends React.Component {
       },
     };
 
-    this.setState(({ contentOffset, cropData, croppedImageSize }), () => {
+    this.setState(({ contentOffset, cropData, croppedImageSize, scaledImageSize }), () => {
       this.props.onTransformDataChange && this.props.onTransformDataChange({ ...this.state })
     })
   }
@@ -170,12 +172,10 @@ export default class ImageCropper extends React.Component {
         disableIntervalMomentum={true}
         bouncesZoom={false}
         pinchGestureEnabled
-        centerContent
-        directionalLockEnabled
         scrollEventThrottle={16}>
         <Image
           source={{ uri: this.props.image.path }}
-          style={[styles.image, scaledImageSize]}
+          style={[styles.image, this._scaledImageSize]}
         />
       </ScrollView>
     );
