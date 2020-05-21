@@ -26,11 +26,7 @@ export default class ImageCropper extends React.Component {
     },
     horizontal: false,
     maximumZoomScale: 0,
-    minimumZoomScale: 0,
-    scaledImageSize: {
-      x: 0,
-      y: 0,
-    }
+    minimumZoomScale: 0
   }
 
   UNSAFE_componentWillMount() {
@@ -44,6 +40,8 @@ export default class ImageCropper extends React.Component {
           imageCropperState.scaledImageSize,
           size,
         )
+        // keeping this out state avoids the pinch/zoom bug
+        this._scaledImageSize = imageCropperState.scaledImageSize
       })
     } else {
       this.resetImageSize(size)
@@ -83,6 +81,9 @@ export default class ImageCropper extends React.Component {
         _horizontal = true;
       }
     }
+    // set class variable only on resetImageSize()
+    this._scaledImageSize = _scaledImageSize
+
     const _contentOffset = {
       x: (_scaledImageSize.width - this.props.size.width) / 2,
       y: (_scaledImageSize.height - this.props.size.height) / 2,
@@ -97,11 +98,9 @@ export default class ImageCropper extends React.Component {
     );
 
     this.setState({
-      contentOffset: _contentOffset,
       horizontal: _horizontal,
       maximumZoomScale: _maximumZoomScale,
       minimumZoomScale: _minimumZoomScale,
-      scaledImageSize: _scaledImageSize,
     })
     this._updateTransformData(
       _contentOffset,
@@ -110,15 +109,16 @@ export default class ImageCropper extends React.Component {
     );
   }
 
-  _onScroll(event) {
+  _onScroll = event => {
     this._updateTransformData(
       event.nativeEvent.contentOffset,
       event.nativeEvent.contentSize,
       event.nativeEvent.layoutMeasurement,
-    );
+    )
   }
 
   _updateTransformData(contentOffset, scaledImageSize, croppedImageSize) {
+    console.log('_updateTransformData', contentOffset, scaledImageSize, croppedImageSize)
     const offsetRatioX = contentOffset.x / scaledImageSize.width;
     const offsetRatioY = contentOffset.y / scaledImageSize.height;
     const sizeRatioX = croppedImageSize.width / scaledImageSize.width;
@@ -135,15 +135,16 @@ export default class ImageCropper extends React.Component {
       },
     };
 
-    this.setState(({ contentOffset, cropData, scaledImageSize }), () => {
+    // keeping this._scaledImageSize set to state avoids the pinch/zoom bug
+    this.setState(({ contentOffset, cropData, scaledImageSize: this._scaledImageSize }), () => {
       this.props.onTransformDataChange && this.props.onTransformDataChange(this.state)
     })
   }
 
   render() {
-    const { contentOffset, horizontal, maximumZoomScale, minimumZoomScale, scaledImageSize } = this.state
+    const { contentOffset, horizontal, maximumZoomScale, minimumZoomScale } = this.state
     const viewWidth = Dimensions.get('window').width - 20 // 10 margins on either side
-    const measuredSize = { maxHeight: this.props.size.height, maxWidth: viewWidth }
+    const scrollViewSize = { maxHeight: this.props.size.height, maxWidth: viewWidth }
 
     return (
       <ScrollView
@@ -153,19 +154,18 @@ export default class ImageCropper extends React.Component {
         horizontal={horizontal}
         maximumZoomScale={maximumZoomScale}
         minimumZoomScale={minimumZoomScale}
-        onMomentumScrollEnd={this._onScroll.bind(this)}
-        onScrollEndDrag={this._onScroll.bind(this)}
+        onMomentumScrollEnd={this._onScroll}
+        onScrollEndDrag={this._onScroll}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        style={[styles.imageCropper, measuredSize]}
+        style={[styles.imageCropper, scrollViewSize]}
         contentContainerStyle={[styles.contentContainer]}
-        pinchGestureEnabled
         centerContent
-        directionalLockEnabled
+        pinchGestureEnabled
         scrollEventThrottle={16}>
         <Image
           source={{ uri: this.props.image.path }}
-          style={[styles.image, scaledImageSize]}
+          style={[styles.image, this._scaledImageSize]}
         />
       </ScrollView>
     );
@@ -182,6 +182,5 @@ const styles = StyleSheet.create({
   },
   imageCropper: {
     alignSelf: 'center',
-    overflow: 'hidden',
   },
 })
