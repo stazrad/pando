@@ -7,7 +7,6 @@ import {
   Platform,
   StyleSheet,
 } from 'react-native'
-import debounce from 'lodash.debounce'
 
 export default class ImageCropper extends React.Component {
   state = {
@@ -25,24 +24,15 @@ export default class ImageCropper extends React.Component {
       x: 0,
       y: 0,
     },
-    croppedImageSize: {
-      x: 0,
-      y: 0,
-    },
     horizontal: false,
     maximumZoomScale: 0,
-    minimumZoomScale: 0,
-    scaledImageSize: {
-      x: 0,
-      y: 0,
-    }
+    minimumZoomScale: 0
   }
 
   UNSAFE_componentWillMount() {
     const { imageCropperState, onTransformDataChange, size } = this.props
 
     if (imageCropperState) {
-      console.log('HYDRATE', imageCropperState)
       // hydrate state from project
       this.setState({ ...imageCropperState }, () => {
         this._updateTransformData(
@@ -50,7 +40,8 @@ export default class ImageCropper extends React.Component {
           imageCropperState.scaledImageSize,
           size,
         )
-        this.resetImageSize(size)
+        // keeping this out state avoids the pinch/zoom bug
+        this._scaledImageSize = imageCropperState.scaledImageSize
       })
     } else {
       this.resetImageSize(size)
@@ -144,15 +135,15 @@ export default class ImageCropper extends React.Component {
       },
     };
 
-    this.setState(({ contentOffset, cropData, croppedImageSize, scaledImageSize }), () => {
-      this.props.onTransformDataChange && this.props.onTransformDataChange({ ...this.state })
+    // keeping this._scaledImageSize set to state avoids the pinch/zoom bug
+    this.setState(({ contentOffset, cropData, scaledImageSize: this._scaledImageSize }), () => {
+      this.props.onTransformDataChange && this.props.onTransformDataChange(this.state)
     })
   }
 
   render() {
-    const { contentOffset, croppedImageSize, horizontal, maximumZoomScale, minimumZoomScale, scaledImageSize } = this.state
+    const { contentOffset, horizontal, maximumZoomScale, minimumZoomScale } = this.state
     const viewWidth = Dimensions.get('window').width - 20 // 10 margins on either side
-    const measuredSize = { height: this.props.size.height, width: viewWidth }
     const scrollViewSize = { maxHeight: this.props.size.height, maxWidth: viewWidth }
 
     return (
@@ -169,8 +160,7 @@ export default class ImageCropper extends React.Component {
         showsVerticalScrollIndicator={false}
         style={[styles.imageCropper, scrollViewSize]}
         contentContainerStyle={[styles.contentContainer]}
-        disableIntervalMomentum={true}
-        bouncesZoom={false}
+        centerContent
         pinchGestureEnabled
         scrollEventThrottle={16}>
         <Image
