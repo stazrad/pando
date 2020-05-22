@@ -74,7 +74,7 @@ export default function Projects (props) {
       <View>
         {
           !projects.length
-            ? <Text style={styles.noProjectsText}>Import above to create a pando!</Text>
+            ? <Text style={styles.noProjectsText}>Import above to create a Pando!</Text>
             : (
               <FlatList
                 data={projects}

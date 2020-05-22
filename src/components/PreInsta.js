@@ -26,7 +26,7 @@ export default function PreInsta (props) {
             <Image
               source={INSTAGRAM} />
           </View>
-          <Text style={styles.text}>Pando will save to your camera roll and open Instagram</Text>
+          <Text style={styles.text}>Pando! will save to your camera roll and send you to Instagram</Text>
         </View>
         <View style={styles.row}>
           <View style={styles.icon}>
@@ -49,7 +49,10 @@ export default function PreInsta (props) {
             <Image
               source={MULTI} />
           </View>
-          <Text style={styles.text}>Choose "Multi Post" to make a slider of your Pando</Text>
+          <Text style={styles.text}>Choose "Multi Post" to make a slider of your Pando!</Text>
+        </View>
+        <View style={[styles.row, { maxHeight: 80, alignItems: 'baseline' }]}>
+          <Text style={[styles.text, { textAlign: 'center' }]}>Tag @pando_app to be featured</Text>
         </View>
         <TouchableOpacity
           style={styles.buttonBig}
