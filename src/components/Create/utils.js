@@ -62,13 +62,15 @@ export async function cropPromise (image, cropData) {
 }
 
 export async function addWatermark (image) {
+  console.log('SCALE?', image.height / image.width, image.width / image.height, image)
+  const markerScale = image.height / image.width * .1
   const path = await ImageMarker.markImage({
       src: image.path,
       markerSrc: PANDO, // icon uri
       X: image.width - 240, // left
       Y: image.height - 50, // top
       scale: 1, // scale of bg
-      markerScale: 0.1, // scale of icon
+      markerScale: .1, // scale of icon
       quality: 100, // quality of image
       saveFormat: 'jpg',
   })
