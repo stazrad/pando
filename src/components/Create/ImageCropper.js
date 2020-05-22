@@ -42,7 +42,6 @@ export default class ImageCropper extends React.Component {
           imageCropperState?.scaledImageSize,
           size,
         )
-        // this.resetImageSize(size)
       })
     } else {
       this.resetImageSize(size)
@@ -51,7 +50,6 @@ export default class ImageCropper extends React.Component {
 
   UNSAFE_componentWillReceiveProps (nextProps) {
     if (this.props.size.height !== nextProps.size.height || this.props.size.width !== nextProps.size.width) {
-      console.log('TOGGLE ENOUGHT')
       this.resetImageSize(nextProps.size)
     }
   }
