@@ -59,10 +59,10 @@ export default function Import (props) {
           <TouchableOpacity onPress={openPicker} style={{alignItems: 'center'}}>
             <SvgUri
               fill='white'
-              width='80'
-              height='80'
+              width={expandProjects ? 60 : 80}
+              height={expandProjects ? 60 : 80}
               source={PLUS_ICON} />
-            <Text style={styles.text}>IMPORT</Text>
+            <Text style={[styles.text, { fontSize: expandProjects ? 26 : 28 }]}>IMPORT</Text>
           </TouchableOpacity>
         </View>
         <View style={{...styles.container, ...{ flex: expandProjects ? 2 : 1 }}}>

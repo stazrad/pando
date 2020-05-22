@@ -110,18 +110,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   bigButtonsContainer: {
-    marginBottom: 50,
-    marginTop: 30,
+    flex: 1,
+    alignItems: 'center',
   },
   button: {
     alignSelf: 'stretch',
     flex: 1,
+    alignSelf: 'flex-end',
   },
   buttonBig: {
     backgroundColor: 'black',
     height: 60,
     width: 240,
-    marginBottom: 8,
+    marginTop: 12,
   },
   buttonBigText: {
     color: 'white',
@@ -145,15 +146,13 @@ const styles = StyleSheet.create({
   },
   footer: {
     flexDirection: 'row',
+    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     width: '100%',
-    maxHeight: 60,
-    marginBottom: 20,
   },
   sliderContainer: {
     flex: 2,
     marginTop: 60,
-    height: 340,
   },
 })

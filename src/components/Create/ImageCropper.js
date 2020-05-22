@@ -30,18 +30,18 @@ export default class ImageCropper extends React.Component {
   }
 
   UNSAFE_componentWillMount() {
-    const { imageCropperState, onTransformDataChange, size } = this.props
+    const { imageCropperState, size } = this.props
 
     if (imageCropperState) {
       // hydrate state from project
       this.setState({ ...imageCropperState }, () => {
+        // keeping this out state avoids the pinch/zoom bug
+        this._scaledImageSize = imageCropperState?.scaledImageSize
         this._updateTransformData(
           imageCropperState.contentOffset,
-          imageCropperState.scaledImageSize,
+          imageCropperState?.scaledImageSize,
           size,
         )
-        // keeping this out state avoids the pinch/zoom bug
-        this._scaledImageSize = imageCropperState.scaledImageSize
       })
     } else {
       this.resetImageSize(size)
@@ -85,8 +85,8 @@ export default class ImageCropper extends React.Component {
     this._scaledImageSize = _scaledImageSize
 
     const _contentOffset = {
-      x: (_scaledImageSize.width - this.props.size.width) / 2,
-      y: (_scaledImageSize.height - this.props.size.height) / 2,
+      x: (_scaledImageSize.width - size.width) / 2,
+      y: (_scaledImageSize.height - size.height) / 2,
     };
     const _maximumZoomScale = Math.min(
       this.props.image.width / _scaledImageSize.width,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, FlatList , Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, FlatList , Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 import Swipeable from 'react-native-swipeable-row'
 import { navigate } from 'App'
@@ -61,24 +61,34 @@ export default function Projects (props) {
     //
     // props.expandProjects(y > 100)
   }
+  const openFeedback = () => {
+    Linking.openURL('instagram://user?username=pando_app')
+  }
 
   useEffect(() => {
     refreshProjects()
   }, [])
+  const footer = (
+    <TouchableOpacity onPress={openFeedback} style={styles.footer}>
+      <Text style={styles.subtitle}>Tap to message <Text style={styles.link}>@pando_app 🐼</Text></Text>
+      <Text style={[styles.subtitle, styles.version]}>v1.1.0</Text>
+    </TouchableOpacity>
+  )
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>My Pandos
         <Text style={{ fontSize: 18 }}>{` (${projects.length})`}</Text>
       </Text>
-      <View>
+      <View style={styles.scrollContainer}>
         {
           !projects.length
-            ? <Text style={styles.noProjectsText}>Import above to create a pando!</Text>
+            ? <Text style={styles.noProjectsText}>Import above to create a Pando!</Text>
             : (
               <FlatList
                 data={projects}
                 keyExtractor={item => item.id}
+                ListFooterComponent={footer}
                 renderItem={({ item }) => (
                   <ProjectPreview
                     project={item}
@@ -114,9 +124,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     fontFamily: 'Oswald-Regular',
   },
+  footer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
   image: {
     width: Dimensions.get('window').width,
     height: 100,
+  },
+  link: {
+    fontFamily: 'Oswald-Bold',
+    borderBottomColor: 'white'
   },
   noProjectsText: {
     color: 'white',
@@ -130,9 +149,23 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
-    marginBottom: 5,
+    marginBottom: 8,
     color: 'white',
     justifyContent: 'flex-start',
     fontFamily: 'Oswald-Regular',
   },
+  scrollContainer: {
+    flex: 1,
+  },
+  subtitle: {
+    flex: 1,
+    fontSize: 14,
+    color: 'white',
+    fontFamily: 'Oswald-Regular',
+    maxHeight: 20,
+  },
+  version: {
+    color: 'grey',
+    fontFamily: 'Oswald-Regular',
+  }
 })

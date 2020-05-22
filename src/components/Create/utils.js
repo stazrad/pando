@@ -62,6 +62,7 @@ export async function cropPromise (image, cropData) {
 }
 
 export async function addWatermark (image) {
+  const markerScale = (image.width / image.height) * .1
   const path = await ImageMarker.markImage({
       src: image.path,
       markerSrc: PANDO, // icon uri
