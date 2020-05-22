@@ -71,7 +71,7 @@ export default function Projects (props) {
       <Text style={styles.title}>My Pandos
         <Text style={{ fontSize: 18 }}>{` (${projects.length})`}</Text>
       </Text>
-      <View>
+      <View style={styles.scrollContainer}>
         {
           !projects.length
             ? <Text style={styles.noProjectsText}>Import above to create a Pando!</Text>
@@ -88,6 +88,8 @@ export default function Projects (props) {
             )
         }
       </View>
+
+      <Text style={styles.subtitle}>version 1.1.0</Text>
     </View>
   )
 }
@@ -130,10 +132,19 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
-    marginBottom: 5,
     marginBottom: 8,
     color: 'white',
     justifyContent: 'flex-start',
     fontFamily: 'Oswald-Regular',
   },
+  scrollContainer: {
+    flex: 1,
+  },
+  subtitle: {
+    flex: 1,
+    fontSize: 14,
+    color: 'white',
+    fontFamily: 'Oswald-Light',
+    maxHeight: 20,
+  }
 })

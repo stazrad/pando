@@ -112,8 +112,6 @@ const styles = StyleSheet.create({
   bigButtonsContainer: {
     flex: 1,
     alignItems: 'center',
-    // marginBottom: 50,
-    // marginTop: 30,
   },
   button: {
     alignSelf: 'stretch',
@@ -152,12 +150,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
     width: '100%',
-    // maxHeight: 60,
-    // marginBottom: 20,
   },
   sliderContainer: {
     flex: 2,
     marginTop: 60,
-    // height: 340,
   },
 })
