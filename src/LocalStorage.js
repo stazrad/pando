@@ -11,7 +11,8 @@ export const createProject = async ({ image }) => {
     dateLastEdit: new Date(),
     draft: true,
     id,
-    image
+    image,
+    version: '1.1.0',
   }
 
   // const keys = await AsyncStorage.getAllKeys()

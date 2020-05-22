@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     marginBottom: 5,
+    marginBottom: 8,
     color: 'white',
     justifyContent: 'flex-start',
     fontFamily: 'Oswald-Regular',

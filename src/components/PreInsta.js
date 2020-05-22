@@ -52,7 +52,7 @@ export default function PreInsta (props) {
           <Text style={styles.text}>Choose "Multi Post" to make a slider of your Pando!</Text>
         </View>
         <View style={[styles.row, { maxHeight: 80, alignItems: 'baseline' }]}>
-          <Text style={[styles.text, { textAlign: 'center' }]}>Tag @pando_app to be featured</Text>
+          <Text style={[styles.text, { textAlign: 'center' }]}>🐼 Tag @pando_app</Text>
         </View>
         <TouchableOpacity
           style={styles.buttonBig}
